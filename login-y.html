@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Page title -->
+    <title>HOMER | WebApp admin theme</title>
+
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!--<link rel="shortcut icon" type="image/ico" href="favicon.ico" />-->
+
+    <!-- Vendor styles -->
+    <link rel="stylesheet" href="vendor/fontawesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="vendor/metisMenu/dist/metisMenu.css" />
+    <link rel="stylesheet" href="vendor/animate.css/animate.css" />
+    <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="vendor/toastr/build/toastr.min.css" />
+
+    <!-- App styles -->
+    <link
+      rel="stylesheet"
+      href="fonts/pe-icon-7-stroke/css/pe-icon-7-stroke.css"
+    />
+    <link rel="stylesheet" href="fonts/pe-icon-7-stroke/css/helper.css" />
+    <link rel="stylesheet" href="styles/style.css" />
+  </head>
+  <body class="blank">
+    <!--[if lt IE 7]>
+      <p class="alert alert-danger">
+        You are using an <strong>outdated</strong> browser. Please
+        <a href="http://browsehappy.com/">upgrade your browser</a> to improve
+        your experience.
+      </p>
+    <![endif]-->
+
+    <!-- <div class="color-line"></div> -->
+
+    <div class="login-container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="text-center m-b-md">
+            <h3>材料检验客户端</h3>
+            <small>使用工程编号登录</small>
+          </div>
+          <div class="hpanel">
+            <div class="panel-body">
+              <form action="#" id="loginForm" class="form-horizontal">
+                <div class="form-group">
+                  <label class="col-sm-3 control-label" for="username"
+                    >工程编号</label
+                  >
+                  <div class="col-sm-9">
+                    <input
+                      type="text"
+                      placeholder="请输入工程编号"
+                      required=""
+                      value=""
+                      name="username"
+                      id="username"
+                      class="form-control"
+                    />
+                    <div class="error-block-username text-danger"></div>
+                  </div>
+                </div>
+                <div id="pass-form-group" class="form-group hidden">
+                  <label class="col-sm-3 control-label" for="password"
+                    >密码</label
+                  >
+                  <div class="col-sm-9">
+                    <input
+                      type="password"
+                      placeholder="请输入密码"
+                      required=""
+                      value=""
+                      name="password"
+                      id="password"
+                      class="form-control"
+                    />
+                    <div class="error-block-password text-danger"></div>
+                  </div>
+                </div>
+                <div id="phone-form-group" class="hidden">
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label" for="phone"
+                      >绑定手机号</label
+                    >
+                    <div class="col-sm-9">
+                      <input
+                        type="phone"
+                        placeholder=""
+                        required=""
+                        value=""
+                        name="phone"
+                        id="phone"
+                        class="form-control"
+                      />
+                      <div class="error-block-phone text-danger"></div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label" for="verifyCode"
+                      >验证码</label
+                    >
+                    <div class="col-sm-9">
+                      <div class="col-xs-7 p-l-none">
+                        <input
+                          type="text"
+                          placeholder=""
+                          required=""
+                          value=""
+                          name="verifyCode"
+                          id="verifyCode"
+                          class="form-control"
+                        />
+                      </div>
+                      <div class="col-xs-4">
+                        <button
+                          type="button"
+                          id="readPhoneCode"
+                          class="btn btn-link"
+                        >
+                          获取验证码
+                        </button>
+                      </div>
+                      <div class="error-block-verifyCode text-danger"></div>
+                    </div>
+                  </div>
+                </div>
+                <!-- 初始选择的登陆方式 -->
+                <div class="row login-type-group p-b-xl">
+                  <div class="col-xs-6">
+                    <button
+                      type="button"
+                      class="btn btn-info btn-block login-type-btn"
+                      data-type="phone"
+                    >
+                      手机验证登陆
+                    </button>
+                  </div>
+                  <div class="col-xs-6">
+                    <button
+                      type="button"
+                      class="btn btn-info btn-block login-type-btn"
+                      data-type="pass"
+                    >
+                      密码登陆
+                    </button>
+                  </div>
+                  <div class="txt-center">
+                    <a class="btn btn-link" href="./register-y.html"
+                      >创建新的工程编号</a
+                    >
+                  </div>
+                </div>
+                <div class="row login-btn-group hidden p-t-lg">
+                  <div class="col-xs-6 col-xs-offset-3 p-b-sm">
+                    <button class="btn btn-primary btn-block">登陆系统</button>
+                  </div>
+                  <div class="col-xs-6 col-xs-offset-3 p-b-sm">
+                    <button
+                      type="submit"
+                      class="btn btn-default btn-block btn-pass login-type-btn"
+                      data-type="pass"
+                    >
+                      密码登陆
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-default btn-block btn-phone login-type-btn"
+                      data-type="phone"
+                    >
+                      绑定手机登陆
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="row">
+        <div class="col-md-12 text-center">
+          <strong>HOMER</strong> - AngularJS Responsive WebApp <br />
+          2015 Copyright Company Name
+        </div>
+      </div> -->
+    </div>
+
+    <!-- Vendor scripts -->
+    <script src="vendor/jquery/dist/jquery.min.js"></script>
+    <script src="vendor/jquery-ui/jquery-ui.min.js"></script>
+    <script src="vendor/slimScroll/jquery.slimscroll.min.js"></script>
+    <script src="vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="vendor/metisMenu/dist/metisMenu.min.js"></script>
+    <script src="vendor/iCheck/icheck.min.js"></script>
+    <script src="vendor/sparkline/index.js"></script>
+    <script src="vendor/jquery-validation/jquery.validate.min.js"></script>
+    <script src="vendor/toastr/build/toastr.min.js"></script>
+
+    <!-- App scripts -->
+    <script src="scripts/homer.js"></script>
+    <script>
+      // 登陆方式 pass；phone
+      var loginType = "";
+      var passKeys = ["userName", "passWord"];
+      var phoneKeys = ["userName", "phone", "verifyCode"];
+      var phoneReg = /^(((13[0-9]{1})|(15[0-9]{1}))+d{8})$/;
+      toastr.options = {
+        // debug: false,
+        newestOnTop: false,
+        positionClass: "toast-top-center",
+        closeButton: true,
+        showDuration: "100",
+        hideDuration: "1000",
+        timeOut: "3000",
+        // toastClass: "animated fadeInDown",
+      };
+
+      $(".login-type-btn").on("click", function (e) {
+        event.preventDefault();
+        var type = $(this).data("type");
+        // 切换登录方式
+        if (type === "pass") {
+          loginType = "pass";
+          $("#pass-form-group").removeClass("hidden");
+          $("#phone-form-group").addClass("hidden");
+          $(passKeys).each(function (ele) {
+            $("." + ele).val("");
+          });
+        } else {
+          loginType = "phone";
+          $("#phone-form-group").removeClass("hidden");
+          $("#pass-form-group").addClass("hidden");
+          $(phoneKeys).each(function (ele) {
+            $("." + ele).val("");
+          });
+        }
+        // 隐藏登陆方式按钮
+        $(".login-type-group").addClass("hidden");
+        // 显示登陆按钮
+        $(".login-btn-group").removeClass("hidden");
+        if (type === "pass") {
+          $(".login-btn-group .btn-phone").removeClass("hidden");
+          $(".login-btn-group .btn-pass").addClass("hidden");
+        } else {
+          $(".login-btn-group .btn-phone").addClass("hidden");
+          $(".login-btn-group .btn-pass").removeClass("hidden");
+        }
+      });
+
+      $("#loginForm").validate({
+        rules: {
+          username: {
+            required: true,
+            minlength: 3,
+            // regex: "(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,10}$", //正则
+          },
+          password: {
+            required: true,
+          },
+          phone: {
+            required: true,
+            mobile: true,
+          },
+          verifyCode: {
+            required: true,
+            // number: true,
+            // digits: true,
+            // minlength: 6,
+            // maxlength: 6,
+          },
+        },
+        messages: {
+          username: {
+            required: "请输入工程编号",
+            // regex:
+            //   "密码必须包含大小写字母和数字的组合，不能使用特殊字符，长度在8-10之间",
+          },
+          password: {
+            required: "请输入密码",
+          },
+          phone: {
+            required: "请输入手机号码",
+            mobile: "请输入正确的手机号",
+          },
+          verifyCode: {
+            required: "请输入手机验证码",
+            // number: "只支持数字",
+            // digits: "不支持小数或负数",
+            // minlength: "请输入正确的验证码",
+            // maxlength: "请输入正确的验证码",
+          },
+        },
+        onfocusout: true,
+        submitHandler: function (form) {
+          var formData = {};
+          var t = $(form).serializeArray();
+          $.each(t, function () {
+            ((loginType == pass && passKeys.indexOf(this.name)) ||
+              (loginType == "phone" && phoneKeys.indexOf(this.name))) &&
+              (formData[this.name] = this.value);
+          });
+
+          $.ajax({
+            url: "http://meterial.cxhy.cn/login",
+            type: "POST",
+            processData: false,
+            cache: false,
+            dataType: "json",
+            data: formData,
+            success: function (res) {
+              //跳转至home页
+            },
+            error: function (error) {},
+          });
+          // form.submit();
+        },
+        errorPlacement: function (error, element) {
+          var name = $(element).attr("name");
+          $(".error-block-" + name).html(error);
+        },
+        errorElement: "span",
+      });
+
+      $("#readPhoneCode").on("click", function (e) {
+        var val = $("index[type='phone']").val();
+        if (!val || !phoneReg.test(val)) {
+          toastr.warning("请先填写手机号");
+          return;
+        }
+        $.ajax({
+          url: "http://meterial.cxhy.cn/phone-code",
+          type: "get",
+          processData: false,
+          cache: false,
+          dataType: "json",
+          data: {},
+          success: function (res) {},
+          error: function (error) {},
+        });
+      });
+    </script>
+  </body>
+</html>
