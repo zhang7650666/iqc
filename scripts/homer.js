@@ -215,11 +215,8 @@ $.fn["animatePanel"] = function () {
   }, animateTime);
 };
 
-$.validator.addMethod(
-  "mobile",
-  function (value, element) {
-    var tel = /^(d{3,4}-?)?d{7,9}$/g;
-    return this.optional(element) || tel.test(value);
-  },
-  "手机号码格式错误"
-);
+$.validator.addMethod("isMobile", function(value, element) {
+  var length = value.length;
+  var mobile = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(17[0-9]{1}))+\d{8})$/;
+  return this.optional(element) || (length == 11 && mobile.test(value));
+}, "手机号码格式错误");//可以自定义默认提示信息
