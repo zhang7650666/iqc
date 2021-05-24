@@ -229,19 +229,22 @@ if ($.validator) {
 }
 
 // toastr 提示配置
-toastr.options = {
-  // debug: false,
-  newestOnTop: false,
-  positionClass: "toast-top-center",
-  closeButton: true,
-  showDuration: "100",
-  hideDuration: "1000",
-  timeOut: "3000",
-  // toastClass: "animated fadeInDown",
-};
+if (window.toastr) {
+  toastr.options = {
+    // debug: false,
+    newestOnTop: false,
+    positionClass: "toast-top-center",
+    closeButton: true,
+    showDuration: "100",
+    hideDuration: "1000",
+    timeOut: "3000",
+    // toastClass: "animated fadeInDown",
+  };
+}
 
 //errorCodeMap
 var errorCodeMap = {
+  0: "无效的token或token已过期",
   201: "密码不正确",
   202: "验证码不正确",
   203: "用户不存在",
@@ -257,7 +260,7 @@ $.ajaxSetup({
     var res = XMLHttpRequest.responseText;
     var jsonData = JSON.parse(res);
     if (errorCodeMap[jsonData.code]) {
-      toastr.warning(errorCodeMap[jsonData.code]);
+      toastr && toastr.warning(errorCodeMap[jsonData.code]);
     } else {
       //正常情况就不统一处理了
     }
@@ -312,3 +315,55 @@ function query2obj(url) {
 //     .map((i) => `${i}=${obj[i]}`)
 //     .join("&");
 // }
+
+//退出登陆
+$(".logoutBtn").on("click", function (e) {
+  swal(
+    {
+      title: "提示",
+      text: "确认退出登陆？",
+      // type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#DD6B55",
+      confirmButtonText: "确认",
+      cancelButtonText: "取消",
+      closeOnConfirm: false,
+      // closeOnCancel: false,
+    },
+    function (isConfirm) {
+      if (isConfirm) {
+        //退出登陆，清除token, 跳转登陆页
+        $.ajax({
+          url: "http://meterial.cxhy.cn/logout/",
+          type: "POST",
+          dataType: "json",
+          contentType: "application/json",
+          data: "{}",
+          success: function (res) {
+            if (res.code == 200) {
+              toastr && toastr.success("已退出登陆！");
+              localStorage.setItem("iqc_user_info", "");
+              setTimeout(function () {
+                window.location.href = "./login-y.html";
+              }, 1000);
+            }
+          },
+          error: function (error) {},
+        });
+      }
+    }
+  );
+});
+
+//动态生成分类列表
+function createList() {
+  //loading
+  $.get(
+    "http://meterial.cxhy.cn/getClassifyList/",
+    { token: "9c71793b1e6d537baf0861806cb1dfc3" },
+    function (res) {
+      var data = res.data;
+      $.each(data, function (idx, item) {});
+    }
+  );
+}
