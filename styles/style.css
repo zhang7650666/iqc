@@ -3974,3 +3974,21 @@ ul.h-list li:hover a {
     margin-left: 10px;
   }
 }
+
+
+/* .table>tbody>tr>td {
+  
+  text-align: center;
+  vertical-align: middle;
+  
+  }
+  
+ .table thead>tr>th {
+  text-align: center;
+  
+  } */
+
+  .table-center{
+    text-align: center;
+    vertical-align: middle !important;
+  }
