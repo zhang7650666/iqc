@@ -452,6 +452,22 @@
   text-align: center;
 }
 
+.label-right .control-label {
+  text-align: right;
+}
+
+.hidden {
+  display: none;
+}
+
+.shown {
+  display: block;
+}
+
+.line34 {
+  line-height: 34px;
+}
+
 .sweet-alert button {
   background-color: #34495e;
   color: white;

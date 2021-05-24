@@ -215,8 +215,100 @@ $.fn["animatePanel"] = function () {
   }, animateTime);
 };
 
-$.validator.addMethod("isMobile", function(value, element) {
-  var length = value.length;
-  var mobile = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(17[0-9]{1}))+\d{8})$/;
-  return this.optional(element) || (length == 11 && mobile.test(value));
-}, "手机号码格式错误");//可以自定义默认提示信息
+if ($.validator) {
+  $.validator.addMethod(
+    "isMobile",
+    function (value, element) {
+      var length = value.length;
+      var mobile =
+        /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(17[0-9]{1}))+\d{8})$/;
+      return this.optional(element) || (length == 11 && mobile.test(value));
+    },
+    "手机号码格式错误"
+  ); //可以自定义默认提示信息
+}
+
+// toastr 提示配置
+toastr.options = {
+  // debug: false,
+  newestOnTop: false,
+  positionClass: "toast-top-center",
+  closeButton: true,
+  showDuration: "100",
+  hideDuration: "1000",
+  timeOut: "3000",
+  // toastClass: "animated fadeInDown",
+};
+
+//errorCodeMap
+var errorCodeMap = {
+  201: "密码不正确",
+  202: "验证码不正确",
+  203: "用户不存在",
+  204: "用户已存在",
+  205: "工程编号不正确",
+};
+
+//ajax错误信息统一捕获处理
+$.ajaxSetup({
+  contentType: "application/x-www-form-urlencoded;charset=utf-8",
+  complete: function (XMLHttpRequest, textStatus) {
+    //通过XMLHttpRequest取得响应结果
+    var res = XMLHttpRequest.responseText;
+    var jsonData = JSON.parse(res);
+    if (errorCodeMap[jsonData.code]) {
+      toastr.warning(errorCodeMap[jsonData.code]);
+    } else {
+      //正常情况就不统一处理了
+    }
+  },
+  statusCode: {
+    // 504: function () {
+    //   alert("数据获取/输入失败，服务器没有响应。504");
+    // },
+    // 500: function () {
+    //   alert("服务器有误。500");
+    // },
+  },
+});
+
+function query2obj(url) {
+  /**
+   * 200902 修复没有参数的URL会返回： {url: ''}
+   * 原因： index为 -1;  index + 1 = 0;
+   *
+   */
+  var index = url.lastIndexOf("?");
+  index = index === -1 ? url.indexOf("&") : index;
+  if (index === -1) {
+    return {};
+  }
+  var query = url.substr(index + 1);
+  var params = query.split("&");
+  var len = params.length;
+  var result = {};
+  for (var i = 0; i < len; i++) {
+    if (!params[i]) {
+      continue;
+    }
+    var param = params[i].split("=");
+    var key = param[0];
+    var value = param[1];
+    var item = result[key];
+    if ("undefined" === typeof item) {
+      result[key] = value;
+    } else if (Array.isArray(item)) {
+      item.push(value);
+    } else {
+      // 这里只可能是string了
+      result[key] = [item, value];
+    }
+  }
+  return result;
+}
+
+// function obj2query(obj) {
+//   return Object.keys(obj)
+//     .map((i) => `${i}=${obj[i]}`)
+//     .join("&");
+// }
