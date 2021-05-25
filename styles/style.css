@@ -1891,7 +1891,7 @@ body {
   position: fixed;
   overflow-x: hidden;
   overflow-y: scroll;
-  width: 197px;
+  width: 180px;
 }
 .fixed-sidebar.show-sidebar #menu {
   width: 180px;
@@ -2579,6 +2579,7 @@ body.fullscreen-panel-mode {
   text-transform: uppercase;
   font-weight: 700;
   padding: 15px 20px;
+  font-size: 12px;
 }
 #side-menu li {
   border-bottom: 1px solid #e4e5e7;
@@ -2596,9 +2597,21 @@ body.fullscreen-panel-mode {
   text-transform: none;
   font-weight: 600;
 }
-#side-menu li .nav-second-level li.active a {
+#side-menu li .nav-second-level li.active > a {
   color: #34495e;
+  /* color: #3498db; */
   background-color: #f7f9fa;
+}
+#side-menu li .nav-second-level li.active .nav-second-level li a {
+  color: #34495e;
+  /* color: #3498db; */
+  padding: 10px 10px 10px 40px;
+  background-color: #f1f1f1;
+}
+#side-menu li .nav-second-level li.active .nav-second-level li.active a {
+  color: #3498db;
+  padding: 10px 10px 10px 40px;
+  background-color: #f1f1f1;
 }
 #side-menu.nav > li > a:hover,
 #side-menu.nav > li > a:focus {
@@ -3991,7 +4004,6 @@ ul.h-list li:hover a {
   }
 }
 
-
 /* .table>tbody>tr>td {
   
   text-align: center;
@@ -4004,10 +4016,10 @@ ul.h-list li:hover a {
   
   } */
 
-  .table-center{
-    text-align: center;
-    vertical-align: middle !important;
-  }
+.table-center {
+  text-align: center;
+  vertical-align: middle !important;
+}
 
   .table-wp input[type="text"] {
     outline: none;
@@ -4020,3 +4032,14 @@ ul.h-list li:hover a {
     position:relative;
     top: 2px;
   }
+.table-word input[type="text"] {
+  outline: none;
+  border: none;
+  width: 100%;
+  padding: 0 5px;
+  box-sizing: border-box;
+}
+.table-word input[type="checkbox"] {
+  position: relative;
+  top: 2px;
+}
