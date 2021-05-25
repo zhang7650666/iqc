@@ -414,29 +414,44 @@
                             This is a bordered striped and responsive table
                         </div>
                         <div class="panel-body">
-                            <div class="table-responsive table-word">
+                            <div class="table-responsive table-word" style="text-align: center;">
+                                <style type="text/css">
+                                    #table {
+                                        border: 1px solid #ccc;
+                                        border-collapse:collapse;
+                                        }
+                                    #table td {
+                                        border: 1px solid #ccc;
+                                        border-bottom: none;
+                                        text-align: center;
+                                        width: 16.6666%;
+                                        font-size: 12px;
+                                        height: 35px;
+                                        }
+                                </style>
+                                <!-- 测试图片 -->
+                                <!-- <img src="./images/a1.jpg" alt="" srcset="" crossorigin="anonymous"> -->
+                                <img src="./images/a1.jpg" alt="" srcset="">
                                 <!-- 工程编号 -->
                                 <div class="row">
-                                    <div class="col-lg-12 table-order" style="font-size: 12px;"></div>
+                                    <div class="col-lg-12 table-order" style="font-size: 12px; text-align: left;"></div>
                                 </div>
                                 <!-- title -->
                                 <div class="row p-b-xs">
                                     <h4 class="col-lg-12 table-title txt-center" style="font-size: 12px; text-align:center"></h4>
                                 </div>
                                 <!-- 表头 -->
-                                <div class="thead-info m-b" style=""></div>
-                                <table cellpadding="1" cellspacing="1" class="table table-bordered table-striped"
-                                    id="table">
-                                    <!-- <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Phone</th>
-                                            <th>Street Address</th>
-                                            <th>City</th>
-                                            <th>Country</th>
-                                            <th>Country</th>
-                                        </tr>
-                                    </thead> -->
+                                <!-- <div class="thead-info m-b" style=""></div> -->
+                                <table style="border:1px solid #fff ;font-size: 12px;" id="table-head">
+                                    <tr style="height: 30px;border:none;">
+                                        <td style="border:none;text-align: right;width: 15%;">项目公司：</td> 
+                                        <td style="border:none;text-align: left; width: 30%;"><label id="ProjectCompany"></label></td> 
+                                        <td style="border:none;text-align: right;width: 20%;">日常养护单位:</td>
+                                        <td style="border:none;text-align: left; width: 35%;"><label id="MaintenanceUnit "></label></td>
+                                    </tr>
+                                </table>
+                                <table 
+                                    id="table" align="center" style="border:none; border-bottom: 1px solid #ccc;" width="100%">
                                     <tbody>
                                         <tr>
                                             <td>Abraham</td>
@@ -484,7 +499,7 @@
                                 </table>
                                 <!-- 备注 -->
                                 <div class="row">
-                                    <div class="col-lg-12 table-desc" style="font-size: 12px;word-wrap:break-word;"></div>
+                                    <div class="col-lg-12 table-desc" style="font-size: 12px;word-wrap:break-word;margin-top: 10px;text-align:left"></div>
                                 </div>
                             </div>
                             <div class="row">
@@ -939,6 +954,7 @@
         $('.table-title').html(tableDatas.title)
         // table-title
         // 表头信息
+
         var theadHtml = '';
         tableDatas.tableData[0].tableHead.forEach(function (head) {
             var thHtml = '';
@@ -946,13 +962,13 @@
             head.forEach(function (item) {
                 switch (item.colType) {
                     case 'LABEL':
-                        thHtml += '<div class="col-sm-4" style="font-size: 12px;"><>\
-                            <span style="font-size: 12px;">' + item.colName + '</span>\
-                            <input type="text"/>\
-                            </div>'
+                        thHtml += '<td class="col-sm-4" style="border:1px solid #fff;text-align: right;width: 16%;">' + item.colName + ':</td>'
+                        break;
+                    case 'TEXT':
+                        thHtml += '<td class="col-sm-4" style="border:1px solid #fff;text-align: right;width: 16%;">' + item.value + '</td>'
                         break;
                 }
-                thStr = '<div class="row" style="font-size: 12px;">' + thHtml + '</div>'
+                thStr = '<tr style="border:1px solid #fff;height: 30px;">' + thHtml + '</tr>'
             })
             theadHtml += thStr;
         })
@@ -964,15 +980,15 @@
             tb.forEach(function (item) {
                 switch (item.colType) {
                     case 'LABEL':
-                        tdHtml += '<td colspan=' + item.columnCount + ' class="table-center" style="border: 1px solid #ccc;border-bottom: 0px;font-size: 12px;">' + item
+                        tdHtml += '<td colspan=' + item.columnCount + ' class="table-center">' + item
                             .colName + '</td>';
                         break;
                     case 'TEXT':
-                        tdHtml += '<td colspan=' + item.columnCount + ' style="border: 1px solid #ccc;border-bottom: 0px;font-size: 12px;"><input type="text"/></td>';
+                        tdHtml += '<td colspan=' + item.columnCount + '><input type="text"/></td>';
                         break;
                     case 'DATE':
                         tdHtml += '<td colspan=' + item.columnCount +
-                            ' class="table-center" style="border: 1px solid #ccc;border-bottom: 0px;font-size: 12px;"><input type="text" /></td>';
+                            ' class="table-center"><input type="text" /></td>';
                         break;
                     case 'CHECKBOX':
                         var checkFormHtml = '';
@@ -989,7 +1005,7 @@
                                 '
                             } else {
                                 checkStr += '\
-                                    <div class="form-check">\
+                                    <div class="form-check" style="text-align:left;margin-left: 10px;">\
                                         <label class="form-check-label">\
                                             <input type="checkbox" date-id=' + checkItem.id +
                                     ' class="form-check-input" value="" data-checked=' + checkItem
@@ -1000,15 +1016,15 @@
                             }
                             
                         })
-                        tdHtml += '<td colspan=' + item.columnCount + ' style="border: 1px solid #ccc;border-bottom: 0px;font-size: 12px;"> ' + checkStr + ' </td>';
+                        tdHtml += '<td colspan=' + item.columnCount + '> ' + checkStr + ' </td>';
                         break;
 
                 }
-                tdStr = '<tr style="border: 1px solid #ccc;border-bottom: 0px;font-size: 12px;">' + tdHtml + '</tr>'
+                tdStr = '<tr>' + tdHtml + '</tr>'
             })
             trHtml += tdStr;
         });
-        $('.thead-info').html(theadHtml);
+        $('#table-head').html(theadHtml);
         $('#table tbody').html(trHtml);
         $('.table-desc').html(tableDatas.tableData[0].desc);
         // checkbox 默认选中项

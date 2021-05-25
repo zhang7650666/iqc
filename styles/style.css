@@ -4008,3 +4008,15 @@ ul.h-list li:hover a {
     text-align: center;
     vertical-align: middle !important;
   }
+
+  .table-word input[type="text"] {
+    outline: none;
+    border: none;
+    width: 100%;
+    padding: 0 5px;
+    box-sizing: border-box;
+  }
+  .table-word input[type="checkbox"] {
+    position:relative;
+    top: 2px;
+  }
