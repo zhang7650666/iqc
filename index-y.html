@@ -26,6 +26,7 @@
     />
     <link rel="stylesheet" href="fonts/pe-icon-7-stroke/css/helper.css" />
     <link rel="stylesheet" href="styles/style.css" />
+    <link rel="stylesheet" href="styles/flex.css" />
   </head>
   <body class="fixed-navbar fixed-sidebar">
     <!--[if lt IE 7]>
@@ -86,40 +87,168 @@
     <!-- Navigation -->
     <aside id="menu">
       <div id="navigation">
-        <ul class="nav" id="side-menu">
-          <li>
-            <a href="#"
-              ><span class="nav-label">Interface</span
-              ><span class="fa arrow"></span>
-            </a>
-            <ul class="nav nav-second-level">
-              <li>
-                <a href="#">第二层</a>
-                <ui class="nav nav-second-level" aria-expanded="false">
-                  <li><a href="typography.html">第三层啊</a></li>
-                  <li><a href="buttons.html">Colors &amp; Buttons</a></li>
-                </ui>
-              </li>
-              <li><a href="typography.html">Typography</a></li>
-              <li><a href="buttons.html">Colors &amp; Buttons</a></li>
-              <li><a href="components.html">Components</a></li>
-              <li><a href="alerts.html">Alerts</a></li>
-              <li><a href="modals.html">Modals</a></li>
-              <li><a href="loading_buttons.html">Loading buttons</a></li>
-              <li><a href="draggable.html">Draggable panels</a></li>
-              <li><a href="code_editor.html">Code editor</a></li>
-              <li><a href="email_template.html">Email template</a></li>
-              <li><a href="nestable_list.html">List</a></li>
-              <li><a href="tour.html">Tour</a></li>
-              <li><a href="icons.html">Icons library</a></li>
-            </ul>
-          </li>
-          <li>
-            <a href="package.html"> <span class="nav-label">Package</span></a>
-          </li>
-        </ul>
+        <ul class="nav" id="side-menu"></ul>
       </div>
     </aside>
+
+    <!-- Main Wrapper -->
+    <div id="wrapper">
+      <div class="content animate-panel">
+        <!-- 新建分类见证表 -->
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="hpanel">
+              <div class="panel-body">
+                <button
+                  class="btn btn-info"
+                  type="button"
+                  class="btn btn-primary"
+                  data-toggle="modal"
+                  data-target="#createClassifyModle"
+                >
+                  新 建
+                </button>
+                <button type="button" class="btn w-xs btn-primary">
+                  已填写
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 新建分类 -->
+        <div
+          class="modal fade hmodal-info"
+          id="createClassifyModle"
+          tabindex="-1"
+          role="dialog"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="color-line"></div>
+              <div class="modal-header">
+                <h4 class="modal-title">新建分类</h4>
+                <small class="font-bold">
+                  有啥提示的，写到这里，没啥提示的，删除掉；
+                </small>
+              </div>
+              <div class="modal-body">
+                <form method="get" class="form-horizontal">
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">试件编号</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" />
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">强度等级</label>
+                    <div class="col-sm-10">
+                      <select class="form-control m-b" name="account">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">委托人</label>
+
+                    <div class="col-sm-10">
+                      <input
+                        type="password"
+                        class="form-control"
+                        name="password"
+                      />
+                    </div>
+                  </div>
+                  <div class="hr-line-dashed"></div>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">见证人</label>
+
+                    <div class="col-sm-10">
+                      <input
+                        type="text"
+                        placeholder="placeholder"
+                        class="form-control"
+                      />
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-default"
+                  data-dismiss="modal"
+                >
+                  取消
+                </button>
+                <button type="button" class="btn btn-primary">保存</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 选项卡 -->
+        <div class="hpanel">
+          <ul class="nav nav-tabs" id="tabHead">
+            <li class="active">
+              <a data-toggle="tab" href="#tab-1"> This is tab</a>
+            </li>
+            <li class="">
+              <a data-toggle="tab" href="#tab-2">This is second tab</a>
+            </li>
+          </ul>
+          <div class="tab-content" id="tabBody">
+            <div id="tab-1" class="tab-pane active">
+              <div class="panel-body">
+                <div flex>
+                  <div class="hpanel plan-box hgreen w200">
+                    <div class="panel-heading hbuilt text-center">
+                      <h4 class="font-bold">Standard plan</h4>
+                    </div>
+                    <div class="panel-body">
+                      <p class="text-muted">
+                        Lorem ipsum dolor sit amet, illum fastidii dissentias
+                        quo ne. Sea ne sint animal iisque, nam an soluta
+                        sensibus.
+                      </p>
+
+                      <a href="#" class="btn btn-success btn-sm m-t-xs"
+                        >Select plan</a
+                      >
+                    </div>
+                  </div>
+                  <div class="hpanel plan-box hgreen w200">
+                    <div class="panel-heading hbuilt text-center">
+                      <h4 class="font-bold">Standard plan</h4>
+                    </div>
+                    <div class="panel-body">
+                      <p class="text-muted">
+                        Lorem ipsum dolor sit amet, illum fastidii dissentias
+                        quo ne. Sea ne sint animal iisque, nam an soluta
+                        sensibus.
+                      </p>
+
+                      <a href="#" class="btn btn-success btn-sm m-t-xs"
+                        >Select plan</a
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="tab-2" class="tab-pane">
+              <div class="panel-body">
+                <strong>Donec quam felis</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Vendor scripts -->
     <script src="vendor/jquery/dist/jquery.min.js"></script>
@@ -131,7 +260,7 @@
     <script src="vendor/jquery-flot/jquery.flot.pie.js"></script>
     <script src="vendor/flot.curvedlines/curvedLines.js"></script>
     <script src="vendor/jquery.flot.spline/index.js"></script>
-    <script src="vendor/metisMenu/dist/metisMenu.js"></script>
+    <script src="vendor/metisMenu/dist/metisMenu.min.js"></script>
     <script src="vendor/iCheck/icheck.min.js"></script>
     <script src="vendor/peity/jquery.peity.min.js"></script>
     <script src="vendor/sparkline/index.js"></script>
@@ -142,6 +271,7 @@
     <script src="scripts/homer.js"></script>
 
     <script>
+      //生成左侧列表
       createList && createList();
     </script>
   </body>
