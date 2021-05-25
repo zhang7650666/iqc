@@ -414,92 +414,69 @@
                             This is a bordered striped and responsive table
                         </div>
                         <div class="panel-body">
-                            <div class="table-responsive table-word" style="text-align: center;">
+                            <div class="table-responsive table-wp" style="text-align: center;">
                                 <style type="text/css">
-                                    #table {
+                                    .table-header tr th {
+                                        border:1px solid #fff;
+                                        text-align: right;
+                                        width: 16%;
+                                        padding: 0px;
+                                    }
+                                    .table-body {
                                         border: 1px solid #ccc;
-                                        border-collapse:collapse;
-                                        }
-                                    #table td {
+                                        border-collapse: collapse;
+                                    }
+
+                                    .table-body td {
                                         border: 1px solid #ccc;
                                         border-bottom: none;
                                         text-align: center;
                                         width: 16.6666%;
                                         font-size: 12px;
                                         height: 35px;
-                                        }
+                                    }
                                 </style>
                                 <!-- 测试图片 -->
                                 <!-- <img src="./images/a1.jpg" alt="" srcset="" crossorigin="anonymous"> -->
-                                <img src="./images/a1.jpg" alt="" srcset="">
+                                <!-- <img src="./images/a1.jpg" alt="" srcset=""> -->
                                 <!-- 工程编号 -->
                                 <div class="row">
                                     <div class="col-lg-12 table-order" style="font-size: 12px; text-align: left;"></div>
                                 </div>
                                 <!-- title -->
                                 <div class="row p-b-xs">
-                                    <h4 class="col-lg-12 table-title txt-center" style="font-size: 12px; text-align:center"></h4>
+                                    <h4 class="col-lg-12 table-title txt-center"
+                                        style="font-size: 12px; text-align:center"></h4>
                                 </div>
                                 <!-- 表头 -->
                                 <!-- <div class="thead-info m-b" style=""></div> -->
-                                <table style="border:1px solid #fff ;font-size: 12px;" id="table-head">
+                                <table style="border:1px solid #fff ;font-size: 12px;" class="table-header">
                                     <tr style="height: 30px;border:none;">
-                                        <td style="border:none;text-align: right;width: 15%;">项目公司：</td> 
-                                        <td style="border:none;text-align: left; width: 30%;"><label id="ProjectCompany"></label></td> 
+                                        <td style="border:none;text-align: right;width: 15%;">项目公司：</td>
+                                        <td style="border:none;text-align: left; width: 30%;"><label
+                                                id="ProjectCompany"></label></td>
                                         <td style="border:none;text-align: right;width: 20%;">日常养护单位:</td>
-                                        <td style="border:none;text-align: left; width: 35%;"><label id="MaintenanceUnit "></label></td>
+                                        <td style="border:none;text-align: left; width: 35%;"><label
+                                                id="MaintenanceUnit "></label></td>
                                     </tr>
                                 </table>
-                                <table 
-                                    id="table" align="center" style="border:none; border-bottom: 1px solid #ccc;" width="100%">
+                                <table class="table-body" align="center" style="border:none; border-bottom: 1px solid #ccc;"
+                                    width="100%">
                                     <tbody>
-                                        <tr>
+                                        <!-- <tr>
                                             <td>Abraham</td>
                                             <td>076 9477 4896</td>
                                             <td>294-318 Duis Ave</td>
                                             <td>Vosselaar</td>
                                             <td>Belgium</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Phelan</td>
-                                            <td>0500 034548</td>
-                                            <td>680-1097 Mi Rd.</td>
-                                            <td>Lavoir</td>
-                                            <td>Pakistan</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Raya</td>
-                                            <td>(01315) 27698</td>
-                                            <td>Ap #289-8161 In Avenue</td>
-                                            <td>Santomenna</td>
-                                            <td>Burkina Faso</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Azalia</td>
-                                            <td>0500 854198</td>
-                                            <td>226-4861 Augue. St.</td>
-                                            <td>Newtown</td>
-                                            <td>Christmas Island</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Garth</td>
-                                            <td>(01662) 59083</td>
-                                            <td>3219 Elit Avenue</td>
-                                            <td>Ternitz</td>
-                                            <td>Saint Martin</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Selma</td>
-                                            <td>0877 118 6905</td>
-                                            <td>P.O. Box 410, 7331 Nec, St.</td>
-                                            <td>Glenrothes</td>
-                                            <td>Korea, North</td>
-                                        </tr>
+                                        </tr> -->
                                     </tbody>
                                 </table>
                                 <!-- 备注 -->
                                 <div class="row">
-                                    <div class="col-lg-12 table-desc" style="font-size: 12px;word-wrap:break-word;margin-top: 10px;text-align:left"></div>
+                                    <div class="col-lg-12 table-desc"
+                                        style="font-size: 12px;word-wrap:break-word;margin-top: 10px;text-align:left">
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">
@@ -655,390 +632,113 @@
     <!-- App scripts -->
     <script src="scripts/homer.js"></script>
     <script>
-        var tableDatas = {
-            "id": 1,
-            "name": "委托检验合同单（钢筋原材）",
-            "title": "委托检验合同单（钢筋原材）",
-            "orderNo": "BMT-ZL-39",
-            "tableData": [{
-                    "tableHead": [
-                        [{
-                                "colType": "LABEL",
-                                "colName": "以下内容由委托方填写",
-                                "columnCount": 1
-                            },
-                            {
-                                "colType": "TEXT",
-                                "columnCount": 1,
-                                "value": ""
-                            },
-                            {
-                                "colType": "LABEL",
-                                "colName": "合同编号",
-                                "columnCount": 1
-                            },
-                            {
-                                "colType": "TEXT",
-                                "columnCount": 1,
-                                "value": ""
-                            },
-                            {
-                                "colType": "LABEL",
-                                "colName": "委托编号",
-                                "columnCount": 1
-                            },
-                            {
-                                "colType": "TEXT",
-                                "columnCount": 1,
-                                "value": ""
-                            }
-                        ]
-                    ],
-                    "tableBody": [
-                        [{
-                                "colType": "LABEL",
-                                "colName": "工程代号",
-                                "columnCount": 1
-                            },
-                            {
-                                "colType": "TEXT",
-                                "columnCount": 1,
-                                "value": ""
-                            },
-                            {
-                                "colType": "CHECKBOX",
-                                "columnCount": 1,
-                                "pos": "right",
-                                "options": [{
-                                    "name": "见证",
-                                    "id": "JZ",
-                                    "checked": false
-                                }]
-                            },
-                            {
-                                "colType": "CHECKBOX",
-                                "columnCount": 1,
-                                "pos": "right",
-                                "options": [{
-                                    "name": "复试",
-                                    "id": "JZ",
-                                    "checked": false
-                                }]
-                            },
-                            {
-                                "colType": "LABEL",
-                                "colName": "原试验编号",
-                                "columnCount": 1
-                            },
-                            {
-                                "colType": "TEXT",
-                                "columnCount": 1,
-                                "value": ""
-                            }
-                        ],
-                        [{
-                                "colType": "LABEL",
-                                "colName": "委托单位",
-                                "columnCount": 1
-                            },
-                            {
-                                "colType": "TEXT",
-                                "columnCount": 3,
-                                "value": ""
-                            },
-                            {
-                                "colType": "LABEL",
-                                "colName": "委托日期",
-                                "columnCount": 1
-                            },
-                            {
-                                "colType": "DATE",
-                                "columnCount": 1,
-                                "value": ""
-                            }
-                        ],
-                        [{
-                                "colType": "LABEL",
-                                "colName": "监理单位",
-                                "columnCount": 1
-                            },
-                            {
-                                "colType": "TEXT",
-                                "columnCount": 3,
-                                "value": ""
-                            },
-                            {
-                                "colType": "LABEL",
-                                "colName": "见证人",
-                                "columnCount": 1
-                            },
-                            {
-                                "colType": "TEXT",
-                                "columnCount": 1,
-                                "value": ""
-                            }
-                        ],
-                        [{
-                                "colType": "LABEL",
-                                "colName": "工程名称",
-                                "columnCount": 1
-                            },
-                            {
-                                "colType": "TEXT",
-                                "columnCount": 5,
-                                "value": ""
-                            }
-                        ],
-                        [{
-                                "colType": "LABEL",
-                                "colName": "使用部位",
-                                "columnCount": 1
-                            },
-                            {
-                                "colType": "TEXT",
-                                "columnCount": 5,
-                                "value": ""
-                            }
-                        ],
-                        [{
-                                "colType": "LABEL",
-                                "colName": "检验依据",
-                                "columnCount": 1
-                            },
-                            {
-                                "colType": "CHECKBOX",
-                                "columnCount": 5,
-                                "value": "",
-                                "options": [{
-                                        "name": "BG/T 1499.2-2018《钢筋混凝土用钢 第2部分：热轧带肋外钢筋》",
-                                        "id": "G1",
-                                        "checked": false
-                                    },
-                                    {
-                                        "name": "BG/T 1499.2-2018《钢筋混凝土用钢 第2部分：热轧带肋外钢筋》",
-                                        "id": "G2",
-                                        "checked": false
-                                    },
-                                    {
-                                        "name": "BG/T 1499.2-2018《钢筋混凝土用钢 第2部分：热轧带肋外钢筋》",
-                                        "id": "G3",
-                                        "checked": false
-                                    },
-                                    {
-                                        "name": "BG/T 1499.2-2018《钢筋混凝土用钢 第2部分：热轧带肋外钢筋》",
-                                        "id": "G3",
-                                        "checked": false
-                                    },
-                                    {
-                                        "name": "其它",
-                                        "id": "G4",
-                                        "checked": false
-                                    }
-                                ]
-                            }
-                        ],
-                        [{
-                                "colType": "LABEL",
-                                "colName": "判定依据",
-                                "columnCount": 1
-                            },
-                            {
-                                "colType": "CHECKBOX",
-                                "columnCount": 5,
-                                "value": "",
-                                "options": [{
-                                        "name": "BG/T 1499.2-2018《钢筋混凝土用钢 第2部分：热轧带肋外钢筋》",
-                                        "id": "G1",
-                                        "checked": false
-                                    },
-                                    {
-                                        "name": "BG/T 1499.2-2018《钢筋混凝土用钢 第2部分：热轧带肋外钢筋》",
-                                        "id": "G2",
-                                        "checked": false
-                                    },
-                                    {
-                                        "name": "BG/T 1499.2-2018《钢筋混凝土用钢 第2部分：热轧带肋外钢筋》",
-                                        "id": "G3",
-                                        "checked": false
-                                    },
-                                    {
-                                        "name": "BG/T 1499.2-2018《钢筋混凝土用钢 第2部分：热轧带肋外钢筋》",
-                                        "id": "G3",
-                                        "checked": false
-                                    },
-                                    {
-                                        "name": "其它",
-                                        "id": "G4",
-                                        "checked": false
-                                    }
-                                ]
-                            }
-                        ],
-                        [{
-                                "colType": "LABEL",
-                                "colName": "检测项目",
-                                "columnCount": 1
-                            },
-                            {
-                                "colType": "CHECKBOX",
-                                "columnCount": 5,
-                                "value": "",
-                                "options": [{
-                                        "name": "BG/T 1499.2-2018《钢筋混凝土用钢 第2部分：热轧带肋外钢筋》",
-                                        "id": "G1",
-                                        "checked": false
-                                    },
-                                    {
-                                        "name": "BG/T 1499.2-2018《钢筋混凝土用钢 第2部分：热轧带肋外钢筋》",
-                                        "id": "G2",
-                                        "checked": false
-                                    },
-                                    {
-                                        "name": "BG/T 1499.2-2018《钢筋混凝土用钢 第2部分：热轧带肋外钢筋》",
-                                        "id": "G3",
-                                        "checked": false
-                                    },
-                                    {
-                                        "name": "BG/T 1499.2-2018《钢筋混凝土用钢 第2部分：热轧带肋外钢筋》",
-                                        "id": "G3",
-                                        "checked": false
-                                    },
-                                    {
-                                        "name": "其它",
-                                        "id": "G4",
-                                        "checked": false
-                                    }
-                                ]
-                            }
-                        ],
-                        [{
-                                "colType": "LABEL",
-                                "colName": "钢筋检验类别",
-                                "columnCount": 1
-                            },
-                            {
-                                "colType": "CHECKBOX",
-                                "columnCount": 5,
-                                "value": "",
-                                "options": [{
-                                        "name": "BG/T 1499.2-2018《钢筋混凝土用钢 第2部分：热轧带肋外钢筋》",
-                                        "id": "G1",
-                                        "checked": false
-                                    },
-                                    {
-                                        "name": "BG/T 1499.2-2018《钢筋混凝土用钢 第2部分：热轧带肋外钢筋》",
-                                        "id": "G2",
-                                        "checked": false
-                                    }
-                                ]
-                            }
-                        ]
-                    ],
-                    "desc": "注：<span>1、以上项目填写内容的真实性由委托方负责。</span> <span>2、按资料管理要求提供3份检测报告，若需3份以上，请到来样登记室办理。</span> <span>3、检测后样品由试验室自行处理，若有其它要求，请在检测要求中注明。</span><span style='color:red'>4、样品异常情况，在样品状态中予以描述，无描述视为样品完好。</span> "
-                },
-                {
-                    "tableHead": [
-                        [{
-                            "colType": "LABEL",
-                            "colName": "以下内容由委托方填写",
-                            "columnCount": 1
-                        }]
-                    ],
-                    "tableBody": []
-                }
-            ]
-        }
-        // 工程编号
-        $('.table-order').html(tableDatas.orderNo)
-        // title 信息
-        $('.table-title').html(tableDatas.title)
-        // table-title
-        // 表头信息
+        $.get("http://meterial.cxhy.cn/getFormStyle/", {
+            token: 'b522cbe750f3d6fb056bcfaa1de9a6b5',
+            form_id: 1,
+        }, function (res) {
+            if (res.code == 200) {
+                tableDatas = res.data;
+                dataToTable(tableDatas, tableDatas.tableData[0], '.table-wp')
+            }
+        });
 
-        var theadHtml = '';
-        tableDatas.tableData[0].tableHead.forEach(function (head) {
-            var thHtml = '';
-            var thStr = '';
-            head.forEach(function (item) {
-                switch (item.colType) {
-                    case 'LABEL':
-                        thHtml += '<td class="col-sm-4" style="border:1px solid #fff;text-align: right;width: 16%;">' + item.colName + ':</td>'
-                        break;
-                    case 'TEXT':
-                        thHtml += '<td class="col-sm-4" style="border:1px solid #fff;text-align: right;width: 16%;">' + item.value + '</td>'
-                        break;
-                }
-                thStr = '<tr style="border:1px solid #fff;height: 30px;">' + thHtml + '</tr>'
+        function dataToTable(data, tableData, ele) {
+            // 工程编号
+            $(ele).find('.table-order').html(data.numbers)
+            // title 信息
+            $(ele).find('.table-title').html(data.title)
+            // table-title
+            // 表头信息
+
+            var theadHtml = '';
+            tableData.tableHead.forEach(function (head) {
+                var thHtml = '';
+                var thStr = '';
+                head.forEach(function (item) {
+                    switch (item.columnType) {
+                        case 'label':
+                            thHtml +=
+                                '<th class="col-sm-4"  data-id='+item.id+'>' +
+                                item.name + '</th>'
+                            break;
+                        case 'text':
+                            thHtml +=
+                                '<th class="col-sm-4"><input type="text" data-submitId='+item.submitId+'/> </th>'
+                            break;
+                    }
+                    thStr = '<tr style="border:1px solid #fff;height: 30px;">' + thHtml + '</tr>'
+                })
+                theadHtml += thStr;
             })
-            theadHtml += thStr;
-        })
-        // 表体信息
-        var trHtml = "";
-        tableDatas.tableData[0].tableBody.forEach(function (tb) {
-            var tdHtml = '';
-            var tdStr = '';
-            tb.forEach(function (item) {
-                switch (item.colType) {
-                    case 'LABEL':
-                        tdHtml += '<td colspan=' + item.columnCount + ' class="table-center">' + item
-                            .colName + '</td>';
-                        break;
-                    case 'TEXT':
-                        tdHtml += '<td colspan=' + item.columnCount + '><input type="text"/></td>';
-                        break;
-                    case 'DATE':
-                        tdHtml += '<td colspan=' + item.columnCount +
-                            ' class="table-center"><input type="text" /></td>';
-                        break;
-                    case 'CHECKBOX':
-                        var checkFormHtml = '';
-                        var checkStr = ''
-                        item.options.forEach(function (checkItem) {
-                            // 根据pos属性决定复选框在前面还是后面， 如果不存在默认放在前面
-                            if(item.pos) {
-                                checkStr += '\
+            // 表体信息
+            var trHtml = "";
+            tableData.tableBody.forEach(function (tb) {
+                var tdHtml = '';
+                var tdStr = '';
+                tb.forEach(function (item) {
+                    switch (item.columnType) {
+                        case 'label':
+                            var isCheckBox = item.extendType =='checkbox' ? '<input type="checkbox" data-submitId='+item.submitId+' class="form-check-input" value="" data-checked=' +
+                                        item.checked + '>' : ''; // to do 增加选中状态后放开
+                            tdHtml += '<td colspan=' + item.columnCount + ' class="table-center" data-id='+item.id+' >'+ item.name+'  ' + isCheckBox + '</td>'
+                            break;
+                        case 'text':
+                            tdHtml += '<td colspan=' + item.columnCount + '><input type="text" data-submitId='+item.submitId+' /></td>';
+                            break;
+                        case 'date':
+                            tdHtml += '<td colspan=' + item.columnCount +
+                                ' class="table-center"><input type="text" data-submitId='+item.submitId+' /></td>';
+                            break;
+                        case 'checkbox':
+                            var checkFormHtml = '';
+                            var checkStr = ''
+                            item.options.forEach(function (checkItem) {
+                                // 根据pos属性决定复选框在前面还是后面， 如果不存在默认放在前面
+                                if (item.pos) {
+                                    checkStr += '\
                                     <div class="form-check">\
                                         <label class="form-check-label">' + checkItem.name + '\
-                                            <input type="checkbox" date-id=' + checkItem.id + ' class="form-check-input" value="" data-checked=' + checkItem.checked + '>\
+                                            <input type="checkbox" date-id=' + checkItem.id +
+                                        ' class="form-check-input" value="" data-checked=' +
+                                        checkItem.checked + '>\
                                         </label>\
                                     </div>\
                                 '
-                            } else {
-                                checkStr += '\
+                                } else {
+                                    checkStr += '\
                                     <div class="form-check" style="text-align:left;margin-left: 10px;">\
                                         <label class="form-check-label">\
-                                            <input type="checkbox" date-id=' + checkItem.id +
-                                    ' class="form-check-input" value="" data-checked=' + checkItem
-                                    .checked + '> ' + checkItem.name + ' \
+                                            <input type="checkbox" date-id=' + checkItem.id +' date-typeId=' + checkItem.type_id +
+                                        ' class="form-check-input" value="" data-checked=' + checkItem .checked + '> ' + checkItem.name + ' \
                                         </label>\
                                     </div>\
                                 '
-                            }
-                            
-                        })
-                        tdHtml += '<td colspan=' + item.columnCount + '> ' + checkStr + ' </td>';
-                        break;
+                                }
 
+                            })
+                            tdHtml += '<td colspan=' + item.columnCount + ' data-id='+item.id+'> ' + checkStr + ' </td>';
+                            break;
+
+                    }
+                    tdStr = '<tr>' + tdHtml + '</tr>'
+                })
+                trHtml += tdStr;
+            });
+            $(ele).find('.table-header').html(theadHtml);
+            $(ele).find('.table-body').html(trHtml);
+            $(ele).find('.table-desc').html(tableData.desc);
+            // checkbox 默认选中项
+            $(ele).find('.table-body input').each(function (index, ele) {
+                if ($(this).attr("data-checked") == 'true') {
+                    $(this).attr("checked", true)
                 }
-                tdStr = '<tr>' + tdHtml + '</tr>'
             })
-            trHtml += tdStr;
-        });
-        $('#table-head').html(theadHtml);
-        $('#table tbody').html(trHtml);
-        $('.table-desc').html(tableDatas.tableData[0].desc);
-        // checkbox 默认选中项
-        $('#table tbody input').each(function (index, ele) {
-            if ($(this).attr("data-checked") == 'true') {
-                $(this).attr("checked", true)
-            }
-        })
+        }
 
-        $('.download').click(function() {
-            $(".table-word").wordExport('word文档');
+
+        $('.download').click(function () {
+            $(".table-wp").wordExport('word文档');
         })
-        
-        
     </script>
 
 </body>
