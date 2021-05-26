@@ -635,3 +635,10 @@ function createList() {
     }
   );
 }
+
+
+// 获取当前年月日
+function ymd() {
+  var now = new Date();
+  return time = now.getFullYear() + "-" +((now.getMonth()+1)<10?"0":"")+(now.getMonth()+1)+"-"+(now.getDate()<10?"0":"")+now.getDate();
+}
