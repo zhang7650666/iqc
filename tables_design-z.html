@@ -386,11 +386,23 @@
                         </div>
                         <div class="panel-body">
                             <form action="#" id="loginForm" class="form-horizontal label-right">
-                                <div class="table-responsive table-wp" style="text-align: center;">
+                                <div class="table-wp">
+                                    <!-- 工程编号 -->
+                                    <div class="row">
+                                        <div class="col-lg-12 table-order" style="font-size: 12px; text-align: left;"></div>
+                                    </div>
+                                    <!-- title -->
+                                    <div class="row p-b-xs">
+                                        <h4 class="col-lg-12 table-title txt-center"
+                                            style="font-size: 12px; text-align:center"></h4>
+                                    </div>
+                                    
+                                </div>
+                                <div class="table-responsive table-html" style="text-align: center;">
                                     <style type="text/css">
                                         .table-header tr th {
                                             border:1px solid #fff;
-                                            text-align: right;
+                                            text-align: left;
                                             width: 16%;
                                             padding: 0px;
                                         }
@@ -405,21 +417,13 @@
                                             text-align: center;
                                             width: 16.6666%;
                                             font-size: 12px;
-                                            height: 35px;
+                                            height: 30px;
                                         }
                                     </style>
                                     <!-- 测试图片 -->
                                     <!-- <img src="./images/a1.jpg" alt="" srcset="" crossorigin="anonymous"> -->
                                     <!-- <img src="./images/a1.jpg" alt="" srcset=""> -->
-                                    <!-- 工程编号 -->
-                                    <div class="row">
-                                        <div class="col-lg-12 table-order" style="font-size: 12px; text-align: left;"></div>
-                                    </div>
-                                    <!-- title -->
-                                    <div class="row p-b-xs">
-                                        <h4 class="col-lg-12 table-title txt-center"
-                                            style="font-size: 12px; text-align:center"></h4>
-                                    </div>
+                                    
                                     <!-- 表头 -->
                                     <table style="border:1px solid #fff ;font-size: 12px;" class="table-header">
                                     </table>
@@ -443,6 +447,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                
                             </form>
                             <div class="row">
                                 <button class="download">下载</button>
@@ -471,21 +476,24 @@
     <script src="scripts/jquery.base64.js"></script>
     <script>
         $.get("http://meterial.cxhy.cn/getFormStyle/", {
-            token: '9d2018992eb6be45f78b5569646cd424',
+            token: '5bbaaaaeaa681cc6c4cad8e2fddd80c5',
             form_id: 1,
         }, function (res) {
             if (res.code == 200) {
-                tableDatas = res.data;
-                dataToTable(tableDatas, tableDatas.tableData[0], '.table-wp')
+                var tableDatas = res.data;
+                // 工程编号
+                $('.table-wp .table-order').html(tableDatas.numbers)
+                // title 信息
+                $('.table-wp .table-title').html(tableDatas.title)
+            // 表头信息
+                res.data.tableData.forEach(function(item) {
+                    dataToTable(item)
+                })
+                
             }
         });
-
-        function dataToTable(data, tableData, ele) {
-            // 工程编号
-            $(ele).find('.table-order').html(data.numbers)
-            // title 信息
-            $(ele).find('.table-title').html(data.title)
-            // 表头信息
+        function dataToTable(tableData) {
+            
             var theadHtml = '';
             tableData.tableHead.forEach(function (head) {
                 var thHtml = '';
@@ -515,7 +523,7 @@
                     switch (item.columnType) {
                         case 'label':
                             var isCheckBox = item.extendType =='checkbox' ? '<input type="checkbox" class="form-check-input"  name='+item.submitId+' value='+item.id+' data-checked=' +
-                                        item.checked + '>' : ''; // to do 增加选中状态后放开
+                            item.value + '>' : ''; // to do 增加选中状态后放开
                             tdHtml += '<td colspan=' + item.columnCount + ' class="table-center" data-id='+item.id+' >'+ item.name+'  ' + isCheckBox + '</td>'
                             break;
                         case 'text':
@@ -542,38 +550,42 @@
                                 '
                                 } else {
                                     checkStr += '\
-                                    <div class="form-check" style="text-align:left;margin-left: 10px;">\
+                                    <div class="form-check" style="text-align:left;margin-left: 10px;display:inline-block">\
                                         <label class="form-check-label">\
-                                            <input type="checkbox" date-id=' + checkItem.id +' date-typeId=' + checkItem.type_id +
-                                        ' value='+checkItem.id+' name='+item.submitId+' class="form-check-input"  data-checked=' + checkItem .checked + '> ' + checkItem.name + ' \
+                                            <input type="checkbox" value='+checkItem.id+' name='+item.submitId+' \
+                                         class="form-check-input"  checked=' + checkItem.vaule + '> ' + checkItem.name + ' \
                                         </label>\
                                     </div>\
                                 '
                                 }
 
                             })
-                            tdHtml += '<td colspan=' + item.columnCount + ' data-id='+item.id+'> ' + checkStr + ' </td>';
+                            tdHtml += '<td colspan=' + item.columnCount + ' data-id='+item.id+' style="text-align:left"> ' + checkStr + ' </td>';
                             break;
 
                     }
                     tdStr = '<tr>' + tdHtml + '</tr>'
                 })
                 trHtml += tdStr;
+                
             });
-            $(ele).find('.table-header').html(theadHtml);
-            $(ele).find('.table-body').html(trHtml);
-            $(ele).find('.table-desc').html(tableData.desc);
-            // checkbox 默认选中项
-            $(ele).find('.table-body input').each(function (index, ele) {
-                // if ($(this).attr("data-checked") == 'true') {
-                //     $(this).attr("checked", true)
-                // }
-            })
-        }
 
+            $('.table-html .table-header').html(theadHtml);
+            $('.table-html .table-body').html(trHtml);
+            $('.table-html .table-desc').html(tableData.desc);
+            // checkbox 默认选中项
+            $('.table-html .table-body input').each(function (index, ele) {
+                if ($(this).attr("data-checked") == 'true') {
+                    $(this).attr("checked", true)
+                }
+            })
+            $('.table-wp').append($('.table-html').html())
+            
+        }
+        $('.table-html').hide();
         // 点击下载
         $('.download').click(function () {
-            // $(".table-wp").wordExport('word文档');           
+            $(".table-wp").wordExport('word文档');           
         })
         // 点击保存
         $('.save').click(function () {
