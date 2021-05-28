@@ -386,31 +386,7 @@
                         </div>
                         <div class="panel-body">
                             <form action="#" id="loginForm" class="form-horizontal label-right">
-                                <div class="table-responsive table-wp" style="text-align: center;">
-                                    <style type="text/css">
-                                        .table-header tr th {
-                                            border:1px solid #fff;
-                                            text-align: right;
-                                            width: 16%;
-                                            padding: 0px;
-                                        }
-                                        .table-body {
-                                            border: 1px solid #ccc;
-                                            border-collapse: collapse;
-                                        }
-
-                                        .table-body td {
-                                            border: 1px solid #ccc;
-                                            border-bottom: none;
-                                            text-align: center;
-                                            width: 16.6666%;
-                                            font-size: 12px;
-                                            height: 35px;
-                                        }
-                                    </style>
-                                    <!-- 测试图片 -->
-                                    <!-- <img src="./images/a1.jpg" alt="" srcset="" crossorigin="anonymous"> -->
-                                    <!-- <img src="./images/a1.jpg" alt="" srcset=""> -->
+                                <div class="table-wp">
                                     <!-- 工程编号 -->
                                     <div class="row">
                                         <div class="col-lg-12 table-order" style="font-size: 12px; text-align: left;"></div>
@@ -420,12 +396,51 @@
                                         <h4 class="col-lg-12 table-title txt-center"
                                             style="font-size: 12px; text-align:center"></h4>
                                     </div>
+                                    
+                                </div>
+                                <div class="table-responsive table-html" style="text-align: center;">
+                                    <style type="text/css">
+                                        .table-header tr th {
+                                            border:1px solid #fff;
+                                            text-align: left;
+                                            width: 16%;
+                                            padding: 0px;
+                                        }
+                                        .table-body {
+                                            border: 1px solid #ccc;
+                                            border-collapse: collapse;
+                                        }
+                                        .table-body td {
+                                            border: 1px solid #ccc;
+                                            border-bottom: none;
+                                            text-align: center;
+                                            width: 16.6666%;
+                                            font-size: 12px;
+                                            height: 30px;
+                                        }
+                                        .table-header{
+                                            border:1px solid #fff ;font-size: 12px;
+                                        }
+                                        .table-body{
+                                            border:none; border-bottom: 1px solid #ccc;
+                                            width: 100%;
+                                        }
+                                        .table-desc{
+                                            font-size: 12px;word-wrap:break-word;margin-top: 10px;text-align:left
+                                        }
+                                        .checkbox-wp{
+                                            text-align:left;margin-left: 10px;
+                                        }
+                                    </style>
+                                    <!-- 测试图片 -->
+                                    <!-- <img src="./images/a1.jpg" alt="" srcset="" crossorigin="anonymous"> -->
+                                    <!-- <img src="./images/a1.jpg" alt="" srcset=""> -->
+                                    
                                     <!-- 表头 -->
-                                    <table style="border:1px solid #fff ;font-size: 12px;" class="table-header">
+                                    <table class="table-header">
                                     </table>
                                     <!-- 表体 -->
-                                    <table class="table-body" align="center" style="border:none; border-bottom: 1px solid #ccc;"
-                                        width="100%">
+                                    <table class="table-body" align="center">
                                         <tbody>
                                             <!-- <tr>
                                                 <td>Abraham</td>
@@ -438,15 +453,15 @@
                                     </table>
                                     <!-- 备注 -->
                                     <div class="row">
-                                        <div class="col-lg-12 table-desc"
-                                            style="font-size: 12px;word-wrap:break-word;margin-top: 10px;text-align:left">
-                                        </div>
+                                        <div class="col-lg-12 table-desc"></div>
                                     </div>
                                 </div>
+                                
                             </form>
                             <div class="row">
                                 <button class="download">下载</button>
                                 <button class="save">保存</button>
+                                <button class="print">打印</button>
                             </div>
                         </div>
                     </div>
@@ -469,23 +484,38 @@
     <!-- App scripts -->
     <script src="scripts/homer.js"></script>
     <script src="scripts/jquery.base64.js"></script>
+    <script src="scripts/jquery.jqprint-0.3.js"></script>
+    <script>
+        jQuery.browser={};
+        (function(){
+            jQuery.browser.msie=false; 
+            jQuery.browser.version=0;
+            if(navigator.userAgent.match(/MSIE ([0-9]+)./)){ 
+                jQuery.browser.msie=true;
+                jQuery.browser.version=RegExp.$1;
+            }
+        })();	
+    </script>
     <script>
         $.get("http://meterial.cxhy.cn/getFormStyle/", {
-            token: '9d2018992eb6be45f78b5569646cd424',
+            token: '26755477049f93149c1c77c975dd155c',
             form_id: 1,
         }, function (res) {
             if (res.code == 200) {
-                tableDatas = res.data;
-                dataToTable(tableDatas, tableDatas.tableData[0], '.table-wp')
+                var tableDatas = res.data;
+                // 工程编号
+                $('.table-wp .table-order').html(tableDatas.numbers)
+                // title 信息
+                $('.table-wp .table-title').html(tableDatas.title)
+            // 表头信息
+                res.data.tableData.forEach(function(item) {
+                    dataToTable(item)
+                })
+                
             }
         });
-
-        function dataToTable(data, tableData, ele) {
-            // 工程编号
-            $(ele).find('.table-order').html(data.numbers)
-            // title 信息
-            $(ele).find('.table-title').html(data.title)
-            // 表头信息
+        function dataToTable(tableData) {
+            
             var theadHtml = '';
             tableData.tableHead.forEach(function (head) {
                 var thHtml = '';
@@ -514,8 +544,7 @@
                 tb.forEach(function (item) {
                     switch (item.columnType) {
                         case 'label':
-                            var isCheckBox = item.extendType =='checkbox' ? '<input type="checkbox" class="form-check-input"  name='+item.submitId+' value='+item.id+' data-checked=' +
-                                        item.checked + '>' : ''; // to do 增加选中状态后放开
+                            var isCheckBox = item.extendType =='checkbox' ? '<input type="checkbox" class="form-check-input"  name='+item.submitId+' value='+item.id+'>' : ''; // to do 增加选中状态后放开
                             tdHtml += '<td colspan=' + item.columnCount + ' class="table-center" data-id='+item.id+' >'+ item.name+'  ' + isCheckBox + '</td>'
                             break;
                         case 'text':
@@ -528,83 +557,105 @@
                         case 'checkbox':
                             var checkFormHtml = '';
                             var checkStr = ''
+                            var eleName = ''
                             item.options.forEach(function (checkItem) {
-                                // 根据pos属性决定复选框在前面还是后面， 如果不存在默认放在前面
-                                if (item.pos) {
-                                    checkStr += '\
-                                    <div class="form-check">\
-                                        <label class="form-check-label">' + checkItem.name + '\
-                                            <input type="checkbox" date-id=' + checkItem.id +
-                                        ' class="form-check-input" value='+checkItem.id+' data-checked=' +
-                                        checkItem.checked + '>\
-                                        </label>\
-                                    </div>\
-                                '
-                                } else {
-                                    checkStr += '\
-                                    <div class="form-check" style="text-align:left;margin-left: 10px;">\
-                                        <label class="form-check-label">\
-                                            <input type="checkbox" date-id=' + checkItem.id +' date-typeId=' + checkItem.type_id +
-                                        ' value='+checkItem.id+' name='+item.submitId+' class="form-check-input"  data-checked=' + checkItem .checked + '> ' + checkItem.name + ' \
-                                        </label>\
-                                    </div>\
-                                '
+                                // 根据direction属性决定复选框在是竖着排列还是横轴  0 表示横   1表示 竖 2 待定
+                                switch(checkItem.direction) {
+                                    case 0:
+                                        checkStr += '<div class="form-check checkbox-wp">';
+                                        eleName = '</div>';
+                                        break;
+                                    case 1:
+                                    case 2:
+                                        checkStr += '<span class="form-check checkbox-wp">';
+                                        eleName = '</span>';
+                                        break;
                                 }
+                                checkStr += '\
+                                    <label class="form-check-label">\
+                                        <input type="checkbox" value='+checkItem.id+' name='+item.submitId+' \
+                                        class="form-check-input"> ' + checkItem.name + ' \
+                                    </label>\
+                                    ' +eleName+ '\
+                                '
 
                             })
-                            tdHtml += '<td colspan=' + item.columnCount + ' data-id='+item.id+'> ' + checkStr + ' </td>';
+                            tdHtml += '<td colspan=' + item.columnCount + ' data-id='+item.id+' style="text-align:left"> ' + checkStr + ' </td>';
                             break;
 
                     }
                     tdStr = '<tr>' + tdHtml + '</tr>'
                 })
                 trHtml += tdStr;
+                
             });
-            $(ele).find('.table-header').html(theadHtml);
-            $(ele).find('.table-body').html(trHtml);
-            $(ele).find('.table-desc').html(tableData.desc);
+
+            $('.table-html .table-header').html(theadHtml);
+            $('.table-html .table-body').html(trHtml);
+            $('.table-html .table-desc').html(tableData.desc);
             // checkbox 默认选中项
-            $(ele).find('.table-body input').each(function (index, ele) {
+            $('.table-html .table-body input').each(function (index, ele) {
                 // if ($(this).attr("data-checked") == 'true') {
                 //     $(this).attr("checked", true)
                 // }
             })
+            $('.table-wp').append($('.table-html').html())
+            
         }
-
+        $('.table-html').hide();
         // 点击下载
         $('.download').click(function () {
-            // $(".table-wp").wordExport('word文档');           
+            $(".table-wp").wordExport('word文档');           
         })
         // 点击保存
         $('.save').click(function () {
+            console.log(6666, $("#loginForm").serializeArray())
+            var t = $("#loginForm").serializeArray();
+            var tempObj = {}
+            // t.forEach(function(item) {
+            //     if(!tempObj[item.name]) {
+            //         tempObj[item.name] = [item.value]
+            //     } else {
+            //         tempObj[item.name].push(item.value);
+            //     }
+            // });
+            // var tempArr = []
+            // for(var key in tempObj) {
+            //     if(tempObj[key].le)
+            // }
+            console.log('tempObj', tempObj)
             //对 var str = $.base64.encode('123321'); 123321 进行加密
             // var dstr = $.base64.decode(str); 对 str 进行解密
             
-            var params = {
-                token: '9d2018992eb6be45f78b5569646cd424',
-                form_id: 1,
-                project_id: '123456',
-                form_data: $.base64.encode(JSON.stringify($("#loginForm").serializeArray())),
-                target_day: ymd(), // 获取当前年月日
-            }
-            $.ajax({
-            url: "http://meterial.cxhy.cn/saveFormRecord/",
-            type: "POST",
-            dataType: "json",
-            contentType: "application/json",
-            data: JSON.stringify(params),
-            success: function (res) {
+            // var params = {
+            //     token: '9d2018992eb6be45f78b5569646cd424',
+            //     form_id: 1,
+            //     project_id: '123456',
+            //     form_data: $.base64.encode(JSON.stringify($("#loginForm").serializeArray())),
+            //     target_day: ymd(), // 获取当前年月日
+            // }
+            // $.ajax({
+            // url: "http://meterial.cxhy.cn/saveFormRecord/",
+            // type: "POST",
+            // dataType: "json",
+            // contentType: "application/json",
+            // data: JSON.stringify(params),
+            // success: function (res) {
                
-               if (res.code == 200) {
+            //    if (res.code == 200) {
                   
-                }
-            },
-            error: function (error) {
-            },
-          });
+            //     }
+            // },
+            // error: function (error) {
+            // },
+        //   });
            
         })
-        
+
+        // 点击打印
+        $('.print').click(function() {
+            $("#wrapper").jqprint();
+        })
         
     </script>
 
