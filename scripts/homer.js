@@ -648,3 +648,9 @@ function ymd() {
     (now.getDate() < 10 ? "0" : "") +
     now.getDate());
 }
+
+//返回上层
+function goBack(setp) {
+  setp = setp || -1;
+  window && window.history.go(setp);
+}
