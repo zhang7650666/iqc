@@ -396,7 +396,7 @@ function createList() {
   //loading
   $.get(
     "http://meterial.cxhy.cn/getClassifyList/",
-    { token: "b522cbe750f3d6fb056bcfaa1de9a6b5" },
+    { token: "87631cd3fe3578f5ea877307644a3655" },
     function (res) {
       // var res = {
       //   code: 200,
@@ -636,9 +636,15 @@ function createList() {
   );
 }
 
-
 // 获取当前年月日
 function ymd() {
   var now = new Date();
-  return time = now.getFullYear() + "-" +((now.getMonth()+1)<10?"0":"")+(now.getMonth()+1)+"-"+(now.getDate()<10?"0":"")+now.getDate();
+  return (time =
+    now.getFullYear() +
+    "-" +
+    (now.getMonth() + 1 < 10 ? "0" : "") +
+    (now.getMonth() + 1) +
+    "-" +
+    (now.getDate() < 10 ? "0" : "") +
+    now.getDate());
 }

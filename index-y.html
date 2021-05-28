@@ -18,6 +18,27 @@
     <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="vendor/sweetalert/lib/sweet-alert.css" />
     <link rel="stylesheet" href="vendor/toastr/build/toastr.min.css" />
+    <!-- <link
+      rel="stylesheet"
+      href="vendor/datatables.net-bs/css/dataTables.bootstrap.min.css"
+    /> -->
+
+    <link
+      rel="stylesheet"
+      href="vendor/bootstrap-datepicker-master/dist/css/bootstrap-datepicker3.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="vendor/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css"
+    />
+    <link
+      rel="stylesheet"
+      href="vendor/clockpicker/dist/bootstrap-clockpicker.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="vendor/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css"
+    />
 
     <!-- App styles -->
     <link
@@ -95,155 +116,74 @@
     <div id="wrapper">
       <div class="content animate-panel">
         <!-- 新建分类见证表 -->
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="hpanel">
-              <div class="panel-body">
-                <button
-                  class="btn btn-info"
-                  type="button"
-                  class="btn btn-primary"
-                  data-toggle="modal"
-                  data-target="#createClassifyModle"
-                >
-                  新 建
-                </button>
-                <button type="button" class="btn w-xs btn-primary">
-                  已填写
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 新建分类 -->
-        <div
-          class="modal fade hmodal-info"
-          id="createClassifyModle"
-          tabindex="-1"
-          role="dialog"
-          aria-hidden="true"
-        >
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="color-line"></div>
-              <div class="modal-header">
-                <h4 class="modal-title">新建分类</h4>
-                <small class="font-bold">
-                  有啥提示的，写到这里，没啥提示的，删除掉；
-                </small>
-              </div>
-              <div class="modal-body">
-                <form method="get" class="form-horizontal">
-                  <div class="form-group">
-                    <label class="col-sm-2 control-label">试件编号</label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" />
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-sm-2 control-label">强度等级</label>
-                    <div class="col-sm-10">
-                      <select class="form-control m-b" name="account">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-sm-2 control-label">委托人</label>
-
-                    <div class="col-sm-10">
-                      <input
-                        type="password"
-                        class="form-control"
-                        name="password"
-                      />
-                    </div>
-                  </div>
-                  <div class="hr-line-dashed"></div>
-                  <div class="form-group">
-                    <label class="col-sm-2 control-label">见证人</label>
-
-                    <div class="col-sm-10">
-                      <input
-                        type="text"
-                        placeholder="placeholder"
-                        class="form-control"
-                      />
-                    </div>
-                  </div>
-                </form>
-              </div>
-              <div class="modal-footer">
-                <button
-                  type="button"
-                  class="btn btn-default"
-                  data-dismiss="modal"
-                >
-                  取消
-                </button>
-                <button type="button" class="btn btn-primary">保存</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 选项卡 -->
         <div class="hpanel">
-          <ul class="nav nav-tabs" id="tabHead">
-            <li class="active">
-              <a data-toggle="tab" href="#tab-1"> This is tab</a>
-            </li>
-            <li class="">
-              <a data-toggle="tab" href="#tab-2">This is second tab</a>
-            </li>
-          </ul>
-          <div class="tab-content" id="tabBody">
-            <div id="tab-1" class="tab-pane active">
-              <div class="panel-body">
-                <div flex>
-                  <div class="hpanel plan-box hgreen w200">
-                    <div class="panel-heading hbuilt text-center">
-                      <h4 class="font-bold">Standard plan</h4>
-                    </div>
-                    <div class="panel-body">
-                      <p class="text-muted">
-                        Lorem ipsum dolor sit amet, illum fastidii dissentias
-                        quo ne. Sea ne sint animal iisque, nam an soluta
-                        sensibus.
-                      </p>
+          <div class="panel-body">
+            <a href="#" class="btn btn-link">新建</a>
+          </div>
+        </div>
 
-                      <a href="#" class="btn btn-success btn-sm m-t-xs"
-                        >Select plan</a
-                      >
-                    </div>
-                  </div>
-                  <div class="hpanel plan-box hgreen w200">
-                    <div class="panel-heading hbuilt text-center">
-                      <h4 class="font-bold">Standard plan</h4>
-                    </div>
-                    <div class="panel-body">
-                      <p class="text-muted">
-                        Lorem ipsum dolor sit amet, illum fastidii dissentias
-                        quo ne. Sea ne sint animal iisque, nam an soluta
-                        sensibus.
-                      </p>
-
-                      <a href="#" class="btn btn-success btn-sm m-t-xs"
-                        >Select plan</a
-                      >
-                    </div>
-                  </div>
-                </div>
+        <!-- 见证记录 -->
+        <div class="hpanel">
+          <div class="panel-body">
+            <form class="form-inline">
+              <div class="form-group">
+                <label for="target_day">日期：</label>
+                <input
+                  id="target_day"
+                  type="text"
+                  value="02-16-2012"
+                  class="form-control"
+                />
               </div>
-            </div>
-            <div id="tab-2" class="tab-pane">
-              <div class="panel-body">
-                <strong>Donec quam felis</strong>
+              <div class="form-group p-l-md">
+                <label for="status">状态：</label>
+                <select class="form-control" name="account" id="status">
+                  <option value="">不限</option>
+                  <option value="0">未见证</option>
+                  <option value="1">已见证</option>
+                </select>
               </div>
+              <div class="form-group p-l-md">
+                <button
+                  type="submit"
+                  class="btn btn-primary"
+                  id="filterTableBtn"
+                >
+                  筛选
+                </button>
+              </div>
+            </form>
+            <br />
+            <div class="table-responsive">
+              <table
+                cellpadding="1"
+                cellspacing="1"
+                class="table table-bordered table-striped"
+              >
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>日期</th>
+                    <th>项目编号</th>
+                    <th>状态</th>
+                    <th>见证记录</th>
+                    <th>备注</th>
+                  </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+                <tfoot id="tableFoot" class="hidden">
+                  <tr>
+                    <td colspan="6">
+                      <nav aria-label="Page navigation">
+                        <ul
+                          class="pagination pull-right"
+                          id="paginationBox"
+                        ></ul>
+                      </nav>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
             </div>
           </div>
         </div>
@@ -266,13 +206,105 @@
     <script src="vendor/sparkline/index.js"></script>
     <script src="vendor/sweetalert/lib/sweet-alert.min.js"></script>
     <script src="vendor/toastr/build/toastr.min.js"></script>
-
+    <script src="vendor/moment/moment.js"></script>
+    <script src="vendor/bootstrap-datepicker-master/dist/js/bootstrap-datepicker.min.js"></script>
+    <script src="vendor/clockpicker/dist/bootstrap-clockpicker.min.js"></script>
+    <script src="vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
     <!-- App scripts -->
     <script src="scripts/homer.js"></script>
 
     <script>
       //生成左侧列表
       createList && createList();
+      //初始化日期
+      $("#target_day").datepicker({
+        language: "zh-CN",
+        autoclose: true, //选中之后自动隐藏日期选择框
+        // clearBtn: true, //清除按钮
+        todayBtn: true, //今日按钮
+        todayHighlight: true,
+        format: "yyyy-mm-dd",
+        viewDate: new Date(),
+      });
+
+      //生成分页元素
+      function getPaginatLi(pagesCount) {
+        if (pagesCount == 0 || pagesCount == "" || pagesCount === undefined) {
+          return "";
+        }
+        var num = "";
+        for (var i = 1; i < pagesCount; i++) {
+          num +=
+            '<li><a href="#" data-page="' + pagesCount + '">' + i + "</a></li>";
+        }
+
+        var paginationEle = [
+          '<li><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span> </a>',
+          num,
+          '<li><a href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span> </a></li>',
+        ];
+
+        $("#paginationBox").html(paginationEle.join(""));
+        $("#tableFoot").removeClass("hidden");
+      }
+
+      function createTr(data) {
+        if (!Array.isArray(data)) {
+          // console.error("数据异常");
+          return "";
+        }
+
+        var trs = "";
+        $(data).each(function (idx, item) {
+          trs +=
+            "<tr> <td> " +
+            item.id +
+            "</td> <td> " +
+            item.update_at +
+            "</td><td> " +
+            item.project_id +
+            "</td><td> " +
+            (item.status == 1 ? "已见证" : "非见证") +
+            "</td><td>" +
+            (item.witness_record_id != ""
+              ? "<a href='./aaaa.html?id=" +
+                item.witness_record_id +
+                "'>查看见证表</a>"
+              : "/") +
+            "</td><td>/</td>" +
+            "</tr>";
+        });
+
+        $("#tableBody").html(trs);
+      }
+
+      //获取表格数据
+      function getList() {
+        var status = $("#status").val() || 0;
+        var target_day = $("#target_day").val();
+        target_day = target_day.split("-").reverse().join("-");
+        $.get(
+          "http://meterial.cxhy.cn/getRecordList/",
+          {
+            token: "87631cd3fe3578f5ea877307644a3655",
+            status: status,
+            target_day: "2021-05-26",
+          },
+          function (res) {
+            var data = res.data;
+            var total = data.total || 0;
+            var pagesCount = parseInt(total) / 20;
+            getPaginatLi(pagesCount);
+            createTr(data);
+          }
+        );
+      }
+
+      getList();
+
+      $("#filterTableBtn").on("click", function () {
+        getList();
+      });
     </script>
   </body>
 </html>

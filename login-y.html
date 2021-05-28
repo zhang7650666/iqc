@@ -47,8 +47,12 @@
           </div>
           <div class="hpanel">
             <div class="panel-body">
-              <form action="#" id="loginForm" class="form-horizontal label-right">
-                <div class="form-group">
+              <form
+                action="#"
+                id="loginForm"
+                class="form-horizontal label-right"
+              >
+                <div class="form-group pass-hidden hidden">
                   <label class="col-xs-3 control-label" for="project_cid"
                     >工程编号</label
                   >
@@ -64,7 +68,26 @@
                     <div class="error-block-project_cid text-danger"></div>
                   </div>
                 </div>
-                <div id="pass-form-group" class="form-group">
+
+                <!-- class="hidden" -->
+                <div class="form-group">
+                  <label class="col-xs-3 control-label" for="phone_num"
+                    >手机号</label
+                  >
+                  <div class="col-xs-9">
+                    <input
+                      type="tel"
+                      placeholder="请输入项目绑定手机号"
+                      required=""
+                      value=""
+                      name="phone_num"
+                      class="form-control"
+                      maxlength="11"
+                    />
+                    <div class="error-block-phone_num text-danger"></div>
+                  </div>
+                </div>
+                <div class="form-group phone-hidden">
                   <label class="col-xs-3 control-label" for="password"
                     >密码</label
                   >
@@ -80,85 +103,18 @@
                     <div class="error-block-password text-danger"></div>
                   </div>
                 </div>
-                <!-- class="hidden" -->
-                <div id="phone-form-group">
-                  <div class="form-group">
-                    <label class="col-xs-3 control-label" for="phone_num"
-                      >手机号</label
-                    >
-                    <div class="col-xs-9">
-                      <input
-                        type="tel"
-                        placeholder="请输入项目绑定手机号"
-                        required=""
-                        value=""
-                        name="phone_num"
-                        class="form-control"
-                        maxlength="11"
-                      />
-                      <div class="error-block-phone_num text-danger"></div>
-                    </div>
-                  </div>
-                  <!-- <div class="form-group">
-                    <label class="col-xs-3 control-label" for="verify_code"
-                      >验证码</label
-                    >
-                    <div class="col-xs-9">
-                      <div class="col-xs-8 p-l-none">
-                        <input
-                          type="text"
-                          placeholder=""
-                          required=""
-                          value=""
-                          name="verify_code"
-                          class="form-control"
-                          maxlength="6"
-                        />
-                      </div>
-                      <div class="col-xs-4 txt-center p-l-none">
-                        <button
-                          type="button"
-                          id="readPhoneCode"
-                          class="btn btn-link"
-                        >
-                          获取验证码
-                        </button>
-                        <div class="countdown hidden line34">59</div>
-                      </div>
-                      <div class="error-block-verify_code text-danger"></div>
-                    </div>
-                  </div> -->
-                </div>
-                <!-- 初始选择的登录方式 -->
-                <!-- <div class="row login-type-group p-b-xl hidden">
-                  <div class="col-xs-6">
-                    <button
-                      type="button"
-                      class="btn btn-info btn-block login-type-btn"
-                      data-type="phone_num"
-                    >
-                      手机验证登录
-                    </button>
-                  </div>
-                  <div class="col-xs-6">
-                    <button
-                      type="button"
-                      class="btn btn-info btn-block login-type-btn"
-                      data-type="pass"
-                    >
-                      密码登录
-                    </button>
-                  </div>
-                </div> -->
-                
-                <div class="row login-btn-group  p-t-lg">
+                <div class="row login-btn-group p-t-md">
                   <div class="col-xs-6 col-xs-offset-3 p-b-sm">
                     <button class="btn btn-primary btn-block">登录系统</button>
                   </div>
-                  <!-- <div class="col-xs-6 col-xs-offset-3 p-b-sm">
+                  <div class="col-xs-6 col-xs-offset-3">
                     <button
                       type="submit"
-                      class="btn btn-default btn-block btn-pass login-type-btn"
+                      class="
+                        btn btn-default btn-block btn-pass
+                        login-type-btn
+                        hidden
+                      "
                       data-type="pass"
                     >
                       密码登录
@@ -166,10 +122,10 @@
                     <button
                       type="button"
                       class="btn btn-default btn-block btn-phone login-type-btn"
-                      data-type="phone_num"
+                      data-type="phone"
                     >
                       绑定手机登录
-                    </button> -->
+                    </button>
                   </div>
                   <div class="txt-center">
                     <a class="btn btn-link" href="./register-y.html"
@@ -182,12 +138,6 @@
           </div>
         </div>
       </div>
-      <!-- <div class="row">
-        <div class="col-md-12 text-center">
-          <strong>HOMER</strong> - AngularJS Responsive WebApp <br />
-          2015 Copyright Company Name
-        </div>
-      </div> -->
     </div>
 
     <!-- Vendor scripts -->
@@ -206,45 +156,27 @@
     <script src="scripts/md5.js"></script>
     <script>
       // 登录方式 pass；phone_num
-      var loginType = "";
-      var passKeys = ["passWord"];
-      var phoneKeys = ["phone_num", "verify_code"];
       var phoneReg = /^[1][3,4,5,6,7,8,9][0-9]{9}$/;
-      var timer = null;
-      var countNum = 5;
-      var countToat = 5;
+
+      var btnMap = {
+        pass: "phone",
+        phone: "pass",
+      };
 
       // 暂时只有手机号码登陆
-      // // 切换登录方式
-      // $(".login-type-btn").on("click", function (e) {
-      //   event.preventDefault();
-      //   var type = $(this).data("type");
-      //   loginType = type;
-      //   // 切换登录方式
-      //   if (type === "pass") {
-      //     $("#pass-form-group").removeClass("hidden");
-      //     $("#phone-form-group").addClass("hidden");
-      //     $(".login-btn-group .btn-phone").removeClass("hidden");
-      //     $(".login-btn-group .btn-pass").addClass("hidden");
-      //     $(phoneKeys).each(function (index, ele) {
-      //       $("#" + ele).val("");
-      //     });
-      //   } else {
-      //     $("#phone-form-group").removeClass("hidden");
-      //     $("#pass-form-group").addClass("hidden");
-      //     $(".login-btn-group .btn-phone").addClass("hidden");
-      //     $(".login-btn-group .btn-pass").removeClass("hidden");
-      //     $(passKeys).each(function (index, ele) {
-      //       console.log("eleeee", ele);
-      //       $("#" + ele).val("");
-      //     });
-      //   }
-      //   // 隐藏登录方式按钮
-      //   $(".login-type-group").addClass("hidden");
-
-      //   // 显示登录按钮
-      //   $(".login-btn-group").removeClass("hidden");
-      // });
+      // 切换登录方式
+      $(".login-type-btn").on("click", function (e) {
+        event.preventDefault();
+        var type = $(this).data("type");
+        // 切换登录方式
+        $("." + type + "-hidden").addClass("hidden");
+        $("." + btnMap[type] + "-hidden").removeClass("hidden");
+        $("." + type + "-hidden")
+          .find("input")
+          .val("");
+        $("[data-type='" + btnMap[type] + "']").removeClass("hidden");
+        $(this).addClass("hidden");
+      });
 
       // 提交校验
       $("#loginForm").validate({
@@ -304,7 +236,7 @@
             }
           });
           formData.password = hex_md5(formData.password);
-          formData.verify_code = '112233';
+          formData.verify_code = "112233";
           $.ajax({
             url: "http://meterial.cxhy.cn/login/",
             type: "POST",
@@ -314,17 +246,22 @@
             contentType: "application/json",
             data: JSON.stringify(formData),
             success: function (res) {
-               //跳转至home页
-               if (res.code == 200) {
-                  localStorage.setItem("iqc_user_info", JSON.stringify({
-                    token: res.data.token || '',
-                    project_cid: res.data.project_cid || ''
-                  }));
-                  window.location.href = res.data.isWohle === 1 ?  "./index-y.html" : "./perfection-y.html";
-                }
+              //跳转至home页
+              if (res.code == 200) {
+                localStorage.setItem(
+                  "iqc_user_info",
+                  JSON.stringify({
+                    token: res.data.token || "",
+                    project_cid: res.data.project_cid || "",
+                  })
+                );
+                window.location.href =
+                  res.data.isWohle === 1
+                    ? "./index-y.html"
+                    : "./perfection-y.html";
+              }
             },
-            error: function (error) {
-            },
+            error: function (error) {},
           });
         },
         errorPlacement: function (error, element) {
@@ -338,58 +275,6 @@
       var initCount = localStorage.getItem("ipa_countdown_to");
       if (initCount && initCount > 0) {
         countdownFn(initCount);
-      }
-
-      // //获取验证码业务
-      // $("#readPhoneCode").on("click", function (e) {
-      //   var val = $("input[type='tel']").val();
-      //   if (!val || !phoneReg.test(val)) {
-      //     toastr.warning("请先填写手机号");
-      //     return;
-      //   }
-      //   $.ajax({
-      //     url: "http://meterial.cxhy.cn/phone-code",
-      //     type: "get",
-      //     processData: false,
-      //     cache: false,
-      //     dataType: "json",
-      //     data: {},
-      //     success: function (res) {
-      //     // 隐藏获取验证码按钮
-      //       $(".countdown").removeClass("hidden");
-      //       $("#readPhoneCode").addClass("hidden");
-      //       countdownFn();
-      //     },
-      //     error: function (error) {},
-      //     });
-      // });
-
-
-    
-
-      function countdownFn() {
-        if (countNum <= 0) {
-          clearTimeout(timer);
-          $(".countdown").addClass("hidden");
-          $("#readPhoneCode").show();
-          countNum = countToat;
-          localStorage.setItem("ipa_countdown_to", '');
-          // $(".countdown").addClass("hidden");
-          // $("#readPhoneCode").removeClass("hidden");
-          return;
-        }
-        var count = localStorage.getItem("ipa_countdown_to") || countToat;
-        $(".countdown").html(count).removeClass("hidden");
-        $("#readPhoneCode").hide();
-
-        function fn() {
-          countNum--;
-          $(".countdown").html(countNum);
-          localStorage.setItem("ipa_countdown_to", countNum);
-          countdownFn();
-        }
-
-        timer = setTimeout(fn, 1000);
       }
     </script>
   </body>
