@@ -4,9 +4,9 @@ function crateThead(item) {
     var thHtml = "";
     switch (item.columnType) {
         case "label":
-            thHtml += '<th colspan="' + item.columnCount + '"><label> ' + item.name + "</th>";
+            thHtml += '<th colspan="' + item.columnCount + '"  rowspan="' + item.tag_height + '"><label> ' + item.name + "</th>";
         default:
-            thHtml += '<th colspan="' + item.columnCount + '"><label flex><span flex-box="0">' +
+            thHtml += '<th colspan="' + item.columnCount + '" rowspan="' + item.tag_height + '"><label flex><span flex-box="0">' +
                 item.name + '</span> <input type="text" name=' + item.submitId +
                 ' vaule="" flex-box="1"/></label></th>';
             break;
@@ -66,12 +66,12 @@ function dataToTable(tableData, parentId) {
                         '<span class="hidden placeholder">□</span><input type="checkbox" class="form-check-input"  name=' +
                         item.submitId + " value=" + item.id +  ">" : ""; // to do 增加选中状态后放开
                     tdHtml +=
-                        "<td colspan=" + item.columnCount +  ' class="table-center" data-id=' +
+                        "<td colspan=" + item.columnCount +  ' rowspan=' + item.tag_height + ' class="table-center" data-id=' +
                         item.id +  " >" + item.name +  "  " + isCheckBox + "</td>";
                     break;
                 case "text":
                     tdHtml +=
-                        "<td colspan=" + item.columnCount + '><input type="text" name=' +
+                        "<td colspan=" + item.columnCount + '  rowspan=' + item.tag_height + '><input type="text" name=' +
                             item.submitId + ' value=""/></td>';
                     break;
                 case "date":
@@ -80,7 +80,7 @@ function dataToTable(tableData, parentId) {
                     var value = data.getFullYear() +  "-" + (data.getMonth() + 1) +
                         "-" + data.getDate();
                     tdHtml +=
-                        "<td colspan=" + item.columnCount + ' class="table-center"><input type="text" id="datapicker' +
+                        "<td colspan=" + item.columnCount + '  rowspan=' + item.tag_height + ' class="table-center"><input type="text" id="datapicker' +
                             item.submitId + '" name=' + item.submitId + ' value="' + 
                             '"/></td>';
                     break;
@@ -121,7 +121,7 @@ function dataToTable(tableData, parentId) {
                     tdHtml +=
                         "<td colspan=" +
                         item.columnCount +
-                        " data-id=" +
+                        "  rowspan=" + item.tag_height + " data-id=" +
                         item.id +
                         ' style="text-align:left">  <div style="padding:0 15px;">' +
                         checkStr +
@@ -149,3 +149,35 @@ function dataToTable(tableData, parentId) {
         });
     });
 }
+
+// 图片转换
+function changeImgToDataurl() {
+    var charImg = document.getElementsByTagName("img");
+    var imgURLs = "";
+    for (var i = 0; i < charImg.length; i++) {
+      var imgURL = charImg[i].currentSrc;
+      getBase64(imgURL, charImg[i]);
+    }
+  }
+
+  function getBase64(url, charImg) {
+    var Img = new Image();
+    Img.crossOrigin = "Anonymous"; //跨域必须使用，且后台也得设置允许跨域
+    dataURL = '';
+    Img.src = url;
+    Img.onload = function () { //要先确保图片完整获取到，这是个异步事件
+      var canvas = document.createElement("canvas"), //创建canvas元素
+        width = Img.width, //确保canvas的尺寸和图片一样
+        height = Img.height;
+      canvas.width = width;
+      canvas.height = height;
+      canvas.getContext("2d").drawImage(Img, 0, 0, width, height); //将图片绘制到canvas中
+      dataURL = canvas.toDataURL('image/jpg'); //转换图片为dataURL
+      condataurl ? condataurl(dataURL, charImg) : null; //调用回调函数
+    };
+  }
+
+  function condataurl(dataURL, charImg) {
+    charImg.src = dataURL;
+    //console.log(charImg);
+  }
