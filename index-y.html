@@ -131,7 +131,7 @@
                 <input
                   id="target_day"
                   type="text"
-                  value="02-16-2012"
+                  value=""
                   class="form-control"
                 />
               </div>
@@ -139,13 +139,13 @@
                 <label for="status">状态：</label>
                 <select class="form-control" name="account" id="status">
                   <option value="">不限</option>
-                  <option value="0">未见证</option>
+                  <option value="0" selected="true">未见证</option>
                   <option value="1">已见证</option>
                 </select>
               </div>
               <div class="form-group p-l-md">
                 <button
-                  type="submit"
+                  type="button"
                   class="btn btn-primary"
                   id="filterTableBtn"
                 >
@@ -163,11 +163,12 @@
                 <thead>
                   <tr>
                     <th>ID</th>
-                    <th>日期</th>
+                    <th width="200px">日期</th>
                     <th>项目编号</th>
                     <th>状态</th>
-                    <th>见证记录</th>
+                    <!-- <th>见证记录</th> -->
                     <th>备注</th>
+                    <th>操作</th>
                   </tr>
                 </thead>
                 <tbody id="tableBody"></tbody>
@@ -214,7 +215,6 @@
     <script src="scripts/homer.js"></script>
 
     <script>
-      var iqc_user_info = JSON.parse(localStorage.iqc_user_info);
       //生成左侧列表
       createList && createList();
       //初始化日期
@@ -225,9 +225,9 @@
         todayBtn: true, //今日按钮
         todayHighlight: true,
         format: "yyyy-mm-dd",
-        viewDate: new Date(),
+        // viewDate: ymd(),
       });
-
+      $("#target_day").val(ymd());
       //生成分页元素
       function getPaginatLi(pagesCount) {
         if (pagesCount == 0 || pagesCount == "" || pagesCount === undefined) {
@@ -256,7 +256,29 @@
         }
 
         var trs = "";
+        var target_day = $("#target_day").val();
         $(data).each(function (idx, item) {
+          var readDetail =
+            " <a href='tables_design-z.html?id=" +
+            item.id +
+            "&target_day=" +
+            target_day +
+            "'> " +
+            "合同详情</a>";
+
+          var witnessDetail =
+            " <a href='tables_design-z.html?id=" +
+            item.id +
+            "&target_day=" +
+            target_day +
+            "'> " +
+            "见证详情</a>";
+
+          var cancleDetail =
+            '<button type="button" class="btn btn-info cancleWitness" data-id="' +
+            item.id +
+            '">取消见证</button>';
+
           trs +=
             "<tr> <td> " +
             item.id +
@@ -266,30 +288,50 @@
             item.project_id +
             "</td><td> " +
             (item.status == 1 ? "已见证" : "非见证") +
-            "</td><td>" +
-            (item.witness_record_id != ""
-              ? "<a href='./aaaa.html?id=" +
-                item.witness_record_id +
-                "'>查看见证表</a>"
-              : "/") +
-            "</td><td>/</td>" +
+            "</td><td>-</td><td class='td-set'>" +
+            readDetail +
+            witnessDetail +
+            (item.witness_record_id == 1 ? cancleDetail : "") +
+            "</td>" +
             "</tr>";
         });
 
         $("#tableBody").html(trs);
+
+        $(".cancleWitness").on("click", function () {
+          var id = $(this).attr("data-id");
+          // cancelWitness/
+          $.ajax({
+            url: "http://meterial.cxhy.cn/cancelWitness/",
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify({
+              id: id,
+              target_day: target_day,
+            }),
+            success: function (res) {
+              if (res.code == 200) {
+                toastr && toastr.success("取消见证记录成功！");
+                localStorage.setItem("iqc_user_info", "");
+                getList();
+              }
+            },
+            error: function (error) {},
+          });
+        });
       }
 
       //获取表格数据
       function getList() {
         var status = $("#status").val() || 0;
         var target_day = $("#target_day").val();
-        target_day = target_day.split("-").reverse().join("-");
+        // target_day = target_day.split("-").reverse().join("-");
         $.get(
           "http://meterial.cxhy.cn/getRecordList/",
           {
-            token: iqc_user_info.token,
             status: status,
-            target_day: ymd(),
+            target_day: target_day,
           },
           function (res) {
             var data = res.data;

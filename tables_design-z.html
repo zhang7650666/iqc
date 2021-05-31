@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
-
-<head>
+  <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -17,18 +16,33 @@
     <link rel="stylesheet" href="vendor/metisMenu/dist/metisMenu.css" />
     <link rel="stylesheet" href="vendor/animate.css/animate.css" />
     <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="vendor/bootstrap-datepicker-master/dist/css/bootstrap-datepicker3.min.css" />
-    <link rel="stylesheet" href="vendor/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" />
-    <link rel="stylesheet" href="vendor/clockpicker/dist/bootstrap-clockpicker.min.css" />
-    <link rel="stylesheet" href="vendor/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
+    <link
+      rel="stylesheet"
+      href="vendor/bootstrap-datepicker-master/dist/css/bootstrap-datepicker3.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="vendor/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css"
+    />
+    <link
+      rel="stylesheet"
+      href="vendor/clockpicker/dist/bootstrap-clockpicker.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="vendor/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css"
+    />
 
     <!-- App styles -->
-    <link rel="stylesheet" href="fonts/pe-icon-7-stroke/css/pe-icon-7-stroke.css" />
+    <link
+      rel="stylesheet"
+      href="fonts/pe-icon-7-stroke/css/pe-icon-7-stroke.css"
+    />
     <link rel="stylesheet" href="fonts/pe-icon-7-stroke/css/helper.css" />
     <link rel="stylesheet" href="styles/style.css" />
-</head>
+  </head>
 
-<body class="fixed-navbar">
+  <body class="fixed-navbar">
     <!--[if lt IE 7]>
       <p class="alert alert-danger">
         You are using an <strong>outdated</strong> browser. Please
@@ -39,194 +53,219 @@
 
     <!-- Header -->
     <div id="header">
-        <div class="color-line"></div>
-        <!-- 常屏 项目名 -->
-        <div id="logo" class="light-version">
-            <span> 材料检验客户端 </span>
-        </div>
+      <div class="color-line"></div>
+      <!-- 常屏 项目名 -->
+      <div id="logo" class="light-version">
+        <span> 材料检验客户端 </span>
+      </div>
 
-        <!--  小屏 顶部导航 -->
-        <nav role="navigation">
-            <!-- <div class="header-link hide-menu"><i class="fa fa-bars"></i></div> -->
-            <div class="small-logo">
-                <span class="text-primary">材料检验客户端</span>
-            </div>
-            <!-- 常屏 顶部导航 -->
-            <div class="navbar-right">
-                <ul class="nav navbar-nav no-borders">
-                    <li class="dropdown">
-                        <a type="button" class="btn btn-text logoutBtn">
-                            <i class="pe-7s-upload pe-rotate-90"></i>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
+      <!--  小屏 顶部导航 -->
+      <nav role="navigation">
+        <!-- <div class="header-link hide-menu"><i class="fa fa-bars"></i></div> -->
+        <div class="small-logo">
+          <span class="text-primary">材料检验客户端</span>
+        </div>
+        <!-- 常屏 顶部导航 -->
+        <div class="navbar-right">
+          <ul class="nav navbar-nav no-borders">
+            <li class="dropdown">
+              <a type="button" class="btn btn-text logoutBtn">
+                <i class="pe-7s-upload pe-rotate-90"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
     </div>
 
     <!-- Main Wrapper -->
     <div id="wrapper" class="m-n">
-        <div class="content animate-panel">
-            <div class="row table-list">
-                <div class="col-lg-12">
-                    <div class="hpanel">
-                        <div class="panel-heading">
-                            <ol class="breadcrumb m-n">
-                                <li><a href="./index-y.html">返回首页</a></li>
-                                <li><a href="#" onclick="goBack()">返回上一层</a></li>
-                            </ol>
-                        </div>
-                        <div class="panel-body">
-                            <form action="#" id="loginForm1" class="form-horizontal label-right">
-                                <div class="table-wp" >
-                                        <!-- 工程编号 -->
-                                        <div class="row">
-                                            <div class="col-lg-12 table-order" style="font-size: 12px; text-align: left">
-                                            </div>
-                                        </div>
-                                        <div style="position: relative;">
-                                            <!-- title -->
-                                            <div>
-                                                <h4 class=" table-title txt-center"
-                                                    style="font-size: 12px; text-align: center;height: 80px;line-height: 80px;"></h4>
-                                            </div>
-                                            <div style="position: absolute;right: 0px;top: 0px;">
-                                                <img src="http://meterial.cxhy.cn/static/images/a4.jpg" width="100" height="100" alt="">
-                                            </div>
-                                    </div>
-                                </div>
-                                
-                            </form>
-                            <div class="row">
-                                <button class="download" data-down="#loginForm1">下载</button>
-                                <button class="save" data-down="#loginForm1">保存</button>
-                                <button class="print" data-down="#loginForm1">打印</button>
-                                <button class="record" data-down="#loginForm1">生成见证记录</button>
-                            </div>
-                        </div>
+      <div class="content animate-panel content-width">
+        <div class="row table-list">
+          <div class="col-lg-12">
+            <div class="hpanel">
+              <div class="panel-heading">
+                <ol class="breadcrumb m-n">
+                  <li><a href="./index-y.html">返回首页</a></li>
+                  <li><a href="#" onclick="goBack()">返回上一层</a></li>
+                </ol>
+              </div>
+              <div class="panel-body">
+                <form
+                  action="#"
+                  id="loginForm1"
+                  class="form-horizontal label-right"
+                >
+                  <div class="table-donwload-section">
+                    <!-- 工程编号 -->
+                    <div class="row">
+                      <div
+                        class="col-lg-12 table-order"
+                        style="font-size: 12px; text-align: left"
+                      ></div>
                     </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="hpanel">
-                        <div class="panel-heading">
-                            <ol class="breadcrumb m-n">
-                                <li><a href="./index-y.html">返回首页</a></li>
-                                <li><a href="#" onclick="goBack()">返回上一层</a></li>
-                            </ol>
-                        </div>
-                        <div class="panel-body">
-                            <form action="#" id="loginForm2" class="form-horizontal label-right">
-                                <div class="table-wp">
-                                    <!-- 工程编号 -->
-                                    <div class="row">
-                                        <div class="col-lg-12 table-order" style="font-size: 12px; text-align: left">
-                                        </div>
-                                    </div>
-                                    <!-- title -->
-                                    <div class="row p-b-xs">
-                                        <h4 class="col-lg-12 table-title txt-center"
-                                            style="font-size: 12px; text-align: center"></h4>
-                                    </div>
-                                </div>
-                            </form>
-                            <div class="row">
-                                <button class="download" data-down="#loginForm2">下载</button>
-                                <button class="save" data-down="#loginForm2">保存</button>
-                                <button class="print" data-down="#loginForm2">打印</button>
-                            </div>
-                        </div>
+                    <div flex>
+                      <!-- title -->
+                      <div flex-box="1">
+                        <h3
+                          class="table-title txt-center"
+                          style="
+                            text-align: center;
+                            height: 80px;
+                            line-height: 80px;
+                            padding-left: 100px;
+                          "
+                        ></h3>
+                      </div>
+                      <div flex-box="0">
+                        <img
+                          src="http://meterial.cxhy.cn/static/images/a4.jpg"
+                          width="100"
+                          height="100"
+                          style="display: inline-block"
+                        />
+                      </div>
                     </div>
-                </div>
+                  </div>
+                  <div class="row txt-center">
+                    <button type="reset" class="btn w-xs btn-default">
+                      重置内容
+                    </button>
+                    <button type="button" class="btn w-xs btn-primary download">
+                      下载
+                    </button>
+                    <button type="button" class="btn w-xs btn-primary2 save">
+                      保存
+                    </button>
+                    <button type="button" class="btn w-xs btn-info print">
+                      打印
+                    </button>
+                    <button type="button" class="btn w-xs btn-success record">
+                      生成见证记录
+                    </button>
+                  </div>
+                </form>
+              </div>
             </div>
-            <div class="table-responsive table-html" style="text-align: center">
-                <style type="text/css">
-                    .table-header tr th {
-                        border: 1px solid #fff;
-                        text-align: left;
-                        width: 16%;
-                        padding: 0px;
-                    }
-
-                    .table-body {
-                        border: 1px solid #ccc;
-                        border-collapse: collapse;
-                    }
-
-                    .table-body td {
-                        border: 1px solid #ccc;
-                        border-bottom: none;
-                        text-align: center;
-                        width: 16.6666%;
-                        font-size: 12px;
-                        height: 30px;
-                    }
-
-                    .table-header {
-                        border: 1px solid #fff;
-                        font-size: 12px;
-                    }
-
-                    .table-body {
-                        border: none;
-                        border-bottom: 1px solid #ccc;
-                        width: 100%;
-                    }
-
-                    .table-desc {
-                        font-size: 12px;
-                        word-wrap: break-word;
-                        margin-top: 10px;
-                        text-align: left;
-                    }
-
-                    .checkbox-wp {
-                        text-align: left;
-                        margin-left: 10px;
-                    }
-
-                    [flex] {
-                        display: -webkit-box;
-                        display: -webkit-flex;
-                        display: -ms-flexbox;
-                        display: flex;
-                    }
-
-                    [flex-box="0"] {
-                        -webkit-box-flex: 0;
-                        -webkit-flex-grow: 0;
-                        -ms-flex-positive: 0;
-                        flex-grow: 0;
-                        -webkit-flex-shrink: 0;
-                        -ms-flex-negative: 0;
-                        flex-shrink: 0;
-                    }
-
-                    [flex-box="1"] {
-                        -webkit-box-flex: 1;
-                        -webkit-flex-grow: 1;
-                        -ms-flex-positive: 1;
-                        flex-grow: 1;
-                        -webkit-flex-shrink: 1;
-                        -ms-flex-negative: 1;
-                        flex-shrink: 1;
-                    }
-                </style>
-                <!-- 测试图片 -->
-                <!-- <img src="./images/a1.jpg" alt="" srcset="" crossorigin="anonymous"> -->
-                <!-- <img src="./images/a1.jpg" alt="" srcset=""> -->
-
-                <!-- 表头 -->
-                <table class="table-header"></table>
-                <!-- 表体 -->
-                <table class="table-body" align="center">
-                    <tbody></tbody>
-                </table>
-                <!-- 备注 -->
-                <div class="row">
-                    <div class="col-lg-12 table-desc" style="font-size: 12px;word-wrap: break-word;margin: 10px 0;text-align: left;"></div>
-                </div>
-            </div>
+          </div>
         </div>
+        <script type="text/template" id="tableTemp">
+          <div class="table-responsive no-border" style="text-align: center">
+            <style type="text/css">
+              .table-header tr th {
+                /* border: 1px solid #fff; */
+                /* text-align: left; */
+                /* width: 16%; */
+                padding: 0px;
+              }
+              .font-weight {
+                  font-weight: 600;
+              }
+              .no-border {
+                  border: 0;
+              }
+              .table-body {
+                width: 100%;
+                border: 1px solid #ccc;
+                border-bottom: 0;
+                border-collapse: collapse;
+              }
+
+              .table-body tr td,
+              .table-body tr th {
+                width: 16%;
+                  border-right: 1px solid #ccc;
+                  border-bottom: 1px solid #ccc;
+                  font-size: 12px;
+                  height: 30px;
+              }
+
+              .table-header {
+                /* border: 1px solid #fff; */
+                font-size: 12px;
+                width: 100%;
+              }
+
+              .table-desc {
+                font-size: 12px;
+                word-wrap: break-word;
+                margin-top: 10px;
+                text-align: left;
+              }
+
+              .checkbox-wp {
+                text-align: left;
+                margin-left: 10px;
+              }
+
+              .txt-center {
+                  text-align: center;
+              }
+              .txt-left {
+                  text-align: left;
+              }
+              .txt-right {
+                  text-align: right;
+              }
+
+              [flex] {
+                display: -webkit-box;
+                display: -webkit-flex;
+                display: -ms-flexbox;
+                display: flex;
+              }
+
+              [flex-box="0"] {
+                -webkit-box-flex: 0;
+                -webkit-flex-grow: 0;
+                -ms-flex-positive: 0;
+                flex-grow: 0;
+                -webkit-flex-shrink: 0;
+                -ms-flex-negative: 0;
+                flex-shrink: 0;
+              }
+
+              [flex-box="1"] {
+                -webkit-box-flex: 1;
+                -webkit-flex-grow: 1;
+                -ms-flex-positive: 1;
+                flex-grow: 1;
+                -webkit-flex-shrink: 1;
+                -ms-flex-negative: 1;
+                flex-shrink: 1;
+              }
+            </style>
+            <!-- 测试图片 -->
+            <!-- <img src="./images/a1.jpg" alt="" srcset="" crossorigin="anonymous"> -->
+            <!-- <img src="./images/a1.jpg" alt="" srcset=""> -->
+
+            <!-- 表头 -->
+            <table class="table-header">
+              __TABLE_HEADER__
+            </table>
+            <!-- 表体 -->
+            <table class="table-body" align="center">
+              <tbody>
+                __TABLE_BODY
+              </tbody>
+            </table>
+            <!-- 备注 -->
+            <div class="row">
+              <div
+                class="col-lg-12 table-desc"
+                style="
+                  font-size: 12px;
+                  word-wrap: break-word;
+                  margin: 10px 0;
+                  text-align: left;
+                "
+              >
+                __TABLE_DESC
+              </div>
+            </div>
+          </div>
+        </script>
+      </div>
     </div>
 
     <!-- Vendor scripts -->
@@ -251,120 +290,143 @@
     <script src="scripts/homer.js"></script>
     <script src="scripts/dataToTable.js"></script>
     <script>
-        // 解决打印报错
-        jQuery.browser = {};
-        (function () {
-            jQuery.browser.msie = false;
-            jQuery.browser.version = 0;
-            if (navigator.userAgent.match(/MSIE ([0-9]+)./)) {
-                jQuery.browser.msie = true;
-                jQuery.browser.version = RegExp.$1;
-            }
-        })();
+      // 解决打印报错
+      jQuery.browser = {};
+      (function () {
+        jQuery.browser.msie = false;
+        jQuery.browser.version = 0;
+        if (navigator.userAgent.match(/MSIE ([0-9]+)./)) {
+          jQuery.browser.msie = true;
+          jQuery.browser.version = RegExp.$1;
+        }
+      })();
     </script>
     <script>
-        var iqc_user_info = JSON.parse(localStorage.iqc_user_info);
-        var isShowRecord = false; // 是否显示见证记录
-        $.get(
-            "http://meterial.cxhy.cn/getFormStyle/", {
-                token: iqc_user_info.token,
-                form_id: 1,
+      var queryObj = query2obj(window.location.href);
+      //proejct_id
+      //   var iqc_user_info = JSON.parse(localStorage.iqc_user_info);
+      var isShowRecord = false; // 是否显示见证记录
+      var tableName = "";
+      var tableNum = "";
+      $.ajax({
+        url: queryObj.id
+          ? "http://meterial.cxhy.cn/getRecordDetail/"
+          : "http://meterial.cxhy.cn/getFormStyle/",
+        type: "GET",
+        data: queryObj.id
+          ? {
+              id: queryObj.id,
+              target_day: queryObj.target_day,
+            }
+          : {
+              form_id: 1,
             },
-            function (res) {
-                if (res.code == 200) {
-                    var tableDatas = res.data;
-                    // 工程编号
-                    $("#loginForm1 .table-wp .table-order").html(tableDatas.numbers);
-                    // title 信息
-                    $("#loginForm1 .table-wp .table-title").html(tableDatas.title);
-                    // 表头信息
-                    res.data.tableData.forEach(function (item) {
-                        dataToTable(item, '#loginForm1');
-                    });
-                }
-            }
-        );
-
-        
-
-        $(".table-html").hide(); // 隐藏table模板
-        // 点击下载
-        $(".download").click(function () {
-            changeImgToDataurl()
-            var ele = $(this).attr('data-down');
-            $(ele).find("span.placeholder").removeClass("hidden");
-            $(ele).find(".table-wp").wordExport("word文档");
-            $(ele).find("span.placeholder").addClass("hidden");
-        });
-
-        // 点击保存
-        $(".save").click(function () { 
-            //对 var str = $.base64.encode('123321'); 123321 进行加密
-            // var dstr = $.base64.decode(str); 对 str 进行解密
-            var params = {
-                token: iqc_user_info.token,
-                form_id: 1,
-                project_id: iqc_user_info.project_cid,
-                form_data: $.base64.encode(JSON.stringify($("#loginForm1").serializeArray())), // checkbox 只有选中的才会提交
-                target_day: ymd(), // 获取当前年月日
-            }
-            $.ajax({
-                url: "http://meterial.cxhy.cn/saveFormRecord/",
-                type: "POST",
-                dataType: "json",
-                contentType: "application/json",
-                data: JSON.stringify(params),
-                success: function (res) {
-
-                if (res.code == 200) {
-
-                    }
-                },
-                error: function (error) {
-                },
+        success: function (res) {
+          if (res.code == 200) {
+            var tableDatas = res.data;
+            // 工程编号
+            tableNum = tableDatas.numbers;
+            tableName = tableDatas.title;
+            $(".table-donwload-section .table-order").html(tableDatas.numbers);
+            // title 信息
+            $(".table-donwload-section .table-title").html(tableDatas.title);
+            // 表头信息
+            res.data.tableData.forEach(function (item) {
+              dataToTable(item, "#loginForm1");
             });
+          }
+        },
+      });
+
+      //   $(".table-html").hide(); // 隐藏table模板
+      // 点击下载
+      $(".download").click(function () {
+        changeImgToDataurl();
+        // 处理输入框内容替换
+        var entrys = $("#loginForm1").find('input[type="text"]');
+        entrys = Array.prototype.slice.call(entrys);
+        entrys.forEach(function (inputEle) {
+          var val = $(inputEle).val() || "";
+          $(inputEle).siblings(".placeholder").text(val);
         });
-        
-        // 点击生成见证记录
-        $($(".table-list").children("div").get(1)).hide();
-        $(".record").click(function () {
-            // 切换显示一个table还是两个table
-            $($(".table-list").children("div").get(0)).removeClass('col-lg-12');
-            $($(".table-list").children("div").get(0)).addClass('col-lg-6');
-            var params = {
-                token: iqc_user_info.token,
-                record_id: 1, //  $("#loginForm1 .table-wp .table-order").html(),
-                target_day: ymd(), // 获取当前年月日
+
+        // $(ele).find("span.placeholder").removeClass("hidden");
+        $(".table-donwload-section").wordExport(tableNum + tableName);
+        entrys.forEach(function (inputEle) {
+          var val = $(inputEle).val() || "";
+          $(inputEle).siblings(".placeholder").text("");
+        });
+        // $(ele).find("span.placeholder").addClass("hidden");
+      });
+
+      // 点击保存
+      $(".save").click(function () {
+        //对 var str = $.base64.encode('123321'); 123321 进行加密
+        // var dstr = $.base64.decode(str); 对 str 进行解密
+        var datas = $("#loginForm1").serializeArray();
+        var submitData = {};
+        $(datas).each(function (idx, item) {
+          var already = submitData["sid_" + item.name] || "";
+          submitData["sid_" + item.name] =
+            (already ? already + "," : "") + item.value || "";
+        });
+        var params = {
+          form_id: 1,
+          project_id: (window.userInfo || userinfo).project_cid,
+          form_data: $.base64.encode(JSON.stringify(submitData)), // checkbox 只有选中的才会提交
+          target_day: ymd(), // 获取当前年月日
+        };
+        $.ajax({
+          url: "http://meterial.cxhy.cn/saveFormRecord/",
+          type: "POST",
+          dataType: "json",
+          contentType: "application/json",
+          data: JSON.stringify(params),
+          success: function (res) {
+            if (res.code == 200) {
             }
-            $.ajax({
-                url: "http://meterial.cxhy.cn/generateWitness/",
-                type: "POST",
-                dataType: "json",
-                contentType: "application/json",
-                data: JSON.stringify(params),
-                success: function (res) {
-                    if (res.code == 200) {
-                        // var tableDatas = res.data;
-                        // // 工程编号
-                        // $("#loginForm1 .table-wp .table-order").html(tableDatas.numbers);
-                        // // title 信息
-                        // $("#loginForm1 .table-wp .table-title").html(tableDatas.title);
-                        // // 表头信息
-                        res.data.tableData.forEach(function (item) {
-                            dataToTable(item, '#loginForm2');
-                        });
-                        $($(".table-list").children("div").get(1)).show();
-                    }
-                },
-                error: function (error) {
-                },
-            });
+          },
+          error: function (error) {},
         });
-        // 点击打印
-        $(".print").click(function () {
-            $("#loginForm1").jqprint();
+      });
+
+      // 点击生成见证记录
+      $($(".table-list").children("div").get(1)).hide();
+      $(".record").click(function () {
+        // 切换显示一个table还是两个table
+        $($(".table-list").children("div").get(0)).removeClass("col-lg-12");
+        $($(".table-list").children("div").get(0)).addClass("col-lg-6");
+        var params = {
+          record_id: 1, //  $("#loginForm1 .table-wp .table-order").html(),
+          target_day: ymd(), // 获取当前年月日
+        };
+        $.ajax({
+          url: "http://meterial.cxhy.cn/generateWitness/",
+          type: "POST",
+          dataType: "json",
+          contentType: "application/json",
+          data: JSON.stringify(params),
+          success: function (res) {
+            if (res.code == 200) {
+              // var tableDatas = res.data;
+              // // 工程编号
+              // $(".table-donwload-section .table-order").html(tableDatas.numbers);
+              // // title 信息
+              // $(".table-donwload-section .table-title").html(tableDatas.title);
+              // // 表头信息
+              res.data.tableData.forEach(function (item) {
+                dataToTable(item, "#loginForm2");
+              });
+              $($(".table-list").children("div").get(1)).show();
+            }
+          },
+          error: function (error) {},
         });
+      });
+      // 点击打印
+      $(".print").click(function () {
+        $("#loginForm1").jqprint();
+      });
     </script>
-</body>
-
+  </body>
 </html>

@@ -240,8 +240,6 @@
           $.ajax({
             url: "http://meterial.cxhy.cn/login/",
             type: "POST",
-            // processData: false,
-            // cache: false,
             dataType: "json",
             contentType: "application/json",
             data: JSON.stringify(formData),
@@ -256,7 +254,7 @@
                   })
                 );
                 window.location.href =
-                  res.data.isWohle === 1
+                  res.data.project_checked == 1
                     ? "./index-y.html"
                     : "./perfection-y.html";
               }
@@ -270,12 +268,6 @@
         },
         errorElement: "span",
       });
-
-      //获取验证码后，刷新界面，初始倒计时
-      var initCount = localStorage.getItem("ipa_countdown_to");
-      if (initCount && initCount > 0) {
-        countdownFn(initCount);
-      }
     </script>
   </body>
 </html>

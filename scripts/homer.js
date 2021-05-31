@@ -252,18 +252,49 @@ var errorCodeMap = {
   205: "工程编号不正确",
 };
 
+var userInfo = localStorage.getItem("iqc_user_info");
+try {
+  userInfo = JSON.parse(userInfo);
+  XMLHttpRequest.setRequestHeader("token", userInfo.token);
+} catch (e) {}
+window.userInfo = userInfo;
+
+var whiteList = ["login/", "register/"];
+var baseUrl = "http://meterial.cxhy.cn/";
 //ajax错误信息统一捕获处理
 $.ajaxSetup({
   contentType: "application/x-www-form-urlencoded;charset=utf-8",
-  complete: function (XMLHttpRequest, textStatus) {
+  beforeSend: function (xhr, ajaxobj) {
+    //处理get方式请求，统一添加token
+    if (whiteList.indexOf(baseUrl + ajaxobj.url) > -1) {
+      return;
+    }
+
+    if (ajaxobj.type === "GET" && ajaxobj.url.indexOf("token") == -1) {
+      ajaxobj.url =
+        ajaxobj.url +
+        (ajaxobj.url.indexOf("?") > -1 ? "&token=" : "?token=") +
+        (userInfo.token || "");
+    }
+
+    if (ajaxobj.type === "POST" && ajaxobj.data) {
+      var data = {};
+      try {
+        data = JSON.parse(ajaxobj.data);
+        data.token = userInfo.token || "";
+      } catch (e) {}
+
+      ajaxobj.data = JSON.stringify(data);
+    }
+  },
+  complete: function (XMLHttpRequest) {
     //通过XMLHttpRequest取得响应结果
     var res = XMLHttpRequest.responseText;
     var jsonData = JSON.parse(res);
     if (errorCodeMap[jsonData.code]) {
       toastr && toastr.warning(errorCodeMap[jsonData.code]);
-    } else {
-      //正常情况就不统一处理了
     }
+    //正常情况就不统一处理了
   },
   statusCode: {
     // 504: function () {
@@ -393,248 +424,15 @@ function menuUnit(data, num) {
 
 //动态生成分类列表
 function createList() {
-  var iqc_user_info = JSON.parse(localStorage.iqc_user_info);
   //loading
-  $.get(
-    "http://meterial.cxhy.cn/getClassifyList/",
-    { token:iqc_user_info.token },
-    function (res) {
-      // var res = {
-      //   code: 200,
-      //   data: [
-      //     {
-      //       id: 1,
-      //       classify_name: "水泥",
-      //       create_at: "2021-05-18T16:13:56",
-      //       update_at: "2021-05-18T16:13:56",
-      //       parent_id: 0,
-      //       order_id: 1,
-      //       level: 1,
-      //       items: [
-      //         {
-      //           id: 13,
-      //           classify_name: "普通硅酸盐水泥（P·O)",
-      //           create_at: "2021-05-24T18:33:28",
-      //           update_at: "2021-05-24T18:33:31",
-      //           parent_id: 1,
-      //           order_id: 1,
-      //           level: 2,
-      //           items: [
-      //             {
-      //               id: 33,
-      //               classify_name: "第三级菜单",
-      //               create_at: "2021-05-24T18:33:28",
-      //               update_at: "2021-05-24T18:33:31",
-      //               parent_id: 13,
-      //               order_id: 1,
-      //               level: 3,
-      //             },
-      //             {
-      //               id: 33,
-      //               classify_name: "第三级菜单",
-      //               create_at: "2021-05-24T18:33:28",
-      //               update_at: "2021-05-24T18:33:31",
-      //               parent_id: 13,
-      //               order_id: 1,
-      //               level: 3,
-      //             },
-      //           ],
-      //         },
-      //         {
-      //           id: 14,
-      //           classify_name: "硅酸盐水泥（P·I)",
-      //           create_at: "2021-05-24T18:35:29",
-      //           update_at: "2021-05-24T18:35:30",
-      //           parent_id: 1,
-      //           order_id: 2,
-      //           level: 2,
-      //         },
-      //         {
-      //           id: 15,
-      //           classify_name: "硅酸盐水泥（P·II)",
-      //           create_at: "2021-05-24T18:35:51",
-      //           update_at: "2021-05-24T18:35:53",
-      //           parent_id: 1,
-      //           order_id: 3,
-      //           level: 2,
-      //         },
-      //         {
-      //           id: 16,
-      //           classify_name: "火山灰质硅酸盐水泥（P·P)",
-      //           create_at: "2021-05-24T18:36:39",
-      //           update_at: "2021-05-24T18:36:43",
-      //           parent_id: 1,
-      //           order_id: 4,
-      //           level: 2,
-      //         },
-      //         {
-      //           id: 17,
-      //           classify_name: "粉煤灰硅酸盐水泥（P·F)",
-      //           create_at: "2021-05-24T18:37:36",
-      //           update_at: "2021-05-24T18:37:37",
-      //           parent_id: 1,
-      //           order_id: 5,
-      //           level: 2,
-      //         },
-      //         {
-      //           id: 18,
-      //           classify_name: "复合硅酸盐水泥（P·C)",
-      //           create_at: "2021-05-24T18:38:14",
-      //           update_at: "2021-05-24T18:38:15",
-      //           parent_id: 1,
-      //           order_id: 6,
-      //           level: 2,
-      //         },
-      //         {
-      //           id: 19,
-      //           classify_name: "矿渣硅酸盐水泥（P·S·A)",
-      //           create_at: "2021-05-24T18:39:04",
-      //           update_at: "2021-05-24T18:39:05",
-      //           parent_id: 1,
-      //           order_id: 7,
-      //           level: 2,
-      //         },
-      //         {
-      //           id: 20,
-      //           classify_name: "矿渣硅酸盐水泥（P·S·B)",
-      //           create_at: "2021-05-24T18:39:18",
-      //           update_at: "2021-05-24T18:39:19",
-      //           parent_id: 1,
-      //           order_id: 8,
-      //           level: 2,
-      //         },
-      //         {
-      //           id: 21,
-      //           classify_name: "铝酸盐水泥（CA）",
-      //           create_at: "2021-05-24T18:40:18",
-      //           update_at: "2021-05-24T18:40:20",
-      //           parent_id: 1,
-      //           order_id: 9,
-      //           level: 2,
-      //         },
-      //       ],
-      //     },
-      //     {
-      //       id: 2,
-      //       classify_name: "钢材",
-      //       create_at: "2021-05-18T17:09:50",
-      //       update_at: "2021-05-18T17:09:50",
-      //       parent_id: 0,
-      //       order_id: 2,
-      //       level: 1,
-      //       items: [],
-      //     },
-      //     {
-      //       id: 3,
-      //       classify_name: "防水材料",
-      //       create_at: "2021-05-18T17:09:50",
-      //       update_at: "2021-05-18T17:09:50",
-      //       parent_id: 0,
-      //       order_id: 3,
-      //       level: 1,
-      //       items: [],
-      //     },
-      //     {
-      //       id: 4,
-      //       classify_name: "混泥土",
-      //       create_at: "2021-05-18T17:09:50",
-      //       update_at: "2021-05-18T17:09:50",
-      //       parent_id: 0,
-      //       order_id: 4,
-      //       level: 1,
-      //       items: [],
-      //     },
-      //     {
-      //       id: 5,
-      //       classify_name: "钢筋链接",
-      //       create_at: "2021-05-18T17:09:50",
-      //       update_at: "2021-05-18T17:09:50",
-      //       parent_id: 0,
-      //       order_id: 5,
-      //       level: 1,
-      //       items: [],
-      //     },
-      //     {
-      //       id: 6,
-      //       classify_name: "砌墙砖",
-      //       create_at: "2021-05-18T17:09:50",
-      //       update_at: "2021-05-18T17:09:50",
-      //       parent_id: 0,
-      //       order_id: 6,
-      //       level: 1,
-      //       items: [],
-      //     },
-      //     {
-      //       id: 7,
-      //       classify_name: "路面砖",
-      //       create_at: "2021-05-18T17:09:50",
-      //       update_at: "2021-05-18T17:09:50",
-      //       parent_id: 0,
-      //       order_id: 7,
-      //       level: 1,
-      //       items: [],
-      //     },
-      //     {
-      //       id: 8,
-      //       classify_name: "砌砖",
-      //       create_at: "2021-05-24T18:30:07",
-      //       update_at: "2021-05-24T18:30:10",
-      //       parent_id: 0,
-      //       order_id: 8,
-      //       level: 1,
-      //       items: [],
-      //     },
-      //     {
-      //       id: 9,
-      //       classify_name: "灰土",
-      //       create_at: "2021-05-24T18:30:44",
-      //       update_at: "2021-05-24T18:30:50",
-      //       parent_id: 0,
-      //       order_id: 9,
-      //       level: 1,
-      //       items: [],
-      //     },
-      //     {
-      //       id: 10,
-      //       classify_name: "建筑砂浆",
-      //       create_at: "2021-05-24T18:31:23",
-      //       update_at: "2021-05-24T18:31:25",
-      //       parent_id: 0,
-      //       order_id: 10,
-      //       level: 1,
-      //       items: [],
-      //     },
-      //     {
-      //       id: 11,
-      //       classify_name: "PVC管",
-      //       create_at: "2021-05-24T18:31:43",
-      //       update_at: "2021-05-24T18:31:45",
-      //       parent_id: 0,
-      //       order_id: 11,
-      //       level: 1,
-      //       items: [],
-      //     },
-      //     {
-      //       id: 12,
-      //       classify_name: "钢管",
-      //       create_at: "2021-05-24T18:31:59",
-      //       update_at: "2021-05-24T18:32:00",
-      //       parent_id: 0,
-      //       order_id: 12,
-      //       level: 1,
-      //       items: [],
-      //     },
-      //   ],
-      //   msg: "ok",
-      // };
-      var data = res.data;
-      var menus = getMemu(data);
-      // $("#side-menu") && $("#side-menu").html(menus);
-      // $("#side-menu").metisMenu("dispose"); //  添加内容前 要这样，官网看到的 https://mm.onokumus.com/mm-dispose.html#
-      $("#side-menu").append(menus);
-      $("#navigation").metisMenu();
-    }
-  );
+  $.get("http://meterial.cxhy.cn/getClassifyList/", function (res) {
+    var data = res.data;
+    var menus = getMemu(data);
+    // $("#side-menu") && $("#side-menu").html(menus);
+    // $("#side-menu").metisMenu("dispose"); //  添加内容前 要这样，官网看到的 https://mm.onokumus.com/mm-dispose.html#
+    $("#side-menu").append(menus);
+    $("#navigation").metisMenu();
+  });
 }
 
 // 获取当前年月日

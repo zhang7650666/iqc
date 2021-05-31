@@ -452,6 +452,10 @@
   text-align: center;
 }
 
+.txt-left {
+  text-align: left;
+}
+
 .label-right .control-label {
   text-align: right;
 }
@@ -466,6 +470,11 @@
 
 .line34 {
   line-height: 34px;
+}
+
+.content-width {
+  max-width: 1200px;
+  margin: auto;
 }
 
 .sweet-alert button {
@@ -4021,17 +4030,17 @@ ul.h-list li:hover a {
   vertical-align: middle !important;
 }
 
-  .table-wp input[type="text"] {
-    outline: none;
-    border: none;
-    width: 100%;
-    padding: 0 5px;
-    box-sizing: border-box;
-  }
-  .table-wp input[type="checkbox"] {
-    position:relative;
-    top: 2px;
-  }
+.table-donwload-section input[type="text"] {
+  outline: none;
+  border: none;
+  width: 100%;
+  padding: 0 5px;
+  box-sizing: border-box;
+}
+.table-donwload-section input[type="checkbox"] {
+  position: relative;
+  top: 2px;
+}
 .table-word input[type="text"] {
   outline: none;
   border: none;
@@ -4042,4 +4051,8 @@ ul.h-list li:hover a {
 .table-word input[type="checkbox"] {
   position: relative;
   top: 2px;
+}
+
+.td-set > * {
+  margin-left: 10px;
 }
