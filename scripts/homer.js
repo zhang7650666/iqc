@@ -393,10 +393,11 @@ function menuUnit(data, num) {
 
 //动态生成分类列表
 function createList() {
+  var iqc_user_info = JSON.parse(localStorage.iqc_user_info);
   //loading
   $.get(
     "http://meterial.cxhy.cn/getClassifyList/",
-    { token: "87631cd3fe3578f5ea877307644a3655" },
+    { token:iqc_user_info.token },
     function (res) {
       // var res = {
       //   code: 200,

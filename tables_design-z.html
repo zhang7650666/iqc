@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -16,33 +17,18 @@
     <link rel="stylesheet" href="vendor/metisMenu/dist/metisMenu.css" />
     <link rel="stylesheet" href="vendor/animate.css/animate.css" />
     <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.css" />
-    <link
-      rel="stylesheet"
-      href="vendor/bootstrap-datepicker-master/dist/css/bootstrap-datepicker3.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="vendor/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css"
-    />
-    <link
-      rel="stylesheet"
-      href="vendor/clockpicker/dist/bootstrap-clockpicker.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="vendor/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css"
-    />
+    <link rel="stylesheet" href="vendor/bootstrap-datepicker-master/dist/css/bootstrap-datepicker3.min.css" />
+    <link rel="stylesheet" href="vendor/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" />
+    <link rel="stylesheet" href="vendor/clockpicker/dist/bootstrap-clockpicker.min.css" />
+    <link rel="stylesheet" href="vendor/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
 
     <!-- App styles -->
-    <link
-      rel="stylesheet"
-      href="fonts/pe-icon-7-stroke/css/pe-icon-7-stroke.css"
-    />
+    <link rel="stylesheet" href="fonts/pe-icon-7-stroke/css/pe-icon-7-stroke.css" />
     <link rel="stylesheet" href="fonts/pe-icon-7-stroke/css/helper.css" />
     <link rel="stylesheet" href="styles/style.css" />
-  </head>
+</head>
 
-  <body class="fixed-navbar">
+<body class="fixed-navbar">
     <!--[if lt IE 7]>
       <p class="alert alert-danger">
         You are using an <strong>outdated</strong> browser. Please
@@ -53,114 +39,159 @@
 
     <!-- Header -->
     <div id="header">
-      <div class="color-line"></div>
-      <!-- 常屏 项目名 -->
-      <div id="logo" class="light-version">
-        <span> 材料检验客户端 </span>
-      </div>
+        <div class="color-line"></div>
+        <!-- 常屏 项目名 -->
+        <div id="logo" class="light-version">
+            <span> 材料检验客户端 </span>
+        </div>
 
-      <!--  小屏 顶部导航 -->
-      <nav role="navigation">
-        <!-- <div class="header-link hide-menu"><i class="fa fa-bars"></i></div> -->
-        <div class="small-logo">
-          <span class="text-primary">材料检验客户端</span>
-        </div>
-        <!-- 常屏 顶部导航 -->
-        <div class="navbar-right">
-          <ul class="nav navbar-nav no-borders">
-            <li class="dropdown">
-              <a type="button" class="btn btn-text logoutBtn">
-                <i class="pe-7s-upload pe-rotate-90"></i>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </nav>
+        <!--  小屏 顶部导航 -->
+        <nav role="navigation">
+            <!-- <div class="header-link hide-menu"><i class="fa fa-bars"></i></div> -->
+            <div class="small-logo">
+                <span class="text-primary">材料检验客户端</span>
+            </div>
+            <!-- 常屏 顶部导航 -->
+            <div class="navbar-right">
+                <ul class="nav navbar-nav no-borders">
+                    <li class="dropdown">
+                        <a type="button" class="btn btn-text logoutBtn">
+                            <i class="pe-7s-upload pe-rotate-90"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
     </div>
 
     <!-- Main Wrapper -->
     <div id="wrapper" class="m-n">
-      <div class="content animate-panel">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="hpanel">
-              <div class="panel-heading">
-                <ol class="breadcrumb m-n">
-                  <li><a href="./index-y.html">返回首页</a></li>
-                  <li><a href="#" onclick="goBack()">返回上一层</a></li>
-                </ol>
-              </div>
-              <div class="panel-body">
-                <form
-                  action="#"
-                  id="loginForm"
-                  class="form-horizontal label-right"
-                >
-                  <div class="table-wp">
-                    <!-- 工程编号 -->
-                    <div class="row">
-                      <div
-                        class="col-lg-12 table-order"
-                        style="font-size: 12px; text-align: left"
-                      ></div>
+        <div class="content animate-panel">
+            <div class="row table-list">
+                <div class="col-lg-12">
+                    <div class="hpanel">
+                        <div class="panel-heading">
+                            <ol class="breadcrumb m-n">
+                                <li><a href="./index-y.html">返回首页</a></li>
+                                <li><a href="#" onclick="goBack()">返回上一层</a></li>
+                            </ol>
+                        </div>
+                        <div class="panel-body">
+                            <form action="#" id="loginForm1" class="form-horizontal label-right">
+                                <div class="table-wp" >
+                                        <!-- 工程编号 -->
+                                        <div class="row">
+                                            <div class="col-lg-12 table-order" style="font-size: 12px; text-align: left">
+                                            </div>
+                                        </div>
+                                        <div style="position: relative;">
+                                            <!-- title -->
+                                            <div>
+                                                <h4 class=" table-title txt-center"
+                                                    style="font-size: 12px; text-align: center;height: 80px;line-height: 80px;"></h4>
+                                            </div>
+                                            <div style="position: absolute;right: 0px;top: 0px;">
+                                                <img src="http://meterial.cxhy.cn/static/images/a4.jpg" width="100" height="100" alt="">
+                                            </div>
+                                    </div>
+                                </div>
+                                
+                            </form>
+                            <div class="row">
+                                <button class="download" data-down="#loginForm1">下载</button>
+                                <button class="save" data-down="#loginForm1">保存</button>
+                                <button class="print" data-down="#loginForm1">打印</button>
+                                <button class="record" data-down="#loginForm1">生成见证记录</button>
+                            </div>
+                        </div>
                     </div>
-                    <!-- title -->
-                    <div class="row p-b-xs">
-                      <h4
-                        class="col-lg-12 table-title txt-center"
-                        style="font-size: 12px; text-align: center"
-                      ></h4>
+                </div>
+                <div class="col-lg-6">
+                    <div class="hpanel">
+                        <div class="panel-heading">
+                            <ol class="breadcrumb m-n">
+                                <li><a href="./index-y.html">返回首页</a></li>
+                                <li><a href="#" onclick="goBack()">返回上一层</a></li>
+                            </ol>
+                        </div>
+                        <div class="panel-body">
+                            <form action="#" id="loginForm2" class="form-horizontal label-right">
+                                <div class="table-wp">
+                                    <!-- 工程编号 -->
+                                    <div class="row">
+                                        <div class="col-lg-12 table-order" style="font-size: 12px; text-align: left">
+                                        </div>
+                                    </div>
+                                    <!-- title -->
+                                    <div class="row p-b-xs">
+                                        <h4 class="col-lg-12 table-title txt-center"
+                                            style="font-size: 12px; text-align: center"></h4>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="row">
+                                <button class="download" data-down="#loginForm2">下载</button>
+                                <button class="save" data-down="#loginForm2">保存</button>
+                                <button class="print" data-down="#loginForm2">打印</button>
+                            </div>
+                        </div>
                     </div>
-                  </div>
-                  <div
-                    class="table-responsive table-html"
-                    style="text-align: center"
-                  >
-                    <style type="text/css">
-                      .table-header tr th {
+                </div>
+            </div>
+            <div class="table-responsive table-html" style="text-align: center">
+                <style type="text/css">
+                    .table-header tr th {
                         border: 1px solid #fff;
                         text-align: left;
                         width: 16%;
                         padding: 0px;
-                      }
-                      .table-body {
+                    }
+
+                    .table-body {
                         border: 1px solid #ccc;
                         border-collapse: collapse;
-                      }
-                      .table-body td {
+                    }
+
+                    .table-body td {
                         border: 1px solid #ccc;
                         border-bottom: none;
                         text-align: center;
                         width: 16.6666%;
                         font-size: 12px;
                         height: 30px;
-                      }
-                      .table-header {
+                    }
+
+                    .table-header {
                         border: 1px solid #fff;
                         font-size: 12px;
-                      }
-                      .table-body {
+                    }
+
+                    .table-body {
                         border: none;
                         border-bottom: 1px solid #ccc;
                         width: 100%;
-                      }
-                      .table-desc {
+                    }
+
+                    .table-desc {
                         font-size: 12px;
                         word-wrap: break-word;
                         margin-top: 10px;
                         text-align: left;
-                      }
-                      .checkbox-wp {
+                    }
+
+                    .checkbox-wp {
                         text-align: left;
                         margin-left: 10px;
-                      }
-                      [flex] {
+                    }
+
+                    [flex] {
                         display: -webkit-box;
                         display: -webkit-flex;
                         display: -ms-flexbox;
                         display: flex;
-                      }
-                      [flex-box="0"] {
+                    }
+
+                    [flex-box="0"] {
                         -webkit-box-flex: 0;
                         -webkit-flex-grow: 0;
                         -ms-flex-positive: 0;
@@ -168,8 +199,9 @@
                         -webkit-flex-shrink: 0;
                         -ms-flex-negative: 0;
                         flex-shrink: 0;
-                      }
-                      [flex-box="1"] {
+                    }
+
+                    [flex-box="1"] {
                         -webkit-box-flex: 1;
                         -webkit-flex-grow: 1;
                         -ms-flex-positive: 1;
@@ -177,34 +209,24 @@
                         -webkit-flex-shrink: 1;
                         -ms-flex-negative: 1;
                         flex-shrink: 1;
-                      }
-                    </style>
-                    <!-- 测试图片 -->
-                    <!-- <img src="./images/a1.jpg" alt="" srcset="" crossorigin="anonymous"> -->
-                    <!-- <img src="./images/a1.jpg" alt="" srcset=""> -->
+                    }
+                </style>
+                <!-- 测试图片 -->
+                <!-- <img src="./images/a1.jpg" alt="" srcset="" crossorigin="anonymous"> -->
+                <!-- <img src="./images/a1.jpg" alt="" srcset=""> -->
 
-                    <!-- 表头 -->
-                    <table class="table-header"></table>
-                    <!-- 表体 -->
-                    <table class="table-body" align="center">
-                      <tbody></tbody>
-                    </table>
-                    <!-- 备注 -->
-                    <div class="row">
-                      <div class="col-lg-12 table-desc"></div>
-                    </div>
-                  </div>
-                </form>
+                <!-- 表头 -->
+                <table class="table-header"></table>
+                <!-- 表体 -->
+                <table class="table-body" align="center">
+                    <tbody></tbody>
+                </table>
+                <!-- 备注 -->
                 <div class="row">
-                  <button class="download">下载</button>
-                  <button class="save">保存</button>
-                  <button class="print">打印</button>
+                    <div class="col-lg-12 table-desc" style="font-size: 12px;word-wrap: break-word;margin: 10px 0;text-align: left;"></div>
                 </div>
-              </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
 
     <!-- Vendor scripts -->
@@ -221,330 +243,128 @@
     <script src="vendor/bootstrap-datepicker-master/dist/js/bootstrap-datepicker.min.js"></script>
     <script src="vendor/clockpicker/dist/bootstrap-clockpicker.min.js"></script>
     <script src="vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="vendor/toastr/build/toastr.min.js"></script>
 
     <!-- App scripts -->
-    <script src="scripts/homer.js"></script>
     <script src="scripts/jquery.base64.js"></script>
     <script src="scripts/jquery.jqprint-0.3.js"></script>
+    <script src="scripts/homer.js"></script>
+    <script src="scripts/dataToTable.js"></script>
     <script>
-      jQuery.browser = {};
-      (function () {
-        jQuery.browser.msie = false;
-        jQuery.browser.version = 0;
-        if (navigator.userAgent.match(/MSIE ([0-9]+)./)) {
-          jQuery.browser.msie = true;
-          jQuery.browser.version = RegExp.$1;
-        }
-      })();
-    </script>
-    <script>
-      $.get(
-        "http://meterial.cxhy.cn/getFormStyle/",
-        {
-          token: "26755477049f93149c1c77c975dd155c",
-          form_id: 1,
-        },
-        function (res) {
-          if (res.code == 200) {
-            var tableDatas = res.data;
-            // 工程编号
-            $(".table-wp .table-order").html(tableDatas.numbers);
-            // title 信息
-            $(".table-wp .table-title").html(tableDatas.title);
-            // 表头信息
-            res.data.tableData.forEach(function (item) {
-              dataToTable(item);
-            });
-          }
-        }
-      );
-
-      var dateInits = [];
-
-      function crateThead(item) {
-        var thHtml = "";
-        switch (item.columnType) {
-          case "label":
-            thHtml +=
-              '<th colspan="' +
-              item.columnCount +
-              '"><label> ' +
-              item.name +
-              "</th>";
-          default:
-            thHtml +=
-              '<th colspan="' +
-              item.columnCount +
-              '"><label flex><span flex-box="0">' +
-              item.name +
-              '</span> <input type="text" name=' +
-              item.submitId +
-              ' vaule="" flex-box="1"/></label></th>';
-            break;
-        }
-        return thHtml;
-      }
-      /**
-       * 功能：处理表格头的数据格式，以label + 输入框的形式展示
-       * 原因：label和input分开时，大屏中，input距离label较远，可输入的区域较小，所以处理下
-       * @ datas 要处理的数据格式
-       **/
-      function formatTableHeadItem(datas) {
-        if (!datas.length) {
-          return [];
-        }
-        var htmls = "";
-        $(datas).each(function (idx, item) {
-          var dataMap = {};
-          var htmlstr = "";
-          if (Array.isArray(item)) {
-            item.forEach(function (item) {
-              if (!dataMap[item.submitId]) {
-                dataMap[item.submitId] = item;
-              } else {
-                // dataMap[item.submitId] =
-                var colcount =
-                  parseInt(item.columnCount) +
-                  parseInt(dataMap[item.submitId].columnCount);
-                item.columnCount = colcount;
-                $.extend && $.extend(true, dataMap[item.submitId], item);
-              }
-            });
-          }
-
-          for (var i in dataMap) {
-            // newDatas.push(dataMap[i]);
-            htmlstr += crateThead(dataMap[i]);
-          }
-          htmls += htmlstr;
-        });
-        return "<tr>" + htmls + "</tr>";
-      }
-
-      function dataToTable(tableData) {
-        // var theadHtml = "";
-        var theadHtml = formatTableHeadItem(tableData.tableHead);
-
-        //原方法
-        // tableData.tableHead.forEach(function (head) {
-        //   // head: [{}, {}]
-        //   var thHtml = "";
-        //   var thStr = "";
-        //   head.forEach(function (item) {
-        //     switch (item.columnType) {
-        //       case "label":
-        //         thHtml +=
-        //           '<th class="col-sm-4"  data-id=' +
-        //           item.id +
-        //           ">" +
-        //           item.name +
-        //           "</th>";
-        //         break;
-        //       case "text":
-        //         thHtml +=
-        //           '<th class="col-sm-4"><input type="text" name=' +
-        //           item.submitId +
-        //           ' vaule=""/> </th>';
-        //         break;
-        //     }
-
-        //     // thStr =
-        //     //   '<tr style="border:1px solid #fff;height: 30px;">' +
-        //     //   thHtml +
-        //     //   "</tr>";
-        //   });
-        //   theadHtml +=
-        //     '<tr class="row" style="border:1px solid #fff;height: 30px;">' +
-        //     thHtml +
-        //     "</tr>";
-        // });
-        // 表体信息
-        var trHtml = "";
-        tableData.tableBody.forEach(function (tb) {
-          var tdHtml = "";
-          var tdStr = "";
-          tb.forEach(function (item) {
-            switch (item.columnType) {
-              case "label":
-                var isCheckBox =
-                  item.extendType == "checkbox"
-                    ? '<span class="hidden placeholder">□</span><input type="checkbox" class="form-check-input"  name=' +
-                      item.submitId +
-                      " value=" +
-                      item.id +
-                      ">"
-                    : ""; // to do 增加选中状态后放开
-                tdHtml +=
-                  "<td colspan=" +
-                  item.columnCount +
-                  ' class="table-center" data-id=' +
-                  item.id +
-                  " >" +
-                  item.name +
-                  "  " +
-                  isCheckBox +
-                  "</td>";
-                break;
-              case "text":
-                tdHtml +=
-                  "<td colspan=" +
-                  item.columnCount +
-                  '><input type="text" name=' +
-                  item.submitId +
-                  ' value=""/></td>';
-                break;
-              case "date":
-                dateInits.push(item.submitId);
-                var data = new Date();
-                var value =
-                  data.getFullYear() +
-                  "-" +
-                  (data.getMonth() + 1) +
-                  "-" +
-                  data.getDate();
-
-                tdHtml +=
-                  "<td colspan=" +
-                  item.columnCount +
-                  ' class="table-center"><input type="text" id="datapicker' +
-                  item.submitId +
-                  '" name=' +
-                  item.submitId +
-                  ' value="' +
-                  value +
-                  '"/></td>';
-
-                break;
-              case "checkbox":
-                var checkFormHtml = "";
-                var checkStr = "";
-                var eleName = "";
-                // 做一个样式测试
-                if (
-                  (item.submitId == 11 || item.submitId == 12) &&
-                  item.options
-                ) {
-                  item.direction = 1;
-                } else if (item.submitId == 13 && item.options) {
-                  item.direction = 2;
-                } else if (item.submitId == 14 && item.options) {
-                  item.direction = 0;
-                }
-                var joint = "\n";
-                switch (item.direction) {
-                  case 1:
-                    joint = "<br/>";
-                    break;
-                  case 0:
-                  case 2:
-                  default:
-                    // joint = "";
-                    break;
-                }
-
-                (item.options || []).forEach(function (checkItem) {
-                  checkStr +=
-                    '<label class="form-check-label" style="padding-right:10px;">' +
-                    '<span class="hidden placeholder">□</span><input type="checkbox" value=' +
-                    checkItem.id +
-                    " name=" +
-                    item.submitId +
-                    ' \class="form-check-input"> ' +
-                    checkItem.name +
-                    "</label>" +
-                    joint;
-                });
-                tdHtml +=
-                  "<td colspan=" +
-                  item.columnCount +
-                  " data-id=" +
-                  item.id +
-                  ' style="text-align:left">  <div style="padding:0 15px;">' +
-                  checkStr +
-                  " </div></td>";
-                break;
+        // 解决打印报错
+        jQuery.browser = {};
+        (function () {
+            jQuery.browser.msie = false;
+            jQuery.browser.version = 0;
+            if (navigator.userAgent.match(/MSIE ([0-9]+)./)) {
+                jQuery.browser.msie = true;
+                jQuery.browser.version = RegExp.$1;
             }
-            tdStr = "<tr>" + tdHtml + "</tr>";
-          });
-          trHtml += tdStr;
-        });
-
-        $(".table-html .table-header").html(theadHtml);
-        $(".table-html .table-body").html(trHtml);
-        $(".table-html .table-desc").html(tableData.desc);
-        // checkbox 默认选中项
-        $(".table-html .table-body input").each(function (index, ele) {
-          // if ($(this).attr("data-checked") == 'true') {
-          //     $(this).attr("checked", true)
-          // }
-        });
-        $(".table-wp").append($(".table-html").html());
-        dateInits.forEach(function (idx) {
-          $("#datapicker" + idx).datepicker({
-            language: "zh-CN",
-            autoclose: true, //选中之后自动隐藏日期选择框
-            // clearBtn: true, //清除按钮
-            todayBtn: true, //今日按钮
-            todayHighlight: true,
-            format: "yyyy-mm-dd",
-            viewDate: new Date(),
-          });
-        });
-      }
-      $(".table-html").hide();
-      // 点击下载
-      $(".download").click(function () {
-        $("span.placeholder").removeClass("hidden");
-        $(".table-wp").wordExport("word文档");
-        $("span.placeholder").addClass("hidden");
-      });
-      // 点击保存
-      $(".save").click(function () {
-        console.log(6666, $("#loginForm").serializeArray());
-        var t = $("#loginForm").serializeArray();
-        var tempObj = {};
-        // t.forEach(function(item) {
-        //     if(!tempObj[item.name]) {
-        //         tempObj[item.name] = [item.value]
-        //     } else {
-        //         tempObj[item.name].push(item.value);
-        //     }
-        // });
-        // var tempArr = []
-        // for(var key in tempObj) {
-        //     if(tempObj[key].le)
-        // }
-        console.log("tempObj", tempObj);
-        //对 var str = $.base64.encode('123321'); 123321 进行加密
-        // var dstr = $.base64.decode(str); 对 str 进行解密
-
-        // var params = {
-        //     token: '9d2018992eb6be45f78b5569646cd424',
-        //     form_id: 1,
-        //     project_id: '123456',
-        //     form_data: $.base64.encode(JSON.stringify($("#loginForm").serializeArray())),
-        //     target_day: ymd(), // 获取当前年月日
-        // }
-        // $.ajax({
-        // url: "http://meterial.cxhy.cn/saveFormRecord/",
-        // type: "POST",
-        // dataType: "json",
-        // contentType: "application/json",
-        // data: JSON.stringify(params),
-        // success: function (res) {
-
-        //    if (res.code == 200) {
-
-        //     }
-        // },
-        // error: function (error) {
-        // },
-        //   });
-      });
-      // 点击打印
-      $(".print").click(function () {
-        $("#wrapper").jqprint();
-      });
+        })();
     </script>
-  </body>
+    <script>
+        var iqc_user_info = JSON.parse(localStorage.iqc_user_info);
+        var isShowRecord = false; // 是否显示见证记录
+        $.get(
+            "http://meterial.cxhy.cn/getFormStyle/", {
+                token: iqc_user_info.token,
+                form_id: 1,
+            },
+            function (res) {
+                if (res.code == 200) {
+                    var tableDatas = res.data;
+                    // 工程编号
+                    $("#loginForm1 .table-wp .table-order").html(tableDatas.numbers);
+                    // title 信息
+                    $("#loginForm1 .table-wp .table-title").html(tableDatas.title);
+                    // 表头信息
+                    res.data.tableData.forEach(function (item) {
+                        dataToTable(item, '#loginForm1');
+                    });
+                }
+            }
+        );
+
+        
+
+        $(".table-html").hide(); // 隐藏table模板
+        // 点击下载
+        $(".download").click(function () {
+            changeImgToDataurl()
+            var ele = $(this).attr('data-down');
+            $(ele).find("span.placeholder").removeClass("hidden");
+            $(ele).find(".table-wp").wordExport("word文档");
+            $(ele).find("span.placeholder").addClass("hidden");
+        });
+
+        // 点击保存
+        $(".save").click(function () { 
+            //对 var str = $.base64.encode('123321'); 123321 进行加密
+            // var dstr = $.base64.decode(str); 对 str 进行解密
+            var params = {
+                token: iqc_user_info.token,
+                form_id: 1,
+                project_id: iqc_user_info.project_cid,
+                form_data: $.base64.encode(JSON.stringify($("#loginForm1").serializeArray())), // checkbox 只有选中的才会提交
+                target_day: ymd(), // 获取当前年月日
+            }
+            $.ajax({
+                url: "http://meterial.cxhy.cn/saveFormRecord/",
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(params),
+                success: function (res) {
+
+                if (res.code == 200) {
+
+                    }
+                },
+                error: function (error) {
+                },
+            });
+        });
+        
+        // 点击生成见证记录
+        $($(".table-list").children("div").get(1)).hide();
+        $(".record").click(function () {
+            // 切换显示一个table还是两个table
+            $($(".table-list").children("div").get(0)).removeClass('col-lg-12');
+            $($(".table-list").children("div").get(0)).addClass('col-lg-6');
+            var params = {
+                token: iqc_user_info.token,
+                record_id: 1, //  $("#loginForm1 .table-wp .table-order").html(),
+                target_day: ymd(), // 获取当前年月日
+            }
+            $.ajax({
+                url: "http://meterial.cxhy.cn/generateWitness/",
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(params),
+                success: function (res) {
+                    if (res.code == 200) {
+                        // var tableDatas = res.data;
+                        // // 工程编号
+                        // $("#loginForm1 .table-wp .table-order").html(tableDatas.numbers);
+                        // // title 信息
+                        // $("#loginForm1 .table-wp .table-title").html(tableDatas.title);
+                        // // 表头信息
+                        res.data.tableData.forEach(function (item) {
+                            dataToTable(item, '#loginForm2');
+                        });
+                        $($(".table-list").children("div").get(1)).show();
+                    }
+                },
+                error: function (error) {
+                },
+            });
+        });
+        // 点击打印
+        $(".print").click(function () {
+            $("#loginForm1").jqprint();
+        });
+    </script>
+</body>
+
 </html>

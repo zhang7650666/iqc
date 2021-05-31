@@ -214,6 +214,7 @@
     <script src="scripts/homer.js"></script>
 
     <script>
+      var iqc_user_info = JSON.parse(localStorage.iqc_user_info);
       //生成左侧列表
       createList && createList();
       //初始化日期
@@ -286,9 +287,9 @@
         $.get(
           "http://meterial.cxhy.cn/getRecordList/",
           {
-            token: "87631cd3fe3578f5ea877307644a3655",
+            token: iqc_user_info.token,
             status: status,
-            target_day: "2021-05-26",
+            target_day: ymd(),
           },
           function (res) {
             var data = res.data;
