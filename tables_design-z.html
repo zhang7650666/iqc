@@ -220,7 +220,7 @@
                     <button
                       type="button"
                       data-id="loginForm2"
-                      class="btn w-xs btn-primary2 cancleWitness"
+                      class="btn w-xs btn-primary2 hidden cancleWitness"
                     >
                       取消见证
                     </button>
@@ -393,6 +393,7 @@
       })();
     </script>
     <script>
+      var userInfo = getUserInfo();
       var queryObj = query2obj(window.location.href);
       //   编辑初始
       var exclusiveClass = "col-xs-12 col-md-12 col-lg-12";
@@ -416,8 +417,9 @@
       //   type暂设置。1：有操作权限 ，2有查看权限， 3
       if (isEdit) {
         $(".save").html("编辑");
-        // if (userInfo && userInfo.type = 2) {
+        // if (userInfo.type == 2) {
         $(".record").removeClass("hidden");
+        $(".cancleWitness").removeClass("hidden");
         // }
       }
       //   生成表格校验信息
@@ -458,7 +460,11 @@
               tableDatas.title
             );
             // 表头信息
-            res.data.tableData.forEach(function (item) {
+            if (!tableDatas.tableData) {
+              res.msg && toastr && toastr.warning(res.msg);
+              return;
+            }
+            tableDatas.tableData.forEach(function (item) {
               dataToTable(item, "#loginForm1", loginForm1Map);
               saveFn();
             });
@@ -513,7 +519,7 @@
 
             var params = {
               form_id: form_id.form_id || 1,
-              project_id: (window.userInfo || userinfo).project_cid,
+              project_id: userinfo.project_cid || "",
               form_data: $.base64.encode(JSON.stringify(submitData), "UTF-8"), // checkbox 只有选中的才会提交
               target_day: ymd(), // 获取当前年月日
             };

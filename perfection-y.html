@@ -143,9 +143,9 @@
     <script src="scripts/homer.js"></script>
     <script src="scripts/md5.js"></script>
     <script>
-      if (userinfo && userinfo.project_cid) {
-        $("#projectCid").html(userinfo.project_cid);
-      }
+      var userInfo = getUserInfo();
+      $("#projectCid").html(userInfo.project_cid);
+
       //url || 缓存中没有项目编号，重新登陆，
 
       var submitFlag = true;

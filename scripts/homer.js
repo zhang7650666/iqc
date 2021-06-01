@@ -252,12 +252,16 @@ var errorCodeMap = {
   205: "工程编号不正确",
 };
 
-var userInfo = localStorage.getItem("iqc_user_info");
-try {
-  userInfo = JSON.parse(userInfo);
-  XMLHttpRequest.setRequestHeader("token", userInfo.token);
-} catch (e) {}
-window.userInfo = userInfo;
+//获取token
+function getUserInfo() {
+  var info = localStorage.getItem("iqc_user_info");
+  try {
+    info = JSON.parse(info);
+  } catch (e) {}
+  return info;
+}
+
+var userInfo = getUserInfo();
 
 var whiteList = ["login/", "register/"];
 var baseUrl = "http://meterial.cxhy.cn/";
@@ -269,7 +273,6 @@ $.ajaxSetup({
     if (whiteList.indexOf(baseUrl + ajaxobj.url) > -1) {
       return;
     }
-
     if (ajaxobj.type === "GET" && ajaxobj.url.indexOf("token") == -1) {
       ajaxobj.url =
         ajaxobj.url +
@@ -425,6 +428,9 @@ function menuUnit(data, num) {
 }
 
 function getFirstData(data) {
+  if (!Array.isArray(data)) {
+    return "";
+  }
   var item;
   if (data[0] && data[0].items && data[0].items.length) {
     item = getFirstData(data[0].items);
@@ -442,9 +448,9 @@ function createList(cb) {
   $.get("http://meterial.cxhy.cn/getClassifyList/", function (res) {
     var data = res.data;
     // 初始高亮表格
-    if (window.history) {
-      var activeData = getFirstData(data);
-      queryObj.id = activeData.form_id;
+    var activeData = getFirstData(data);
+    if (window.history && activeData) {
+      queryObj.id = activeData.form_id || "";
       var query = "?" + obj2query(queryObj);
       history.replaceState(null, "", query);
       cb && cb();
