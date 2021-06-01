@@ -118,7 +118,10 @@
         <!-- 新建分类见证表 -->
         <div class="hpanel">
           <div class="panel-body">
-            <a href="#" class="btn btn-link">新建</a>
+            <!-- <a  href="tables_design-z.html" class="btn btn-link">新建</a> -->
+            <button id="createContract" type="button" class="btn btn-primary">
+              新建
+            </button>
           </div>
         </div>
 
@@ -144,11 +147,7 @@
                 </select>
               </div>
               <div class="form-group p-l-md">
-                <button
-                  type="button"
-                  class="btn btn-primary"
-                  id="filterTableBtn"
-                >
+                <button type="button" class="btn btn-info" id="filterTableBtn">
                   筛选
                 </button>
               </div>
@@ -171,7 +170,11 @@
                     <th>操作</th>
                   </tr>
                 </thead>
-                <tbody id="tableBody"></tbody>
+                <tbody id="tableBody">
+                  <tr class="txt-center">
+                    <td colspan="6">--没有数据--</td>
+                  </tr>
+                </tbody>
                 <tfoot id="tableFoot" class="hidden">
                   <tr>
                     <td colspan="6">
@@ -215,8 +218,13 @@
     <script src="scripts/homer.js"></script>
 
     <script>
+      var queryObj = {};
       //生成左侧列表
-      createList && createList();
+      createList &&
+        createList(function () {
+          queryObj = query2obj(window.location.href);
+          getList();
+        });
       //初始化日期
       $("#target_day").datepicker({
         language: "zh-CN",
@@ -228,6 +236,10 @@
         // viewDate: ymd(),
       });
       $("#target_day").val(ymd());
+
+      $("#createContract").click(function () {
+        window.location.href = "./tables_design-z.html?form_id=" + queryObj.id;
+      });
       //生成分页元素
       function getPaginatLi(pagesCount) {
         if (pagesCount == 0 || pagesCount == "" || pagesCount === undefined) {
@@ -249,6 +261,7 @@
         $("#tableFoot").removeClass("hidden");
       }
 
+      // 创建表格
       function createTr(data) {
         if (!Array.isArray(data)) {
           // console.error("数据异常");
@@ -256,22 +269,26 @@
         }
 
         var trs = "";
+        // 没有数据时，插入空数据占位
+        !data.length &&
+          (trs =
+            '<tr class="txt-center"><td colspan="6">--没有数据--</td></tr>');
         var target_day = $("#target_day").val();
         $(data).each(function (idx, item) {
+          var isWitness = item.status == 1;
           var readDetail =
             " <a href='tables_design-z.html?id=" +
             item.id +
             "&target_day=" +
             target_day +
-            "'> " +
+            "&type=contract'> " +
             "合同详情</a>";
-
           var witnessDetail =
             " <a href='tables_design-z.html?id=" +
             item.id +
             "&target_day=" +
             target_day +
-            "'> " +
+            "&type=witness'> " +
             "见证详情</a>";
 
           var cancleDetail =
@@ -287,14 +304,15 @@
             "</td><td> " +
             item.project_id +
             "</td><td> " +
-            (item.status == 1 ? "已见证" : "非见证") +
+            (isWitness ? "已见证" : "非见证") +
             "</td><td>-</td><td class='td-set'>" +
             readDetail +
-            witnessDetail +
+            (isWitness ? witnessDetail : "") +
             (item.witness_record_id == 1 ? cancleDetail : "") +
             "</td>" +
             "</tr>";
         });
+        // $(".emptyTr").addClass("hidden");
 
         $("#tableBody").html(trs);
 
@@ -313,7 +331,6 @@
             success: function (res) {
               if (res.code == 200) {
                 toastr && toastr.success("取消见证记录成功！");
-                localStorage.setItem("iqc_user_info", "");
                 getList();
               }
             },
@@ -326,12 +343,12 @@
       function getList() {
         var status = $("#status").val() || 0;
         var target_day = $("#target_day").val();
-        // target_day = target_day.split("-").reverse().join("-");
         $.get(
           "http://meterial.cxhy.cn/getRecordList/",
           {
             status: status,
             target_day: target_day,
+            form_id: queryObj.id,
           },
           function (res) {
             var data = res.data;
@@ -343,7 +360,7 @@
         );
       }
 
-      getList();
+      // getList();
 
       $("#filterTableBtn").on("click", function () {
         getList();

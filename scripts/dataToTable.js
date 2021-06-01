@@ -1,6 +1,4 @@
-var dateInits = [];
-
-function crateThead(item) {
+function crateThead(item, rules, messages) {
   var thHtml = "";
   switch (item.columnType) {
     case "label":
@@ -12,7 +10,15 @@ function crateThead(item) {
         '"><label> ' +
         item.name +
         "</th>";
+      // is_required 【是否必填：0-否，1-是】
+      //处理校验信息
+      if (!!item.is_required) {
+        rules["sid_" + item.submitId] = { required: true };
+        messages["sid_" + item.submitId] = { required: "必填项" };
+      }
     default:
+      var required = rules["sid_" + item.submitId] ? 'required="true"' : "";
+
       thHtml +=
         '<th colspan="' +
         item.columnCount +
@@ -20,7 +26,9 @@ function crateThead(item) {
         item.tag_height +
         '"><label flex><span flex-box="0">' +
         item.name +
-        '</span> <input type="text" name=' +
+        '</span> <input type="text" ' +
+        required +
+        " name=sid_" +
         item.submitId +
         ' vaule="" flex-box="1"/></label></th>';
       break;
@@ -32,7 +40,7 @@ function crateThead(item) {
  * 原因：label和input分开时，大屏中，input距离label较远，可输入的区域较小，所以处理下
  * @ datas 要处理的数据格式
  **/
-function formatTableHeadItem(datas) {
+function formatTableHeadItem(datas, rules, messages) {
   if (!datas.length) {
     return [];
   }
@@ -56,43 +64,61 @@ function formatTableHeadItem(datas) {
     }
 
     for (var i in dataMap) {
-      htmlstr += crateThead(dataMap[i]);
+      htmlstr += crateThead(dataMap[i], rules, messages);
     }
     htmls += htmlstr;
   });
   return "<tr>" + htmls + "</tr>";
 }
 
-function dataToTable(tableData, parentId) {
+function dataToTable(tableData, parentId, map) {
   // var theadHtml = "";
-  var theadHtml = formatTableHeadItem(tableData.tableHead);
+  var dateInits = [];
+  var theadHtml = formatTableHeadItem(
+    tableData.tableHead,
+    map.rules,
+    map.messages
+  );
   // 表体信息
   var trHtml = "";
   tableData.tableBody.forEach(function (tb) {
     var tdStr = "";
     tb.forEach(function (item) {
       var tdHtml = "";
+      var parentAttr = "";
       switch (item.columnType) {
         case "label":
           var checked = item.value ? " checked=checked" : "";
           var isCheckBox =
             item.extendType == "checkbox"
-              ? '<span class="hidden placeholder">□</span><input type="checkbox" class="form-check-input"  name=' +
+              ? '<span class="hidden placeholder">□</span><input type="checkbox" class="form-check-input"  name=sid_' +
                 item.submitId +
-                "value=" +
+                " value=" +
                 item.id +
                 checked +
                 ">"
               : ""; // to do 增加选中状态后放开
           tdHtml =
-            '<span class=="font-weight">' + item.name + "</span> " + isCheckBox;
+            '<span class="font-weight">' + item.name + "</span> " + isCheckBox;
+          parentAttr = 'style="text-align:center"';
+
+          if (!!item.is_required) {
+            map.rules["sid_" + item.submitId] = { required: true };
+            map.messages["sid_" + item.submitId] = { required: "必填项" };
+          }
           break;
         case "text":
           // debugger;
           var place = item.valueExtPos == "bottom" ? "<br/>" : "";
           var isRight = item.valueExtPos == "right";
+          var required = map.rules["sid_" + item.submitId]
+            ? 'required="true"'
+            : "";
+
           tdHtml =
-            '<input type="text" name=' +
+            '<input type="text" ' +
+            required +
+            " name=sid_" +
             item.submitId +
             (isRight ? ' style="width:70%"' : "") +
             ' value="' +
@@ -112,10 +138,17 @@ function dataToTable(tableData, parentId) {
                 (data.getMonth() + 1) +
                 "-" +
                 data.getDate();
+
+          var required = map.rules["sid_" + item.submitId]
+            ? 'required="true"'
+            : "";
+
           tdHtml =
-            '<input type="text" id="datapicker' +
+            '<input type="text" ' +
+            required +
+            ' id="datapicker' +
             item.submitId +
-            '" name=' +
+            '" name=sid_' +
             item.submitId +
             ' value="' +
             value +
@@ -126,7 +159,6 @@ function dataToTable(tableData, parentId) {
           // 做一个样式测试
           var joint = "";
           var className = "";
-          // ，0：竖，1：横，2：就是检测项目这个无特定顺序
           // 0-无序，1-横向，2-纵向
           switch (item.direction) {
             case 1:
@@ -135,7 +167,7 @@ function dataToTable(tableData, parentId) {
               break;
             case 0:
               // joint = "";
-              // className = "txt-left";
+              className = "txt-left";
               break;
             case 2:
               joint = "<br/>";
@@ -154,7 +186,7 @@ function dataToTable(tableData, parentId) {
               '<label class="form-check-label" style="padding-right:10px;">' +
               '<span class="hidden placeholder">□</span><input type="checkbox" value=' +
               checkItem.id +
-              " name=" +
+              " name=sid_" +
               item.submitId +
               checked +
               ' class="form-check-input"> ' +
@@ -189,6 +221,7 @@ function dataToTable(tableData, parentId) {
         ' class=" ' +
         classNams +
         ' "' +
+        parentAttr +
         " >" +
         tdHtml +
         "</td>";
@@ -199,8 +232,8 @@ function dataToTable(tableData, parentId) {
   var temp = $("#tableTemp").html();
   temp = temp.replace("__TABLE_HEADER__", theadHtml);
   temp = temp.replace("__TABLE_BODY", trHtml);
-  temp = temp.replace("__TABLE_DESC", tableData.desc);
-  $(".table-donwload-section").append(temp);
+  temp = temp.replace("__TABLE_DESC", tableData.desc || "");
+  $(parentId).find(".table-donwload-section").append(temp);
   dateInits.forEach(function (idx) {
     $("#datapicker" + idx).datepicker({
       language: "zh-CN",

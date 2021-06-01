@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="vendor/metisMenu/dist/metisMenu.css" />
     <link rel="stylesheet" href="vendor/animate.css/animate.css" />
     <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="vendor/toastr/build/toastr.min.css" />
     <link
       rel="stylesheet"
       href="vendor/bootstrap-datepicker-master/dist/css/bootstrap-datepicker3.min.css"
@@ -81,15 +82,15 @@
     <!-- Main Wrapper -->
     <div id="wrapper" class="m-n">
       <div class="content animate-panel content-width">
-        <div class="row table-list">
-          <div class="col-lg-12">
-            <div class="hpanel">
-              <div class="panel-heading">
-                <ol class="breadcrumb m-n">
-                  <li><a href="./index-y.html">返回首页</a></li>
-                  <li><a href="#" onclick="goBack()">返回上一层</a></li>
-                </ol>
-              </div>
+        <div class="hpanel">
+          <div class="panel-heading">
+            <ol class="breadcrumb m-n">
+              <li><a href="./index-y.html">返回首页</a></li>
+              <li><a href="#" onclick="goBack()">返回上一层</a></li>
+            </ol>
+          </div>
+          <div class="row">
+            <div id="contractTable" class="col-xs-12 col-md-12 col-lg-12">
               <div class="panel-body">
                 <form
                   action="#"
@@ -114,34 +115,114 @@
                             height: 80px;
                             line-height: 80px;
                             padding-left: 100px;
+                            font-size: 18px;
                           "
                         ></h3>
                       </div>
-                      <div flex-box="0">
+                      <!-- <div flex-box="0">
                         <img
                           src="http://meterial.cxhy.cn/static/images/a4.jpg"
                           width="100"
                           height="100"
                           style="display: inline-block"
                         />
+                      </div> -->
+                    </div>
+                  </div>
+                  <div class="row txt-center">
+                    <button
+                      type="button"
+                      data-id="loginForm1"
+                      class="btn w-xs btn-primary download"
+                    >
+                      下载
+                    </button>
+                    <button
+                      type="button"
+                      data-id="loginForm1"
+                      class="btn w-xs btn-info print"
+                    >
+                      打印
+                    </button>
+                    <button
+                      type="reset"
+                      data-id="loginForm1"
+                      class="btn w-xs btn-default resetBtn"
+                    >
+                      重置内容
+                    </button>
+                    <button
+                      type="submit"
+                      data-id="loginForm1"
+                      class="btn w-xs btn-primary2 save"
+                    >
+                      保存
+                    </button>
+                    <button
+                      type="button"
+                      data-id="loginForm1"
+                      class="btn w-xs btn-success record hidden"
+                    >
+                      生成见证记录
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div id="witnessTable" class="col-xs-12 col-md-12 col-lg-12 hidden">
+              <div class="panel-body">
+                <form
+                  action="#"
+                  id="loginForm2"
+                  class="form-horizontal label-right"
+                >
+                  <div class="table-donwload-section">
+                    <!-- 工程编号 -->
+                    <div class="row">
+                      <div
+                        class="col-lg-12 table-order"
+                        style="font-size: 12px; text-align: left"
+                      ></div>
+                    </div>
+                    <div flex>
+                      <!-- title -->
+                      <div flex-box="1">
+                        <h3
+                          class="table-title txt-center"
+                          style="
+                            text-align: center;
+                            height: 80px;
+                            line-height: 80px;
+                            font-size: 18px;
+                          "
+                        >
+                          见证记录详情
+                        </h3>
                       </div>
                     </div>
                   </div>
                   <div class="row txt-center">
-                    <button type="reset" class="btn w-xs btn-default">
-                      重置内容
-                    </button>
-                    <button type="button" class="btn w-xs btn-primary download">
-                      下载
-                    </button>
-                    <button type="button" class="btn w-xs btn-primary2 save">
-                      保存
-                    </button>
-                    <button type="button" class="btn w-xs btn-info print">
+                    <button
+                      type="button"
+                      data-id="loginForm2"
+                      class="btn w-xs btn-info print"
+                    >
                       打印
                     </button>
-                    <button type="button" class="btn w-xs btn-success record">
-                      生成见证记录
+                    <button
+                      type="button"
+                      data-id="loginForm2"
+                      class="btn w-xs btn-primary download"
+                    >
+                      下载
+                    </button>
+
+                    <button
+                      type="button"
+                      data-id="loginForm2"
+                      class="btn w-xs btn-primary2 cancleWitness"
+                    >
+                      取消见证
                     </button>
                   </div>
                 </form>
@@ -149,6 +230,7 @@
             </div>
           </div>
         </div>
+        <!-- 模版 -->
         <script type="text/template" id="tableTemp">
           <div class="table-responsive no-border" style="text-align: center">
             <style type="text/css">
@@ -234,6 +316,14 @@
                 -ms-flex-negative: 1;
                 flex-shrink: 1;
               }
+              #loginForm2 table tr th,
+              #loginForm2 table tr td {
+                  height: 46px;
+                  line-height:23px;
+              }
+              .table-donwload-section label {
+                  font-weight: 500;
+              }
             </style>
             <!-- 测试图片 -->
             <!-- <img src="./images/a1.jpg" alt="" srcset="" crossorigin="anonymous"> -->
@@ -283,6 +373,7 @@
     <script src="vendor/clockpicker/dist/bootstrap-clockpicker.min.js"></script>
     <script src="vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
     <script src="vendor/toastr/build/toastr.min.js"></script>
+    <script src="vendor/jquery-validation/jquery.validate.min.js"></script>
 
     <!-- App scripts -->
     <script src="scripts/jquery.base64.js"></script>
@@ -303,23 +394,55 @@
     </script>
     <script>
       var queryObj = query2obj(window.location.href);
-      //proejct_id
-      //   var iqc_user_info = JSON.parse(localStorage.iqc_user_info);
-      var isShowRecord = false; // 是否显示见证记录
+      //   编辑初始
+      var exclusiveClass = "col-xs-12 col-md-12 col-lg-12";
+      var averageClass = "col-xs-12 col-md-12 col-lg-6";
+      var isEdit = !!queryObj.id;
+      var iscontract = queryObj.type === "contract";
+      var isWitness = queryObj.type === "witness";
+      var createWitnessId = "";
+
+      // contractTable
+      // witnessTable
+      // 这里用原生，方便直接替换类名
+      var contractTableEle = document.getElementById("contractTable");
+      var witnessTableEle = document.getElementById("witnessTable");
+      if (isWitness) {
+        contractTableEle.className = averageClass;
+        witnessTableEle.className = averageClass;
+      }
+      //   record
+      //   编辑状态，置灰重置按钮
+      //   type暂设置。1：有操作权限 ，2有查看权限， 3
+      if (isEdit) {
+        $(".save").html("编辑");
+        // if (userInfo && userInfo.type = 2) {
+        $(".record").removeClass("hidden");
+        // }
+      }
+      //   生成表格校验信息
+      var loginForm1Map = {
+        rules: {},
+        messages: {},
+      };
+      var loginForm2Map = {
+        rules: {},
+        messages: {},
+      };
       var tableName = "";
       var tableNum = "";
       $.ajax({
-        url: queryObj.id
+        url: isEdit
           ? "http://meterial.cxhy.cn/getRecordDetail/"
           : "http://meterial.cxhy.cn/getFormStyle/",
         type: "GET",
-        data: queryObj.id
+        data: isEdit
           ? {
               id: queryObj.id,
               target_day: queryObj.target_day,
             }
           : {
-              form_id: 1,
+              form_id: queryObj.form_id || 1,
             },
         success: function (res) {
           if (res.code == 200) {
@@ -327,75 +450,99 @@
             // 工程编号
             tableNum = tableDatas.numbers;
             tableName = tableDatas.title;
-            $(".table-donwload-section .table-order").html(tableDatas.numbers);
+            $("#loginForm1 .table-donwload-section .table-order").html(
+              tableDatas.numbers
+            );
             // title 信息
-            $(".table-donwload-section .table-title").html(tableDatas.title);
+            $("#loginForm1 .table-donwload-section .table-title").html(
+              tableDatas.title
+            );
             // 表头信息
             res.data.tableData.forEach(function (item) {
-              dataToTable(item, "#loginForm1");
+              dataToTable(item, "#loginForm1", loginForm1Map);
+              saveFn();
             });
           }
         },
       });
 
-      //   $(".table-html").hide(); // 隐藏table模板
       // 点击下载
       $(".download").click(function () {
+        var parentId = $(this).attr("data-id");
         changeImgToDataurl();
         // 处理输入框内容替换
-        var entrys = $("#loginForm1").find('input[type="text"]');
+        var entrys = $("#" + parentId).find("input[type='text']");
+        var selects = $("#" + parentId).find('input[type="checkbox"]');
         entrys = Array.prototype.slice.call(entrys);
         entrys.forEach(function (inputEle) {
+          // inputEle.checked
           var val = $(inputEle).val() || "";
           $(inputEle).siblings(".placeholder").text(val);
         });
 
-        // $(ele).find("span.placeholder").removeClass("hidden");
-        $(".table-donwload-section").wordExport(tableNum + tableName);
+        selects.each(function (idx, inputEle) {
+          var checked = inputEle.checked;
+          $(inputEle)
+            .siblings(".placeholder")
+            .text(checked ? "■" : "□");
+        });
+
+        $(".table-donwload-section").wordExport(
+          tableNum + (parentId == "loginForm2" ? "见证记录" : tableName)
+        );
         entrys.forEach(function (inputEle) {
           var val = $(inputEle).val() || "";
           $(inputEle).siblings(".placeholder").text("");
         });
-        // $(ele).find("span.placeholder").addClass("hidden");
       });
-
       // 点击保存
-      $(".save").click(function () {
-        //对 var str = $.base64.encode('123321'); 123321 进行加密
-        // var dstr = $.base64.decode(str); 对 str 进行解密
-        var datas = $("#loginForm1").serializeArray();
-        var submitData = {};
-        $(datas).each(function (idx, item) {
-          var already = submitData["sid_" + item.name] || "";
-          submitData["sid_" + item.name] =
-            (already ? already + "," : "") + item.value || "";
-        });
-        var params = {
-          form_id: 1,
-          project_id: (window.userInfo || userinfo).project_cid,
-          form_data: $.base64.encode(JSON.stringify(submitData)), // checkbox 只有选中的才会提交
-          target_day: ymd(), // 获取当前年月日
-        };
-        $.ajax({
-          url: "http://meterial.cxhy.cn/saveFormRecord/",
-          type: "POST",
-          dataType: "json",
-          contentType: "application/json",
-          data: JSON.stringify(params),
-          success: function (res) {
-            if (res.code == 200) {
-            }
-          },
-          error: function (error) {},
-        });
-      });
+      function saveFn() {
+        $("#loginForm1").validate({
+          rule: loginForm1Map.rule,
+          messages: loginForm1Map.messages,
+          submitHandler: function () {
+            //   debugger;
+            var datas = $("#loginForm1").serializeArray();
+            var submitData = {};
+            $(datas).each(function (idx, item) {
+              //   debugger;
+              var already = submitData[item.name] || "";
+              submitData[item.name] =
+                (already ? already + "," : "") + $.trim(item.value) || "";
+            });
 
-      // 点击生成见证记录
-      $($(".table-list").children("div").get(1)).hide();
+            var params = {
+              form_id: form_id.form_id || 1,
+              project_id: (window.userInfo || userinfo).project_cid,
+              form_data: $.base64.encode(JSON.stringify(submitData), "UTF-8"), // checkbox 只有选中的才会提交
+              target_day: ymd(), // 获取当前年月日
+            };
+            isEdit && (params.id = queryObj.id);
+
+            $.ajax({
+              url: "http://meterial.cxhy.cn/saveFormRecord/",
+              type: "POST",
+              dataType: "json",
+              contentType: "application/json",
+              data: JSON.stringify(params),
+              success: function (res) {
+                if (res.code == 200) {
+                  toastr && toastr.success("合同保存成功");
+                  setTimeout(function () {
+                    window.location.href = "./index-y.html";
+                  }, 1000);
+                }
+              },
+              error: function (error) {},
+            });
+          },
+        });
+      }
+
+      //非编辑才添加事件 点击生成见证记录
       $(".record").click(function () {
-        // 切换显示一个table还是两个table
-        $($(".table-list").children("div").get(0)).removeClass("col-lg-12");
-        $($(".table-list").children("div").get(0)).addClass("col-lg-6");
+        contractTableEle.className = averageClass;
+        witnessTableEle.className = averageClass;
         var params = {
           record_id: 1, //  $("#loginForm1 .table-wp .table-order").html(),
           target_day: ymd(), // 获取当前年月日
@@ -408,16 +555,26 @@
           data: JSON.stringify(params),
           success: function (res) {
             if (res.code == 200) {
-              // var tableDatas = res.data;
-              // // 工程编号
-              // $(".table-donwload-section .table-order").html(tableDatas.numbers);
-              // // title 信息
-              // $(".table-donwload-section .table-title").html(tableDatas.title);
-              // // 表头信息
+              createWitnessId = res.data.id || "";
               res.data.tableData.forEach(function (item) {
-                dataToTable(item, "#loginForm2");
+                dataToTable(item, "#loginForm2", loginForm2Map);
               });
-              $($(".table-list").children("div").get(1)).show();
+              //   不刷新 向路由中添加参数，刷新后，保持功能
+              if (iscontract) {
+                queryObj.type = "witness";
+                queryObj.id = res.data.id;
+                var query = obj2query(queryObj);
+                query = "?" + query;
+                setTimeout(function () {
+                  if (window.history) {
+                    // 支持History API
+                    history.replaceState(null, "", query);
+                  }
+                });
+              }
+              //点击过生成见证记录后，置灰
+              $(".record").addClass("hidden");
+              //   !isEdit && window.location.search;
             }
           },
           error: function (error) {},
@@ -425,7 +582,33 @@
       });
       // 点击打印
       $(".print").click(function () {
-        $("#loginForm1").jqprint();
+        var fromId = $(this).attr("data-id");
+        $("#" + fromId)
+          .find(".table-donwload-section")
+          .jqprint();
+      });
+
+      $(".cancleWitness").on("click", function () {
+        $.ajax({
+          url: "http://meterial.cxhy.cn/cancelWitness/",
+          type: "POST",
+          dataType: "json",
+          contentType: "application/json",
+          data: JSON.stringify({
+            id: createWitnessId,
+            target_day: ymd(),
+          }),
+          success: function (res) {
+            if (res.code == 200) {
+              toastr && toastr.success("取消见证记录成功！");
+              //   恢复委托表独占
+              contractTableEle.className = exclusiveClass;
+              witnessTableEle.className = exclusiveClass + " hidden";
+              $(".record").removeClass("hidden");
+            }
+          },
+          error: function (error) {},
+        });
       });
     </script>
   </body>

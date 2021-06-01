@@ -300,9 +300,9 @@ $.ajaxSetup({
     // 504: function () {
     //   alert("数据获取/输入失败，服务器没有响应。504");
     // },
-    // 500: function () {
-    //   alert("服务器有误。500");
-    // },
+    500: function () {
+      alert("服务器有误。500");
+    },
   },
 });
 
@@ -341,11 +341,11 @@ function query2obj(url) {
   return result;
 }
 
-// function obj2query(obj) {
-//   return Object.keys(obj)
-//     .map((i) => `${i}=${obj[i]}`)
-//     .join("&");
-// }
+function obj2query(obj) {
+  return Object.keys(obj)
+    .map((i) => `${i}=${obj[i]}`)
+    .join("&");
+}
 
 //退出登陆
 $(".logoutBtn").on("click", function (e) {
@@ -408,8 +408,10 @@ function menuUnit(data, num) {
     str +=
       "<li>" +
       (isChild
-        ? "<a href='#'>"
-        : "<a href='#' class='targetPoint' data-id=" + opt.id + "'>") +
+        ? "<a href='javascript:void()'>"
+        : "<a href='javascript:void()' class='targetPoint' data-id=" +
+          opt.form_id +
+          ">") +
       "<span class='nav-label'>" +
       opt.classify_name +
       "</span>" +
@@ -422,16 +424,51 @@ function menuUnit(data, num) {
   return str;
 }
 
+function getFirstData(data) {
+  var item;
+  if (data[0] && data[0].items && data[0].items.length) {
+    item = getFirstData(data[0].items);
+  } else {
+    item = data[0];
+  }
+  return item;
+  // return data[0] && data[0].items ? getFirstData(data[0].items) : data[0];
+}
+
 //动态生成分类列表
-function createList() {
+var queryObj = query2obj(window.location.href);
+function createList(cb) {
   //loading
   $.get("http://meterial.cxhy.cn/getClassifyList/", function (res) {
     var data = res.data;
+    // 初始高亮表格
+    if (window.history) {
+      var activeData = getFirstData(data);
+      queryObj.id = activeData.form_id;
+      var query = "?" + obj2query(queryObj);
+      history.replaceState(null, "", query);
+      cb && cb();
+    }
+
     var menus = getMemu(data);
-    // $("#side-menu") && $("#side-menu").html(menus);
-    // $("#side-menu").metisMenu("dispose"); //  添加内容前 要这样，官网看到的 https://mm.onokumus.com/mm-dispose.html#
     $("#side-menu").append(menus);
     $("#navigation").metisMenu();
+
+    $("#navigation").on("click", "a[data-id]", function (e) {
+      e.preventDefault();
+      //导航点击处理
+      var id = $(this).attr("data-id");
+      $("a[data-id]").each(function (idx, aele) {
+        $(aele).removeClass("hight");
+      });
+      $(this).addClass("hight");
+      if (id && window.history) {
+        queryObj.id = id;
+        var query = "?" + obj2query(queryObj);
+        history.replaceState(null, "", query);
+        cb && cb();
+      }
+    });
   });
 }
 
@@ -452,4 +489,18 @@ function ymd() {
 function goBack(setp) {
   setp = setp || -1;
   window && window.history.go(setp);
+}
+
+function encode(str) {
+  // first we use encodeURIComponent to get percent-encoded UTF-8,
+  // then we convert the percent encodings into raw bytes which
+  // can be fed into btoa.
+  return window.btoa(
+    encodeURIComponent(str).replace(
+      /%([0-9A-F]{2})/g,
+      function toSolidBytes(match, p1) {
+        return String.fromCharCode("0x" + p1);
+      }
+    )
+  );
 }
