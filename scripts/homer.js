@@ -352,41 +352,42 @@ function obj2query(obj) {
 
 //退出登陆
 $(".logoutBtn").on("click", function (e) {
-  swal(
-    {
-      title: "提示",
-      text: "确认退出登陆？",
-      // type: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#DD6B55",
-      confirmButtonText: "确认",
-      cancelButtonText: "取消",
-      closeOnConfirm: false,
-      // closeOnCancel: false,
-    },
-    function (isConfirm) {
-      if (isConfirm) {
-        //退出登陆，清除token, 跳转登陆页
-        $.ajax({
-          url: "http://meterial.cxhy.cn/logout/",
-          type: "POST",
-          dataType: "json",
-          contentType: "application/json",
-          data: "{}",
-          success: function (res) {
-            if (res.code == 200) {
-              toastr && toastr.success("已退出登陆！");
-              localStorage.setItem("iqc_user_info", "");
-              setTimeout(function () {
-                window.location.href = "./login-y.html";
-              }, 1000);
-            }
-          },
-          error: function (error) {},
-        });
+  swal &&
+    swal(
+      {
+        title: "提示",
+        text: "确认退出登陆？",
+        // type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "确认",
+        cancelButtonText: "取消",
+        closeOnConfirm: false,
+        // closeOnCancel: false,
+      },
+      function (isConfirm) {
+        if (isConfirm) {
+          //退出登陆，清除token, 跳转登陆页
+          // $.ajax({
+          //   url: "http://meterial.cxhy.cn/logout/",
+          //   type: "POST",
+          //   dataType: "json",
+          //   contentType: "application/json",
+          //   data: "{}",
+          //   success: function (res) {
+          //     if (res.code == 200) {
+          toastr && toastr.success("已退出登陆！");
+          localStorage.setItem("iqc_user_info", "");
+          setTimeout(function () {
+            window.location.href = "./login-y.html";
+          }, 1000);
+          //     }
+          //   },
+          //   error: function (error) {},
+          // });
+        }
       }
-    }
-  );
+    );
 });
 
 //递归生成菜单

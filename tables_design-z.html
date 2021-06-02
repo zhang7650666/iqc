@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="vendor/animate.css/animate.css" />
     <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="vendor/toastr/build/toastr.min.css" />
+    <link rel="stylesheet" href="vendor/sweetalert/lib/sweet-alert.css" />
     <link
       rel="stylesheet"
       href="vendor/bootstrap-datepicker-master/dist/css/bootstrap-datepicker3.min.css"
@@ -374,6 +375,7 @@
     <script src="vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
     <script src="vendor/toastr/build/toastr.min.js"></script>
     <script src="vendor/jquery-validation/jquery.validate.min.js"></script>
+    <script src="vendor/sweetalert/lib/sweet-alert.min.js"></script>
 
     <!-- App scripts -->
     <script src="scripts/jquery.base64.js"></script>
@@ -393,7 +395,7 @@
       })();
     </script>
     <script>
-      var userInfo = getUserInfo();
+      var userInfo = getUserInfo() || {};
       var queryObj = query2obj(window.location.href);
       //   编辑初始
       var exclusiveClass = "col-xs-12 col-md-12 col-lg-12";
@@ -515,7 +517,6 @@
           rule: loginForm1Map.rule,
           messages: loginForm1Map.messages,
           submitHandler: function () {
-            //   debugger;
             var datas = $("#loginForm1").serializeArray();
             var submitData = {};
             $(datas).each(function (idx, item) {
@@ -526,8 +527,8 @@
             });
 
             var params = {
-              form_id: form_id.form_id || 1,
-              project_id: userinfo.project_cid || "",
+              form_id: queryObj.form_id || 1,
+              project_id: userInfo.project_cid || "",
               form_data: $.base64.encode(JSON.stringify(submitData), "UTF-8"), // checkbox 只有选中的才会提交
               target_day: ymd(), // 获取当前年月日
             };
