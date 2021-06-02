@@ -448,26 +448,34 @@
             },
         success: function (res) {
           if (res.code == 200) {
-            var tableDatas = res.data;
+            var data = res.data;
             // 工程编号
-            tableNum = tableDatas.numbers;
-            tableName = tableDatas.title;
+            tableNum = data.numbers;
+            tableName = data.title;
             $("#loginForm1 .table-donwload-section .table-order").html(
-              tableDatas.numbers
+              data.numbers
             );
             // title 信息
             $("#loginForm1 .table-donwload-section .table-title").html(
-              tableDatas.title
+              data.title
             );
             // 表头信息
-            if (!tableDatas.tableData) {
-              res.msg && toastr && toastr.warning(res.msg);
-              return;
+            if (data.tableData) {
+              data.tableData.forEach(function (item) {
+                dataToTable(item, "#loginForm1", loginForm1Map);
+                saveFn();
+              });
             }
-            tableDatas.tableData.forEach(function (item) {
-              dataToTable(item, "#loginForm1", loginForm1Map);
-              saveFn();
-            });
+            if (data.witnessData && data.witnessData.tableData) {
+              createWitnessId = data.witnessData.id;
+              data.witnessData.tableData.forEach(function (item) {
+                dataToTable(item, "#loginForm2", loginForm2Map);
+                // saveFn();
+              });
+            }
+
+            //最后的错误信息
+            res.msg && res.msg != "ok" && toastr && toastr.warning(res.msg);
           }
         },
       });
@@ -523,7 +531,7 @@
               form_data: $.base64.encode(JSON.stringify(submitData), "UTF-8"), // checkbox 只有选中的才会提交
               target_day: ymd(), // 获取当前年月日
             };
-            isEdit && (params.id = queryObj.id);
+            isEdit && (params.record_id = queryObj.record_id);
 
             $.ajax({
               url: "http://meterial.cxhy.cn/saveFormRecord/",
@@ -595,6 +603,9 @@
       });
 
       $(".cancleWitness").on("click", function () {
+        if (createWitnessId == "") {
+          console.error("取消见证不能为空");
+        }
         $.ajax({
           url: "http://meterial.cxhy.cn/cancelWitness/",
           type: "POST",
@@ -611,6 +622,14 @@
               contractTableEle.className = exclusiveClass;
               witnessTableEle.className = exclusiveClass + " hidden";
               $(".record").removeClass("hidden");
+              if (window.history) {
+                queryObj = query2obj(window.location.href);
+                queryObj.type = "contract";
+                var query = obj2query(queryObj);
+                query = "?" + query;
+                // 支持History API
+                history.replaceState(null, "", query);
+              }
             }
           },
           error: function (error) {},
