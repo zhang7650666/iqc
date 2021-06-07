@@ -450,6 +450,10 @@
             },
         success: function (res) {
           if (res.code == 200) {
+            if (isEdit && res.data.status == 1) {
+              $(".record").addClass("hidden");
+              // $(".cancleWitness").removeClass("hidden");
+            }
             var data = res.data;
             // 工程编号
             tableNum = data.numbers;
@@ -532,7 +536,7 @@
               form_data: $.base64.encode(JSON.stringify(submitData), "UTF-8"), // checkbox 只有选中的才会提交
               target_day: ymd(), // 获取当前年月日
             };
-            isEdit && (params.record_id = queryObj.record_id);
+            isEdit && (params.record_id = queryObj.id);
 
             $.ajax({
               url: "http://meterial.cxhy.cn/saveFormRecord/",
@@ -559,7 +563,7 @@
         contractTableEle.className = averageClass;
         witnessTableEle.className = averageClass;
         var params = {
-          record_id: 1, //  $("#loginForm1 .table-wp .table-order").html(),
+          record_id: queryObj.id, //  $("#loginForm1 .table-wp .table-order").html(),
           target_day: ymd(), // 获取当前年月日
         };
         $.ajax({
@@ -577,7 +581,7 @@
               //   不刷新 向路由中添加参数，刷新后，保持功能
               if (iscontract) {
                 queryObj.type = "witness";
-                queryObj.id = res.data.id;
+                // queryObj.id = res.data.id;
                 var query = obj2query(queryObj);
                 query = "?" + query;
                 setTimeout(function () {
@@ -604,16 +608,13 @@
       });
 
       $(".cancleWitness").on("click", function () {
-        if (createWitnessId == "") {
-          console.error("取消见证不能为空");
-        }
         $.ajax({
           url: "http://meterial.cxhy.cn/cancelWitness/",
           type: "POST",
           dataType: "json",
           contentType: "application/json",
           data: JSON.stringify({
-            id: createWitnessId,
+            id: queryObj.id,
             target_day: ymd(),
           }),
           success: function (res) {
