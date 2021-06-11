@@ -4,7 +4,7 @@ function crateThead(item, rules, messages) {
     case "label":
       thHtml +=
         '<th colspan="' +
-        item.columnCount +
+        item.tagColumCount +
         '"  rowspan="' +
         item.tag_height +
         '"><label> ' +
@@ -21,7 +21,7 @@ function crateThead(item, rules, messages) {
 
       thHtml +=
         '<th colspan="' +
-        item.columnCount +
+        item.tagColumCount +
         '" rowspan="' +
         item.tag_height +
         '"><label flex><span flex-box="0">' +
@@ -50,15 +50,16 @@ function formatTableHeadItem(datas, rules, messages) {
     var htmlstr = "";
     if (Array.isArray(item)) {
       item.forEach(function (item) {
-        if (!dataMap[item.submitId]) {
-          dataMap[item.submitId] = item;
+        var submitId = parseInt(item.submitId);
+        if (!dataMap[submitId]) {
+          dataMap[submitId] = item;
         } else {
           // dataMap[item.submitId] =
           var colcount =
-            parseInt(item.columnCount) +
-            parseInt(dataMap[item.submitId].columnCount);
-          item.columnCount = colcount;
-          $.extend && $.extend(true, dataMap[item.submitId], item);
+            parseInt(item.tagColumCount) +
+            parseInt(dataMap[submitId].tagColumCount || 1);
+          item.tagColumCount = colcount;
+          $.extend && $.extend(true, dataMap[submitId], item);
         }
       });
     }
@@ -74,11 +75,8 @@ function formatTableHeadItem(datas, rules, messages) {
 function dataToTable(tableData, parentId, map) {
   // var theadHtml = "";
   var dateInits = [];
-  var theadHtml = formatTableHeadItem(
-    tableData.tableHead,
-    map.rules,
-    map.messages
-  );
+  var headData = $.extend([], tableData.tableHead);
+  var theadHtml = formatTableHeadItem(headData, map.rules, map.messages);
   // 表体信息
   var trHtml = "";
   tableData.tableBody.forEach(function (tb) {
@@ -202,11 +200,9 @@ function dataToTable(tableData, parentId, map) {
             " </div>";
           break;
       }
-
+      var columnCount = item.tagColumCount || item.columnCount;
       var colspan =
-        item.columnCount && item.columnCount > 1
-          ? "colspan=" + item.columnCount
-          : "";
+        columnCount && columnCount > 1 ? "colspan=" + columnCount : "";
       var rowspan =
         item.tag_height && item.tag_height > 1
           ? "rowspan=" + item.tag_height
