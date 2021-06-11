@@ -226,6 +226,18 @@ if ($.validator) {
     },
     "手机号码格式错误"
   ); //可以自定义默认提示信息
+  $.validator.addMethod(
+    "isCid",
+    function (value, element) {
+      var length = value.length;
+      console.log('value', value)
+      var mobile =
+        /^W((19\d{2})|(2\d{3}))\d{4}$/;
+      console.log(888, mobile.test(value))
+      return this.optional(element) || (length == 9 && mobile.test(value));
+    },
+    "工程编号必须以大写W开头 W+年份+4位数字,年份必须在(1999-2999)之间 如W20001234"
+  ); //可以自定义默认提示信息
 }
 
 // toastr 提示配置
