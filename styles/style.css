@@ -1759,6 +1759,14 @@ body {
   position: relative;
   border-bottom: 1px solid #e4e5e7;
 }
+#header:after {
+  content: '';
+  height: 0;
+  line-height: 0;
+  display: block;
+  visibility: hidden;
+  clear: both;
+}
 #menu {
   width: 180px;
   bottom: 0;
@@ -4059,4 +4067,25 @@ ul.h-list li:hover a {
 
 .td-set > * {
   margin-left: 10px;
+}
+
+
+.label-p7{
+  padding-top: 7px;
+}
+
+.clear:after {
+  content: '';
+  height: 0;
+  line-height: 0;
+  display: block;
+  visibility: hidden;
+  clear: both;
+}
+
+.rg{
+  text-align: right;
+}
+.c-p{
+  padding-left: 0px;
 }

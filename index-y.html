@@ -59,7 +59,7 @@
     <![endif]-->
 
     <!-- Header -->
-    <div id="header">
+    <div id="header" class="clear">
       <div class="color-line"></div>
       <!-- 常屏 项目名 -->
       <div id="logo" class="light-version">
@@ -116,41 +116,68 @@
     <div id="wrapper">
       <div class="content animate-panel">
         <!-- 新建分类见证表 -->
-        <div class="hpanel">
+        <!-- <div class="hpanel">
           <div class="panel-body">
-            <!-- <a  href="tables_design-z.html" class="btn btn-link">新建</a> -->
+            <a  href="tables_design-z.html" class="btn btn-link">新建</a>
             <button id="createContract" type="button" class="btn btn-primary">
               新建
             </button>
           </div>
-        </div>
+        </div> -->
 
         <!-- 见证记录 -->
-        <div class="hpanel">
+        <div class="hpanel print-wp">
           <div class="panel-body">
-            <form class="form-inline">
-              <div class="form-group">
-                <label for="target_day">日期：</label>
-                <input
-                  id="target_day"
-                  type="text"
-                  value=""
-                  class="form-control"
-                />
+            <div class="">
+              <div class="col-md-6 col-lg-6 m-b">
+                <span>工程编号:</span>
+                <span>1111111111313123</span>
               </div>
-              <div class="form-group p-l-md">
-                <label for="status">状态：</label>
-                <select class="form-control" name="account" id="status">
-                  <option value="">不限</option>
-                  <option value="0" selected="true">未见证</option>
-                  <option value="1">已见证</option>
-                </select>
+              <div class="col-md-6 add-on">
+                <span>工程编号:</span>
+                <span>1111111111313123</span>
               </div>
-              <div class="form-group p-l-md">
-                <button type="button" class="btn btn-info" id="filterTableBtn">
-                  筛选
-                </button>
-              </div>
+            </div>
+            <div class="pr-wp">
+              <h3 class="pr-name txt-center">工程名称：工程名称工程名称工程名称工程名称工程名称</h3>
+              <button id="createContract" type="button" class="btn btn-primary print-hide">
+                新建
+              </button>
+            </div>
+            <form class="form-inline print-hide">
+                <div class="form-group" style="margin-bottom: 20px;">
+                  <label >日期：</label>
+                  <input id="WHC_PayDate" name="start" type="text" placeholder="选择开始日期" data-date-format="yyyy-mm-dd" class="form-control"/>
+                  <span>~</span>
+                  <input id="WHC_PayDate2" name="end" type="text" placeholder="选择结束日期" data-date-format="yyyy-mm-dd" class="form-control" />
+                </div>
+                <div class="form-group p-l-md" style="margin-bottom: 20px;">
+                  <label for="class">分类选择：</label>
+                  <select class="form-control" name="account" id="class">
+                    <option value="">不限</option>
+                    <option value="0" selected="true">未见证</option>
+                    <option value="1">已见证</option>
+                  </select>
+                </div>
+                <div class="form-group p-l-md" style="margin-bottom: 20px;">
+                  <label for="status">报告类型：</label>
+                  <select class="form-control" name="account" id="status">
+                    <option value="">不限</option>
+                    <option value="0" selected="true">未见证</option>
+                    <option value="1">已见证</option>
+                  </select>
+                </div>
+                <div class="form-group p-l-md" style="margin-bottom: 20px;">
+                  <button type="button" class="btn btn-info" id="filterTableBtn">
+                    筛选
+                  </button>
+                </div>
+                <div class="form-group p-l-md" style="margin-bottom: 20px;">
+                  <button type="button" class="btn btn-info print" >
+                    打印列表
+                  </button>
+                </div>
+              
             </form>
             <br />
             <div class="table-responsive">
@@ -158,6 +185,7 @@
                 cellpadding="1"
                 cellspacing="1"
                 class="table table-bordered table-striped"
+                id="print"
               >
                 <thead>
                   <tr>
@@ -193,7 +221,27 @@
         </div>
       </div>
     </div>
-
+    <style>
+      .pr-wp{
+        position: relative;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      .pr-name{
+        display: inline-block;
+        line-height: 30px;
+        color: #000;
+        padding: 0px 15px;
+        font-size: 20px;
+        border-bottom: 2px solid #000;
+      }
+      
+      #createContract{
+        position: absolute;
+        top: 8px;
+        right: 0px;
+      }
+    </style>
     <!-- Vendor scripts -->
     <script src="vendor/jquery/dist/jquery.min.js"></script>
     <script src="vendor/jquery-ui/jquery-ui.min.js"></script>
@@ -215,8 +263,20 @@
     <script src="vendor/clockpicker/dist/bootstrap-clockpicker.min.js"></script>
     <script src="vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
     <!-- App scripts -->
+    <script src="scripts/jquery.jqprint-0.3.js"></script>
     <script src="scripts/homer.js"></script>
-
+    <script>
+      // 解决打印报错
+      jQuery.browser = {};
+      (function () {
+        jQuery.browser.msie = false;
+        jQuery.browser.version = 0;
+        if (navigator.userAgent.match(/MSIE ([0-9]+)./)) {
+          jQuery.browser.msie = true;
+          jQuery.browser.version = RegExp.$1;
+        }
+      })();
+    </script>
     <script>
       var queryObj = {};
       //生成左侧列表
@@ -226,17 +286,31 @@
           getList();
         });
       //初始化日期
-      $("#target_day").datepicker({
-        language: "zh-CN",
-        autoclose: true, //选中之后自动隐藏日期选择框
-        // clearBtn: true, //清除按钮
-        todayBtn: true, //今日按钮
-        todayHighlight: true,
-        format: "yyyy-mm-dd",
-        // viewDate: ymd(),
-      });
-      $("#target_day").val(ymd());
-
+      $('#WHC_PayDate').datepicker({
+        language: 'zh-CN', //语言
+        // todayBtn : "linked",//显示今天按钮
+        autoclose : true,//选择后自动关闭
+        todayHighlight : true,//今天日期高亮
+        clearBtn: true//清除按钮
+        // endDate : new Date() //设置结束时间
+    }).on('changeDate',function(e){
+        var startTime = e.date;
+        $('#WHC_PayDate2').datepicker('setStartDate',startTime);
+        
+    });
+    //日期选择器 选择结束日期
+    $('#WHC_PayDate2').datepicker({
+        language: 'zh-CN', //语言
+        // todayBtn : "linked",//显示今天按钮
+        autoclose : true,//选择后自动关闭
+        clearBtn: true,//清除按钮
+        todayHighlight : true//今天日期高亮
+        // endDate : new Date() //设置结束时间
+    }).on('changeDate',function(e){
+        var endTime = e.date;
+        $('#WHC_PayDate').datepicker('setEndDate',endTime);
+        
+    });
       $("#createContract").click(function () {
         window.location.href = "./tables_design-z.html?form_id=" + queryObj.id;
       });
@@ -273,21 +347,26 @@
         !data.length &&
           (trs =
             '<tr class="txt-center"><td colspan="6">--没有数据--</td></tr>');
-        var target_day = $("#target_day").val();
+        var target_start_day =  $('#WHC_PayDate').val(); // 开始日期
+        var target_end_day = $('#WHC_PayDate2').val(); // 结束日期
         $(data).each(function (idx, item) {
           var isWitness = item.status == 1;
           var readDetail =
             " <a href='tables_design-z.html?id=" +
             item.id +
-            "&target_day=" +
-            target_day +
+            "&target_start_day=" +
+            target_start_day +
+            "&target_end_day=" +
+            target_end_day +
             "&type=contract'> " +
             "合同详情</a>";
           var witnessDetail =
             " <a href='tables_design-z.html?id=" +
             item.id +
-            "&target_day=" +
-            target_day +
+            "&target_start_day=" +
+            target_start_day +
+            "&target_end_day=" +
+            target_end_day +
             "&type=witness'> " +
             "见证详情</a>";
 
@@ -326,7 +405,8 @@
             contentType: "application/json",
             data: JSON.stringify({
               id: id,
-              target_day: target_day,
+              target_start_day: target_start_day,
+              target_end_day: target_end_day
             }),
             success: function (res) {
               if (res.code == 200) {
@@ -342,12 +422,14 @@
       //获取表格数据
       function getList() {
         var status = $("#status").val() || 0;
-        var target_day = $("#target_day").val();
+        var target_start_day =  $('#WHC_PayDate').val(); // 开始日期
+        var target_end_day = $('#WHC_PayDate2').val(); // 结束日期
         $.get(
           "http://meterial.cxhy.cn/getRecordList/",
           {
             status: status,
-            target_day: target_day,
+            target_start_day: target_start_day,
+            target_end_day: target_end_day,
             form_id: queryObj.id,
           },
           function (res) {
@@ -364,6 +446,13 @@
 
       $("#filterTableBtn").on("click", function () {
         getList();
+      });
+
+      // 点击打印
+      $(".print").click(function () {
+        $(".print-hide").hide();
+        $(".print-wp").jqprint();
+        $(".print-hide").show();
       });
     </script>
   </body>

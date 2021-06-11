@@ -368,23 +368,23 @@ $(".logoutBtn").on("click", function (e) {
       function (isConfirm) {
         if (isConfirm) {
           //退出登陆，清除token, 跳转登陆页
-          // $.ajax({
-          //   url: "http://meterial.cxhy.cn/logout/",
-          //   type: "POST",
-          //   dataType: "json",
-          //   contentType: "application/json",
-          //   data: "{}",
-          //   success: function (res) {
-          //     if (res.code == 200) {
-          toastr && toastr.success("已退出登陆！");
-          localStorage.setItem("iqc_user_info", "");
-          setTimeout(function () {
-            window.location.href = "./login-y.html";
-          }, 1000);
-          //     }
-          //   },
-          //   error: function (error) {},
-          // });
+          $.ajax({
+            url: "http://meterial.cxhy.cn/logout/",
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json",
+            data: "{}",
+            success: function (res) {
+              if (res.code == 200) {
+                toastr && toastr.success("已退出登陆！");
+                localStorage.setItem("iqc_user_info", "");
+                setTimeout(function () {
+                  window.location.href = "./login-y.html";
+                }, 1000);
+              }
+            },
+            error: function (error) {},
+          });
         }
       }
     );
@@ -413,8 +413,8 @@ function menuUnit(data, num) {
       "<li>" +
       (isChild
         ? "<a href='javascript:void()'>"
-        : "<a href='javascript:void()' class='targetPoint' data-id=" +
-          opt.form_id +
+        : "<a href='javascript:void()' class='targetPoint' data-form_id=" + opt.form_id + "  data-id=" +
+          opt.id +
           ">") +
       "<span class='nav-label'>" +
       opt.classify_name +
@@ -465,12 +465,14 @@ function createList(cb) {
       e.preventDefault();
       //导航点击处理
       var id = $(this).attr("data-id");
+      var form_id = $(this).attr("data-form_id");
       $("a[data-id]").each(function (idx, aele) {
         $(aele).removeClass("hight");
       });
       $(this).addClass("hight");
       if (id && window.history) {
         queryObj.id = id;
+        queryObj.form_id = form_id;
         var query = "?" + obj2query(queryObj);
         history.replaceState(null, "", query);
         cb && cb();
