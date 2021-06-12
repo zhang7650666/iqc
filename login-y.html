@@ -52,7 +52,7 @@
                 id="loginForm"
                 class="form-horizontal label-right"
               >
-                <div class="form-group pass-hidden hidden">
+                <div class="form-group phone-hidden">
                   <label class="col-xs-3 control-label" for="project_cid"
                     >工程编号</label
                   >
@@ -70,7 +70,7 @@
                 </div>
 
                 <!-- class="hidden" -->
-                <div class="form-group">
+                <div class="form-group pass-hidden hidden">
                   <label class="col-xs-3 control-label" for="phone_num"
                     >手机号</label
                   >
@@ -87,7 +87,7 @@
                     <div class="error-block-phone_num text-danger"></div>
                   </div>
                 </div>
-                <div class="form-group phone-hidden">
+                <div class="form-group">
                   <label class="col-xs-3 control-label" for="password"
                     >密码</label
                   >
@@ -228,44 +228,52 @@
         onfocusout: false,
         // focusCleanup: true, // 当未通过验证的元素获得焦点时,并移除错误提示 （避免和 focusInvalid.一起使用）
         submitHandler: function (form) {
-          var formData = {};
-          var t = $(form).serializeArray();
-          $.each(t, function () {
-            if (this.value) {
-              formData[this.name] = this.value;
-            }
-          });
-          formData.password = formData.password ? hex_md5(formData.password) || '';
-          formData.verify_code = "112233";
-          // formData.project_cid = "W20219999";
-          $.ajax({
-            url: "http://meterial.cxhy.cn/login/",
-            type: "POST",
-            dataType: "json",
-            contentType: "application/json",
-            data: JSON.stringify(formData),
-            success: function (res) {
-              //跳转至home页
-              if (res.code == 200) {
-                localStorage.setItem(
-                  "iqc_user_info",
-                  JSON.stringify({
-                    token: res.data.token || "",
-                    project_cid: res.data.project_cid || "",
-                    type: res.data.type,
-                    id: res.data.id || "",
-                    projectInfo: res.data.projectInfo,
-                  })
-                );
-
-                window.location.href =
-                  res.data.project_checked == 1
-                    ? "./index-y.html"
-                    : "./perfection-y.html";
+          try {
+            var formData = {};
+            var t = $(form).serializeArray();
+            $.each(t, function () {
+              if (this.value) {
+                formData[this.name] = this.value;
               }
-            },
-            error: function (error) {},
-          });
+            });
+            formData.password = formData.password
+              ? hex_md5(formData.password)
+              : "";
+            formData.verify_code = "112233";
+            // formData.project_cid = "W20219999";
+            $.ajax({
+              url: "http://meterial.cxhy.cn/login/",
+              type: "POST",
+              dataType: "json",
+              contentType: "application/json",
+              data: JSON.stringify(formData),
+              success: function (res) {
+                //跳转至home页
+                if (res.code == 200) {
+                  localStorage.setItem(
+                    "iqc_user_info",
+                    JSON.stringify({
+                      token: res.data.token || "",
+                      project_cid: res.data.project_cid || "",
+                      type: res.data.type,
+                      id: res.data.id || "",
+                      projectInfo: res.data.projectInfo,
+                    })
+                  );
+
+                  window.location.href =
+                    res.data.project_checked == 1
+                      ? "./index-y.html"
+                      : "./perfection-y.html";
+                }
+              },
+              error: function (error) {},
+            });
+          } catch (e) {
+            // toastr.warning()
+            return false;
+          }
+          return false;
         },
         errorPlacement: function (error, element) {
           var name = $(element).attr("name");
