@@ -130,6 +130,7 @@
               <div class="row create-item"></div>
               <div class="p-t-md txt-center">
                 <button type="button" class="btn btn-info">返回列表</button>
+                <button type="reset" class="btn btn-default">重置表单</button>
                 <button type="submit" class="btn btn-primary m-l-lg">
                   新建表单
                 </button>
@@ -262,7 +263,7 @@
       var messages = {};
       formData.forEach(function (item) {
         formStr +=
-          '<div class="form-group col-md-6 col-lg-6">\
+          '<div class="form-group col-md-6 col-lg-4">\
           <label class="col-xs-4 control-label label-p7" for="' +
           item.key +
           '">' +

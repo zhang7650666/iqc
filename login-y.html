@@ -235,9 +235,9 @@
               formData[this.name] = this.value;
             }
           });
-          formData.password = hex_md5(formData.password);
+          formData.password = formData.password ? hex_md5(formData.password) || '';
           formData.verify_code = "112233";
-          formData.project_cid = "W20219999";
+          // formData.project_cid = "W20219999";
           $.ajax({
             url: "http://meterial.cxhy.cn/login/",
             type: "POST",
