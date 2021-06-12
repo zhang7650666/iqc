@@ -2743,9 +2743,9 @@ body.page-small #menu {
 body.page-small #wrapper {
   margin-left: 0;
 }
-body.page-small.show-sidebar #menu {
+/* body.page-small.show-sidebar #menu {
   margin-left: 0;
-}
+} */
 body.page-small.show-sidebar #wrapper {
   margin-left: 180px;
 }
