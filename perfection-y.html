@@ -190,7 +190,7 @@
             }
           });
 
-          formData.group_cid = userInfo.project_cid;
+          formData.group_cid = userInfo.project_cid || "";
           // 保存工程单位信息
           if (submitFlag) {
             submitFlag = false;
