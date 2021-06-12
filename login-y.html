@@ -186,7 +186,7 @@
             // minlength: 6,
             // maxlength: 20,
             // regex: "(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,10}$", //正则
-            isCid: true
+            isCid: true,
           },
           password: {
             required: true,
@@ -206,7 +206,8 @@
         messages: {
           project_cid: {
             required: "请输入工程编号",
-            isCid: "工程编号必须以大写W开头 W+年份+4位数字,年份必须在(1999-2999)之间 如W20001234",
+            isCid:
+              "工程编号必须以大写W开头 W+年份+4位数字,年份必须在(1999-2999)之间 如W20001234",
             //   "密码必须包含大小写字母和数字的组合，不能使用特殊字符，长度在8-10之间",
           },
           password: {
@@ -236,7 +237,7 @@
           });
           formData.password = hex_md5(formData.password);
           formData.verify_code = "112233";
-          formData.project_cid = "W20219999"
+          formData.project_cid = "W20219999";
           $.ajax({
             url: "http://meterial.cxhy.cn/login/",
             type: "POST",
@@ -252,8 +253,11 @@
                     token: res.data.token || "",
                     project_cid: res.data.project_cid || "",
                     type: res.data.type,
+                    id: res.data.id || "",
+                    projectInfo: res.data.projectInfo,
                   })
                 );
+
                 window.location.href =
                   res.data.project_checked == 1
                     ? "./index-y.html"

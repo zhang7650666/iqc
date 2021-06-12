@@ -104,7 +104,7 @@
         </div>
       </nav>
     </div>
-    
+
     <!-- Navigation -->
     <aside id="menu">
       <div id="navigation">
@@ -117,82 +117,29 @@
       <div class="content animate-panel">
         <div class="hpanel">
           <div class="panel-body">
-            <div class="row">
-              <div class="col-md-6 col-lg-6 m-b">
-                <!-- <span class="col-sm-3 col-md-3 rg">工程编号:</span>
-                <span class="col-sm-9 col-md-9 c-p">1111111111313123</span> -->
-                <span>工程编号:</span>
-                <span>1111111111313123</span>
-              </div>
-              <div class="col-md-6 col-lg-6">
-                <span>工程编号:</span>
-                <span>1111111111313123</span>
-              </div>
-            </div>
-            <div>
-              <h3 class="txt-center">工程名称：工程名称工程名称工程名称工程名称工程名称</h3>
-            </div>
-          </div>
-        </div>
-        <!-- 新建分类见证表 -->
-        <div class="hpanel">
-          <div class="panel-body">
-            <!-- <a  href="tables_design-z.html" class="btn btn-link">新建</a> -->
-            <button id="createContract" type="button" class="btn btn-primary">
-              新建表单
-            </button>
-            <button id="checkOtherForm" type="button" class="btn btn-primary pull-right">
-              产看其他表格
-            </button>
+            <ul id="unit-info-box" class="l-s-n line34"></ul>
           </div>
         </div>
 
         <!-- 见证记录 -->
         <div class="hpanel print-wp">
+          <div class="panel-heading"></div>
           <div class="panel-body">
-            
-            <form 
-              action="#"
-              id="loginForm"
-              class="form-horizontal label-right">
-              <div class="row create-item">
-                <!-- <div class="form-group col-md-6 col-lg-4">
-                  <label class="col-xs-3 control-label label-p7" for="phone_num">手机号</label>
-                  <div class="col-xs-9">
-                    <input
-                      type="tel"
-                      placeholder="请输入项目绑定手机号"
-                      required=""
-                      value=""
-                      name="phone_num"
-                      class="form-control"
-                      maxlength="11"
-                    />
-                    <div class="error-block-phone_num text-danger"></div>
-                  </div>
-                </div> -->
-                
-              </div>
-              <div class="row login-btn-group p-t-md">
-                <div class="col-xs-6 col-xs-offset-3">
-                  <button
-                    type="submit"
-                    class="
-                      btn btn-default btn-block btn-pass
-                      login-type-btn
-                    "
-                    data-type="pass"
-                  >
-                    密码登录
-                  </button>
-                </div>
+            <h3 class="txt-center p-b-lg">新建表单</h3>
+            <form action="#" id="loginForm" class="form-horizontal label-right">
+              <div class="row create-item"></div>
+              <div class="p-t-md txt-center">
+                <button type="button" class="btn btn-info">返回列表</button>
+                <button type="submit" class="btn btn-primary m-l-lg">
+                  新建表单
+                </button>
               </div>
             </form>
           </div>
         </div>
       </div>
     </div>
-    
+
     <!-- Vendor scripts -->
     <script src="vendor/jquery/dist/jquery.min.js"></script>
     <script src="vendor/jquery-ui/jquery-ui.min.js"></script>
@@ -230,75 +177,70 @@
       })();
     </script>
     <script>
-
+      getUnitDetail();
       //生成左侧列表
       createList &&
         createList(function () {
           queryObj = query2obj(window.location.href);
         });
-      
-      // 点击新建表
-      $("#createContract").click(function () {
-        window.location.href = "./tables_design-z.html?form_id=" + queryObj.id;
-      });
 
       var formData = [
         {
-          label: '使用部位',
-          key: 'usedPart',
-          value: '111',
+          label: "使用部位",
+          key: "usedPart",
+          value: "111",
         },
         {
-          label: '试件编号',
-          key: 'specimenNumber',
-          value: '222',
+          label: "试件编号",
+          key: "specimenNumber",
+          value: "222",
         },
         {
-          label: '样品名称',
-          key: 'sampleName',
-          value: '333',
+          label: "样品名称",
+          key: "sampleName",
+          value: "333",
         },
         {
-          label: '试件品种',
-          key: 'specimenType',
-          value: '444',
+          label: "试件品种",
+          key: "specimenType",
+          value: "444",
         },
         {
-          label: '规格型号(牌号)',
-          key: 'modelName',
-          value: '555',
+          label: "规格型号(牌号)",
+          key: "modelName",
+          value: "555",
         },
         {
-          label: '代表数量',
-          key: 'quantity',
-          value: '666',
+          label: "代表数量",
+          key: "quantity",
+          value: "666",
         },
         {
-          label: '材料进厂时间',
-          key: 'entryTime',
-          value: '777',
+          label: "材料进厂时间",
+          key: "entryTime",
+          value: "777",
         },
         {
-          label: '出厂编号',
-          key: 'factoryNumber',
-          value: '888',
+          label: "出厂编号",
+          key: "factoryNumber",
+          value: "888",
         },
         {
-          label: '生产厂家',
-          key: 'factoryName',
-          value: '999',
+          label: "生产厂家",
+          key: "factoryName",
+          value: "999",
         },
         {
-          label: '取样组数',
-          key: 'samplingQuantity',
-          value: '101',
+          label: "取样组数",
+          key: "samplingQuantity",
+          value: "101",
         },
         {
-          label: '取样地点',
-          key: 'samplingAddress',
-          value: '102',
+          label: "取样地点",
+          key: "samplingAddress",
+          value: "102",
         },
-      ]
+      ];
       // var formData = {
       //   usedPart:	'string', //	Y	使用部位
       //   specimenNumber:	'string', // 	Y	试件编号
@@ -315,35 +257,49 @@
       //   testStatus:	'int',//	Y	检验状态(0：见证，1：复试)
       //   oriTestNumber: 'string', //	N	原试验编号(testStatus=1时，需要提交)
       // }
-      var formStr = '';
+      var formStr = "";
       var rules = {};
       var messages = {};
-      formData.forEach(function(item) {
-        formStr += '<div class="form-group col-md-6 col-lg-6">\
-          <label class="col-xs-4 control-label label-p7" for="'+ item.key +'">'+ item.label +'</label>\
+      formData.forEach(function (item) {
+        formStr +=
+          '<div class="form-group col-md-6 col-lg-6">\
+          <label class="col-xs-4 control-label label-p7" for="' +
+          item.key +
+          '">' +
+          item.label +
+          '</label>\
           <div class="col-xs-8">\
             <input\
               type="text"\
-              placeholder="请输入'+ item.label +'"\
+              placeholder="请输入' +
+          item.label +
+          '"\
               required=""\
-              value="'+item.value+'"\
-              name="'+ item.key +'"\
+              value="' +
+          item.value +
+          '"\
+              name="' +
+          item.key +
+          '"\
               class="form-control"\
             />\
-            <div class="error-block-'+item.key+' text-danger"></div>\
+            <div class="error-block-' +
+          item.key +
+          ' text-danger"></div>\
           </div>\
-        </div>'
-        rules[item.key] = {required: true};
-        var errTips = item.label + '不能为空';
-        messages[item.key] = {required: errTips}
-      })
-      var radioStr = '<div class="col-md-6 col-lg-6 txt-center">\
+        </div>';
+        rules[item.key] = { required: true };
+        var errTips = item.label + "不能为空";
+        messages[item.key] = { required: errTips };
+      });
+      var radioStr =
+        '<div class="col-md-6 col-lg-6 txt-center">\
           <div class="radio col-xs-4"></div>\
           <div class="radio col-xs-3"><label> <input type="radio" checked value="0" id="optionsRadios1" name="testStatus"> 见证 </label></div>\
           <div class="radio col-xs-3"><label> <input type="radio" value="1" id="optionsRadios2" name="testStatus"> 复试 </label></div>\
-      </div>'
-      $('.create-item').html(formStr)
-      $('.create-item').append(radioStr)
+      </div>';
+      $(".create-item").html(formStr);
+      $(".create-item").append(radioStr);
       // 提交校验
       $("#loginForm").validate({
         rules: rules,
@@ -351,20 +307,21 @@
         onfocusout: false,
         // focusCleanup: true, // 当未通过验证的元素获得焦点时,并移除错误提示 （避免和 focusInvalid.一起使用）
         submitHandler: function (form) {
-          var formData = {}
+          var formData = {};
           var t = $(form).serializeArray();
-          for(var i = 0; i < t.length; i++) {
-            if(t[i].name == 'testStatus' && t[i].value == 1){
+          for (var i = 0; i < t.length; i++) {
+            if (t[i].name == "testStatus" && t[i].value == 1) {
               t.push({
-                name: 'oriTestNumber',
+                name: "oriTestNumber",
                 value: 66666,
-              })
+              });
             }
             formData[t[i].name] = t[i].value;
           }
           localStorage.setItem("form_style_query", JSON.stringify(formData));
           var queryObj = query2obj(window.location.href);
-          window.location.href = "./tables_design-z.html?" + obj2query(queryObj)
+          window.location.href =
+            "./tables_design-z.html?" + obj2query(queryObj);
         },
         errorPlacement: function (error, element) {
           var name = $(element).attr("name");
@@ -372,7 +329,6 @@
         },
         errorElement: "span",
       });
-      
     </script>
   </body>
 </html>
