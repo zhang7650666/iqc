@@ -452,8 +452,8 @@
         classifyId:	10, // 	Y	分类id
       }
       var formData = Object.assign(formStyle, form_style_query)
-      
-      $.ajax({
+      if(!isEdit) {
+        $.ajax({
         url: "http://meterial.cxhy.cn/getFormStyle/",
         dataType: "json",
         contentType: "application/json",
@@ -461,10 +461,6 @@
         data: JSON.stringify(formData),
         success: function (res) {
           if (res.code == 200) {
-            if (isEdit && res.data.status == 1) {
-              $(".record").addClass("hidden");
-              // $(".cancleWitness").removeClass("hidden");
-            }
             var data = res.data;
             // 工程编号
             tableNum = data.numbers;
@@ -496,59 +492,55 @@
           }
         },
       });
+      }
       
-      // $.ajax({
-      //   url: isEdit
-      //     ? "http://meterial.cxhy.cn/getRecordDetail/"
-      //     : "http://meterial.cxhy.cn/getFormStyle/",
-      //     dataType: "json",
-      //     contentType: "application/json",
-      //   type: isEdit ? "GET" : "POST",
-      //   data: isEdit
-      //     ? {
-      //         id: queryObj.id,
-      //         target_day: queryObj.target_day,
-      //       }
-      //     : {
-      //         form_id: queryObj.form_id || 1,
-      //       },
-      //   success: function (res) {
-      //     if (res.code == 200) {
-      //       if (isEdit && res.data.status == 1) {
-      //         $(".record").addClass("hidden");
-      //         // $(".cancleWitness").removeClass("hidden");
-      //       }
-      //       var data = res.data;
-      //       // 工程编号
-      //       tableNum = data.numbers;
-      //       tableName = data.title;
-      //       $("#loginForm1 .table-donwload-section .table-order").html(
-      //         data.numbers
-      //       );
-      //       // title 信息
-      //       $("#loginForm1 .table-donwload-section .table-title").html(
-      //         data.title
-      //       );
-      //       // 表头信息
-      //       if (data.tableData) {
-      //         data.tableData.forEach(function (item) {
-      //           dataToTable(item, "#loginForm1", loginForm1Map);
-      //           saveFn();
-      //         });
-      //       }
-      //       if (data.witnessData && data.witnessData.tableData) {
-      //         createWitnessId = data.witnessData.id;
-      //         data.witnessData.tableData.forEach(function (item) {
-      //           dataToTable(item, "#loginForm2", loginForm2Map);
-      //           // saveFn();
-      //         });
-      //       }
+      if(isEdit) {
+        $.ajax({
+          url: "http://meterial.cxhy.cn/getRecordDetail/",
+          type: "GET",
+          data: {
+                id: queryObj.id,
+                target_day: ymd()
+              },
+          success: function (res) {
+            if (res.code == 200) {
+              if (isEdit && res.data.status == 1) {
+                $(".record").addClass("hidden");
+                // $(".cancleWitness").removeClass("hidden");
+              }
+              var data = res.data;
+              // 工程编号
+              tableNum = data.numbers;
+              tableName = data.title;
+              $("#loginForm1 .table-donwload-section .table-order").html(
+                data.numbers
+              );
+              // title 信息
+              $("#loginForm1 .table-donwload-section .table-title").html(
+                data.title
+              );
+              // 表头信息
+              if (data.tableData) {
+                data.tableData.forEach(function (item) {
+                  dataToTable(item, "#loginForm1", loginForm1Map);
+                  saveFn();
+                });
+              }
+              if (data.witnessData && data.witnessData.tableData) {
+                createWitnessId = data.witnessData.id;
+                data.witnessData.tableData.forEach(function (item) {
+                  dataToTable(item, "#loginForm2", loginForm2Map);
+                  // saveFn();
+                });
+              }
 
-      //       //最后的错误信息
-      //       res.msg && res.msg != "ok" && toastr && toastr.warning(res.msg);
-      //     }
-      //   },
-      // });
+              //最后的错误信息
+              res.msg && res.msg != "ok" && toastr && toastr.warning(res.msg);
+            }
+          },
+        });
+      }
+      
 
       // 点击下载
       $(".download").click(function () {
