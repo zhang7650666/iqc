@@ -230,10 +230,9 @@ if ($.validator) {
     "isCid",
     function (value, element) {
       var length = value.length;
-      console.log('value', value)
-      var mobile =
-        /^W((19\d{2})|(2\d{3}))\d{4}$/;
-      console.log(888, mobile.test(value))
+      console.log("value", value);
+      var mobile = /^W((19\d{2})|(2\d{3}))\d{4}$/;
+      console.log(888, mobile.test(value));
       return this.optional(element) || (length == 9 && mobile.test(value));
     },
     "工程编号必须以大写W开头 W+年份+4位数字,年份必须在(1999-2999)之间 如W20001234"
@@ -425,7 +424,9 @@ function menuUnit(data, num) {
       "<li>" +
       (isChild
         ? "<a href='javascript:void()'>"
-        : "<a href='javascript:void()' class='targetPoint' data-form_id=" + opt.form_id + "  data-id=" +
+        : "<a href='javascript:void()' class='targetPoint' data-form_id=" +
+          opt.form_id +
+          "  data-id=" +
           opt.id +
           ">") +
       "<span class='nav-label'>" +
@@ -524,4 +525,34 @@ function encode(str) {
       }
     )
   );
+}
+
+// 单位信息
+var unitNameMap = {
+  cid: "工程编号",
+  construction_group: "施工单位",
+  entrust_group: "委托单位",
+  witness_group: "见证单位",
+};
+function getUnitDetail() {
+  if (!userInfo) {
+    return;
+  }
+  if (userInfo.projectInfo) {
+    var units = [];
+    for (var key in unitNameMap) {
+      var unit = userInfo.projectInfo[key];
+      unit &&
+        units.push(
+          '<li class="width-50 pull-right">' +
+            unitNameMap[key] +
+            "：" +
+            unit +
+            "</li>"
+        );
+    }
+    $("#unit-info-box").html(units.join(""));
+    userInfo.projectInfo.name &&
+      $("#project-title").html(userInfo.projectInfo.name);
+  }
 }
