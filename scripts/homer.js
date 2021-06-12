@@ -416,15 +416,18 @@ function getMemu(data, num) {
 
 function menuUnit(data, num) {
   var str = "";
+  var queryObj = query2obj(window.location.href);
   $.each(data, function (idx, opt) {
     var isChild = opt.items && opt.items.length ? true : false;
     var child = isChild ? getMemu(opt.items, num) : "";
     // "<a href='#' class='targetPoint' data-id=" + opt.id + "'>"
+    console.log('opt', opt.id)
+    var isActive = queryObj.classifyId == opt.id ? 'active': '';
     str +=
-      "<li>" +
+      "<li class='"+isActive+"'>" +
       (isChild
         ? "<a href='javascript:void()'>"
-        : "<a href='javascript:void()' class='targetPoint' data-form_id=" +
+        : "<a href='javascript:void()' class='targetPoint "+ (isActive ? 'hight' : '') +"' data-form_id=" +
           opt.form_id +
           "  data-id=" +
           opt.id +
@@ -464,7 +467,8 @@ function createList(cb) {
     // 初始高亮表格
     var activeData = getFirstData(data);
     if (window.history && activeData) {
-      queryObj.id = activeData.form_id || "";
+      queryObj.classifyId = activeData.id || ""; // classId
+      queryObj.form_id = activeData.form_id || "";
       var query = "?" + obj2query(queryObj);
       history.replaceState(null, "", query);
       cb && cb();

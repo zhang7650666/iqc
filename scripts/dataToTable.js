@@ -174,7 +174,7 @@ function dataToTable(tableData, parentId, map) {
               // joint = "";
               break;
           }
-          var ids = (item.value || "").split(",").filter(function (v) {
+          var ids = (item.value.toString() || "").split(",").filter(function (v) {
             return v;
           });
           (item.options || []).forEach(function (checkItem) {
@@ -192,6 +192,7 @@ function dataToTable(tableData, parentId, map) {
               "</label>" +
               joint;
           });
+          
           tdHtml +=
             '<div style="padding:0 15px;" class="' +
             className +

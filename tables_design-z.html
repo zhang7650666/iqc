@@ -400,7 +400,7 @@
       //   编辑初始
       var exclusiveClass = "col-xs-12 col-md-12 col-lg-12";
       var averageClass = "col-xs-12 col-md-12 col-lg-6";
-      var isEdit = !!queryObj.id;
+      var isEdit = !!queryObj.id; // 从首页跳转过来叫编辑
       var iscontract = queryObj.type === "contract";
       var isWitness = queryObj.type === "witness";
       var createWitnessId = "";
@@ -448,8 +448,8 @@
       var form_style_query = JSON.parse(localStorage.getItem("form_style_query"));
       var formStyle = {
         token:	userInfo.token, //	Y	用户临时标识
-        form_id: 	queryObj.form_id || 1, // 	Y	表格样式id
-        classifyId:	10, // 	Y	分类id
+        form_id: 	queryObj.form_id || 8, // 	Y	表格样式id
+        classifyId:	queryObj.classifyId, // 	Y	分类id
       }
       var formData = Object.assign(formStyle, form_style_query)
       if(!isEdit) {
