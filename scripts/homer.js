@@ -488,7 +488,7 @@ function createList(cb) {
       });
       $(this).addClass("hight");
       if (id && window.history) {
-        queryObj.id = id;
+        queryObj.classifyId = id;
         queryObj.form_id = form_id;
         var query = "?" + obj2query(queryObj);
         history.replaceState(null, "", query);

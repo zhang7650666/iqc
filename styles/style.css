@@ -1930,6 +1930,12 @@ body {
   .fixed-footer.show-sidebar .footer {
     left: 181px;
   }
+  body.page-small.show-sidebar #menu {
+    margin-left: -180px;
+  }
+  body.page-small.show-sidebar #wrapper {
+    margin-left: 0px;
+  }
 }
 #right-sidebar {
   background-color: #fff;
@@ -2746,9 +2752,9 @@ body.page-small #wrapper {
 /* body.page-small.show-sidebar #menu {
   margin-left: 0;
 } */
-body.page-small.show-sidebar #wrapper {
+/* body.page-small.show-sidebar #wrapper {
   margin-left: 180px;
-}
+} */
 a {
   cursor: pointer;
   color: #34495e;
