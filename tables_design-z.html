@@ -141,28 +141,28 @@
                     <button
                       type="button"
                       data-id="loginForm1"
-                      class="btn w-xs btn-info print"
+                      class="btn w-xs btn-info print m-l-lg"
                     >
                       打印
                     </button>
                     <button
                       type="reset"
                       data-id="loginForm1"
-                      class="btn w-xs btn-default resetBtn"
+                      class="btn w-xs btn-default resetBtn m-l-lg"
                     >
                       重置内容
                     </button>
                     <button
                       type="submit"
                       data-id="loginForm1"
-                      class="btn w-xs btn-primary2 save"
+                      class="btn w-xs btn-primary2 save m-l-lg"
                     >
                       保存
                     </button>
                     <button
                       type="button"
                       data-id="loginForm1"
-                      class="btn w-xs btn-success record hidden"
+                      class="btn w-xs btn-success record hidden m-l-lg"
                     >
                       生成见证记录
                     </button>
@@ -236,10 +236,11 @@
           <div class="no-border" style="text-align: center">
             <style type="text/css">
               .table-header tr th {
-                /* border: 1px solid #fff; */
-                /* text-align: left; */
-                /* width: 16%; */
-                padding: 0px;
+                border: 1px solid #fff; 
+                text-align: left;
+                width: 16%;
+                font-size: 12px;
+                /* padding: 0px; */
               }
               .font-weight {
                   font-weight: 600;
@@ -264,10 +265,9 @@
               }
 
               .table-header {
-                /* border: 1px solid #fff; */
-                font-size: 12px;
-                width: 100%;
+                border: 1px solid #fff;
               }
+             
 
               .table-desc {
                 font-size: 12px;
@@ -585,15 +585,15 @@
               submitData[item.name] =
                 (already ? already + "," : "") + $.trim(item.value) || "";
             });
-
             var params = {
+              classifyId: queryObj.classifyId || 1,
               form_id: queryObj.form_id || 1,
               project_id: userInfo.project_cid || "",
               form_data: $.base64.encode(JSON.stringify(submitData), "UTF-8"), // checkbox 只有选中的才会提交
               target_day: ymd(), // 获取当前年月日
             };
             isEdit && (params.record_id = queryObj.id);
-
+            console.log('请求参数', params, submitData)
             $.ajax({
               url: "http://meterial.cxhy.cn/saveFormRecord/",
               type: "POST",

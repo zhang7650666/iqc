@@ -306,6 +306,7 @@ $.ajaxSetup({
     var res = XMLHttpRequest.responseText;
     var jsonData = JSON.parse(res);
     if (errorCodeMap[jsonData.code]) {
+
       toastr && toastr.warning(errorCodeMap[jsonData.code]);
     }
     //正常情况就不统一处理了
@@ -421,7 +422,6 @@ function menuUnit(data, num) {
     var isChild = opt.items && opt.items.length ? true : false;
     var child = isChild ? getMemu(opt.items, num) : "";
     // "<a href='#' class='targetPoint' data-id=" + opt.id + "'>"
-    console.log('opt', opt.id)
     var isActive = queryObj.classifyId == opt.id ? 'active': '';
     str +=
       "<li class='"+isActive+"'>" +

@@ -129,8 +129,8 @@
             <form action="#" id="loginForm" class="form-horizontal label-right">
               <div class="row create-item"></div>
               <div class="p-t-md txt-center">
-                <button type="button" class="btn btn-info">返回列表</button>
-                <button type="reset" class="btn btn-default">重置表单</button>
+                <button type="button" class="btn btn-info btn-back">返回列表</button>
+                <button type="reset" class="btn btn-default reset-form m-l-lg">重置表单</button>
                 <button type="submit" class="btn btn-primary m-l-lg">
                   新建表单
                 </button>
@@ -241,7 +241,13 @@
           key: "samplingAddress",
           value: "102",
         },
+        {
+          label: "原试验编号",
+          key: "oriTestNumber",
+          value: "",
+        },
       ];
+      
       // var formData = {
       //   usedPart:	'string', //	Y	使用部位
       //   specimenNumber:	'string', // 	Y	试件编号
@@ -263,7 +269,7 @@
       var messages = {};
       formData.forEach(function (item) {
         formStr +=
-          '<div class="form-group col-md-6 col-lg-4">\
+          '<div class="form-group col-md-6 col-lg-4 '+item.key+'">\
           <label class="col-xs-4 control-label label-p7" for="' +
           item.key +
           '">' +
@@ -297,10 +303,19 @@
         '<div class="col-md-6 col-lg-6 txt-center">\
           <div class="radio col-xs-4"></div>\
           <div class="radio col-xs-3"><label> <input type="radio" checked value="0" id="optionsRadios1" name="testStatus"> 见证 </label></div>\
-          <div class="radio col-xs-3"><label> <input type="radio" value="1" id="optionsRadios2" name="testStatus"> 复试 </label></div>\
+          <div class="radio col-xs-3"><label> <input type="radio"  value="1" id="optionsRadios2" name="testStatus"> 复试 </label></div>\
       </div>';
       $(".create-item").html(formStr);
       $(".create-item").append(radioStr);
+      $('.oriTestNumber').hide(); // 初始化隐藏原试验编号
+      function isShowOTN() {
+         // 判断 见证和复试当前选中的状态，如果复试选中显示“原试验编号”
+        $(':radio[name="testStatus"]:checked').val() == "1" ? $('.oriTestNumber').show() : $('.oriTestNumber').hide();
+      }
+      isShowOTN();
+      $('input[type=radio][name=testStatus]').change(function() {
+        isShowOTN();
+      });
       // 提交校验
       $("#loginForm").validate({
         rules: rules,
@@ -311,12 +326,6 @@
           var formData = {};
           var t = $(form).serializeArray();
           for (var i = 0; i < t.length; i++) {
-            if (t[i].name == "testStatus" && t[i].value == 1) {
-              t.push({
-                name: "oriTestNumber",
-                value: 66666,
-              });
-            }
             formData[t[i].name] = t[i].value;
           }
           localStorage.setItem("form_style_query", JSON.stringify(formData));
@@ -331,6 +340,14 @@
         },
         errorElement: "span",
       });
+
+      // 返回列表
+      $('.btn-back').click(function() {
+        window.history.go(-1)
+      })
+      // $('.reset-form').click(function() {
+      //   $('#loginForm')[0].reset();
+      // })
     </script>
   </body>
 </html>
