@@ -174,7 +174,7 @@ function dataToTable(tableData, parentId, map) {
               // joint = "";
               break;
           }
-          var ids = (item.value.toString() || "").split(",").filter(function (v) {
+          var ids = (item.value && item.value.toString() || "").split(",").filter(function (v) {
             return v;
           });
           (item.options || []).forEach(function (checkItem) {

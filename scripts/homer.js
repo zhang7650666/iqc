@@ -306,8 +306,10 @@ $.ajaxSetup({
     var res = XMLHttpRequest.responseText;
     var jsonData = JSON.parse(res);
     if (errorCodeMap[jsonData.code]) {
-
       toastr && toastr.warning(errorCodeMap[jsonData.code]);
+      setTimeout(() => {
+        window.location.href = "./login-y.html"
+      }, 2000);
     }
     //正常情况就不统一处理了
   },

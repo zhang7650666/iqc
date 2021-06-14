@@ -500,7 +500,7 @@
           type: "GET",
           data: {
                 id: queryObj.id,
-                target_day: ymd()
+                target_day: queryObj.target_day,
               },
           success: function (res) {
             if (res.code == 200) {
@@ -590,7 +590,7 @@
               form_id: queryObj.form_id || 1,
               project_id: userInfo.project_cid || "",
               form_data: $.base64.encode(JSON.stringify(submitData), "UTF-8"), // checkbox 只有选中的才会提交
-              target_day: ymd(), // 获取当前年月日
+              target_day: queryObj.target_day, // 获取当前年月日
             };
             isEdit && (params.record_id = queryObj.id);
             console.log('请求参数', params, submitData)
@@ -620,7 +620,7 @@
         witnessTableEle.className = averageClass;
         var params = {
           record_id: queryObj.id, //  $("#loginForm1 .table-wp .table-order").html(),
-          target_day: ymd(), // 获取当前年月日
+          target_day: queryObj.target_day,
         };
         $.ajax({
           url: "http://meterial.cxhy.cn/generateWitness/",
@@ -671,7 +671,7 @@
           contentType: "application/json",
           data: JSON.stringify({
             id: queryObj.id,
-            target_day: ymd(),
+            target_day: queryObj.target_day,
           }),
           success: function (res) {
             if (res.code == 200) {

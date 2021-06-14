@@ -152,19 +152,17 @@
             </div>
             <!-- 筛选 -->
             <form class="form-inline print-hide">
-              <div class="form-group m-b">
+              <div class="form-group" style="margin-bottom: 15px !important">
                 <label>日期：</label>
                 <input
                   id="WHC_PayDate"
-                  name="start"
                   type="text"
                   placeholder="选择开始日期"
                   data-date-format="yyyy-mm"
                   class="form-control"
-                  
                 />
               </div>
-              <div class="form-group p-l-md">
+              <div class="form-group p-l-md" style="margin-bottom: 15px !important">
                 <label for="class">分类选择：</label>
                 <select class="form-control" name="account" id="class">
                   <option value="">不限</option>
@@ -172,7 +170,7 @@
                   <option value="1">已见证</option>
                 </select>
               </div>
-              <div class="form-group p-l-md">
+              <div class="form-group p-l-md" style="margin-bottom: 15px !important">
                 <label for="status">报告类型：</label>
                 <select class="form-control" name="account" id="status">
                   <option value="" selected="true">全部</option>
@@ -180,12 +178,12 @@
                   <option value="1">已见证</option>
                 </select>
               </div>
-              <div class="form-group p-l-md fillter-btn" style="margin-top: 15px;" >
+              <div class="form-group p-l-md fillter-btn" style="margin-bottom: 15px !important">
                 <button type="button" class="btn btn-info" id="filterTableBtn">
                   筛选
                 </button>
               </div>
-              <div class="form-group p-l-md" style="margin-top: 15px;">
+              <div class="form-group p-l-md" style="margin-bottom: 15px !important">
                 <button type="button" class="btn btn-info print">
                   打印列表
                 </button>
@@ -213,20 +211,22 @@
                   </tr>
                 </thead>
                 <tbody id="tableBody"></tbody>
-                <tfoot id="tableFoot" class="hidden">
-                  <tr>
-                    <td colspan="6">
-                      <nav aria-label="Page navigation">
-                        <ul
-                          class="pagination pull-right"
-                          id="paginationBox"
-                        ></ul>
-                      </nav>
-                    </td>
-                  </tr>
-                </tfoot>
+                
               </table>
+
             </div>
+            <tfoot id="tableFoot" class="hidden">
+              <tr>
+                <td colspan="6">
+                  <nav aria-label="Page navigation">
+                    <ul
+                      class="pagination pull-right"
+                      id="paginationBox"
+                    ></ul>
+                  </nav>
+                </td>
+              </tr>
+            </tfoot>
           </div>
         </div>
       </div>
@@ -286,36 +286,49 @@
       }(jQuery));
     </script>
     <script>
-      
+      var opt_classify_id = ''; //分类id
+      var pageIndex = 1;
       var queryObj = query2obj(window.location.href);
       // 获取分类数据
       $.get("http://meterial.cxhy.cn/getClassifyList/", function (res) {
-        var classList = res.data;
-      })
-      // var userInfo = getUserInfo();
-      var sevenAgo = moment().subtract(7, "days").format("YYYY-MM");
-      $("#WHC_PayDate").datepicker("setDate", sevenAgo);
-
-      getUnitDetail();
-      getList();
-
-      // var today = ymd();
+        // 默认传第一个分类id
+        opt_classify_id =  res.data[0].id;
+        // 获取表格数据
+        getList();
+        createOptions('class', res.data);
+      });
+      function createOptions(idEle, optList) {
+        var optStr = "";
+        console.log('optList', optList)
+        optList.forEach(function(item) {
+          optStr += '<option value="'+item.id+'">'+item.classify_name+'</option>';
+        })
+        $('#'+idEle).html(optStr)
+      }
+      // 下拉选择选中事件
       
+      $('#class').change(function(){
+		       opt_classify_id = $(this).val();     
+		  });
+      getUnitDetail();
+      // var userInfo = getUserInfo();
+      // 设置默认时间
+      var sevenAgo = moment().subtract(7, "days").format("YYYY-MM");
+
       //初始化日期
-      $("#WHC_PayDate")
-        .datepicker({
-          format: 'yyyy-mm',    
+      $("#WHC_PayDate").datepicker({
           language: "zh-CN", //语言
           autoclose: true, //选择后自动关闭
-          todayHighlight: true, //今天日期高亮
+          // todayHighlight: true, //今天日期高亮
           startView: 'months',
           maxViewMode:'years',
-          minViewMode:'months'
+          minViewMode:'months',
+          minView: 3,
         })
-        
-      
+        $("#WHC_PayDate").val(sevenAgo)
       
 
+ 
       $("#createContract").click(function () {
         window.location.href = "./create_form-z.html";
       });
@@ -327,19 +340,45 @@
         var num = "";
         for (var i = 1; i < pagesCount; i++) {
           num +=
-            '<li><a href="#" data-page="' + pagesCount + '">' + i + "</a></li>";
+            '<li class="'+ (i == 1 ? "active": "") +' page"><a href="javascript:;" data-page="' + pagesCount + '">' + i + "</a></li>";
         }
 
         var paginationEle = [
-          '<li><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span> </a>',
+          '<li class="page-pre"><a href="javascript:;" aria-label="Previous"><span aria-hidden="true">&laquo;</span> </a>',
           num,
-          '<li><a href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span> </a></li>',
+          '<li class="page-next"><a href="javascript:;" aria-label="Next"><span aria-hidden="true">&raquo;</span> </a></li>',
         ];
 
         $("#paginationBox").html(paginationEle.join(""));
         $("#tableFoot").removeClass("hidden");
-      }
+        // 切换
+        $("#paginationBox .page").click(function() {
+          $(this).siblings().removeClass("active")
+          $(this).addClass('active')
+          var pageIndex = parseInt($("#paginationBox .page.active a").html());
+          getList()
+        });
+        // 下一页
+        $(".page-next").click(function() {
+          var pageIndex = parseInt($("#paginationBox .page.active a").html());
+          if(pagesCount > (pageIndex + 1)) {
+            $("#paginationBox .page.active").next().addClass('active');
+            $("#paginationBox .page").eq((pageIndex - 1)).removeClass('active')
+            getList()
+          }  
+        })
+        // 上一页
+        $(".page-pre").click(function() {
+          var pageIndex = parseInt($("#paginationBox .page.active a").html());
+          if((pageIndex - 1) > 0) {
+            $("#paginationBox .page.active").prev().addClass('active');
+            $("#paginationBox .page").eq((pageIndex - 1)).removeClass('active')
+            getList()
+          }  
+        })
+        
 
+      }
       // 创建表格
       function createTr(data) {
         if (!Array.isArray(data)) {
@@ -353,40 +392,35 @@
           trs.push(
             '<tr class="txt-center"><td colspan="9">--没有数据--</td></tr>'
           );
-
-        var target_month = $("#WHC_PayDate").val(); // 开始日期
         $(data).each(function (idx, item) {
+          var target_day = item.create_at.split(' ')[0];
           var isWitness = item.status == 1;
           var readDetail =
-            " <a href='tables_design-z.html?id=" +
+            " <a style='color:#3498db' href='tables_design-z.html?id=" +
             item.id +
-            "&target_month=" +
-            target_month +
+            "&target_day=" +
+            target_day +
             "&type=contract'> " +
             "合同详情</a>";
           var witnessDetail =
             " <a href='tables_design-z.html?id=" +
             item.id +
-            "&target_month=" +
-            target_month +
+            "&target_day=" +
+            target_day +
             "&type=witness'> " +
             "见证详情</a>";
-
           var cancleDetail =
-            '<button type="button" class="btn btn-info cancleWitness" data-id="' +
-            item.id +
-            '">取消见证</button>';
-
+            '<button type="button" class="btn btn-info cancleWitness" data-id="' + item.id + '" data-target_day="' + target_day + '">取消见证</button>';
           trs.push(
             "<tr> " +
               [
-                "<td> " + item.update_at + "</td> ",
-                "<td> 试件编号</td>",
-                "<td> 试件名称</td>",
-                "<td> 委托人</td>",
-                "<td> 见证人</td>",
-                "<td> 检验机构</td>",
-                "<td> 检测表单</td>",
+                "<td> " + item.create_at + "</td> ",
+                "<td> " + item.project_id + "</td>",
+                "<td> " + item.classifyName + "</td>",
+                "<td> " + item.entrustName + "</td>",
+                "<td> " + item.witnessName + "</td>",
+                "<td> " + item.witness_group + "</td>",
+                "<td><button class='btn btn-info' type='button'>编辑</button></td>",
                 "<td> " + (isWitness ? "已见证" : "非见证") + "</td>",
                 "<td class='td-set'>" +
                   readDetail +
@@ -426,19 +460,22 @@
       //获取表格数据
       function getList() {
         var status = $("#status").val() || 0;
-        console.log('target_month', $("#WHC_PayDate").val())
         $.get(
           "http://meterial.cxhy.cn/getRecordList/",
           {
             status: status,
             target_month: $("#WHC_PayDate").val(), // 开始日期
-            classifyId: '', // to do
+            classifyId: opt_classify_id,
+            // page: pageIndex,
           },
           function (res) {
             var data = res.data;
-            var total = data.total || 0;
+            var total = data.total || 80;
             var pagesCount = parseInt(total) / 20;
-            getPaginatLi(pagesCount);
+            
+            if(!$("#paginationBox").html()){
+              getPaginatLi(pagesCount);
+            }
             createTr(data);
           }
         );
@@ -454,7 +491,7 @@
           contentType: "application/json",
           data: JSON.stringify({
             id: id,
-            target_month: $("#WHC_PayDate").val(), // 开始日期
+            target_day: $(this).attr("data-target_day"), // 开始日期
           }),
           success: function (res) {
             if (res.code == 200) {
@@ -473,8 +510,10 @@
       // 点击打印
       $(".print").click(function () {
         $(".print-hide").hide();
+        $("#tableFoot").hide();
         $(".print-wp").jqprint();
         $(".print-hide").show();
+        $("#tableFoot").show();
       });
     </script>
   </body>
