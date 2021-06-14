@@ -400,9 +400,10 @@
       //   编辑初始
       var exclusiveClass = "col-xs-12 col-md-12 col-lg-12";
       var averageClass = "col-xs-12 col-md-12 col-lg-6";
-      var isEdit = !!queryObj.id; // 从首页跳转过来叫编辑
-      var iscontract = queryObj.type === "contract";
-      var isWitness = queryObj.type === "witness";
+      var isId = !!queryObj.id; // url上带id字段都可编辑
+      var iscontract = queryObj.type === "contract"; // 从首页点击"合同详情"跳转过来
+      var isWitness = queryObj.type === "witness"; // 从首页点击"见证详情" 跳转过来
+      var isEdit = queryObj.type === "edit"; // 从首页点击"编辑" 跳转过来
       var createWitnessId = "";
 
       // contractTable
@@ -417,7 +418,7 @@
       //   record
       //   编辑状态，置灰重置按钮
       //   type暂设置。1：有操作权限 ，2有查看权限， 3
-      if (isEdit) {
+      if (isId) {
         $(".save").html("编辑");
         // if (userInfo.type == 2) {
         $(".record").removeClass("hidden");
@@ -452,7 +453,7 @@
         classifyId:	queryObj.classifyId, // 	Y	分类id
       }
       var formData = Object.assign(formStyle, form_style_query)
-      if(!isEdit) {
+      if(!isId) {
         $.ajax({
         url: "http://meterial.cxhy.cn/getFormStyle/",
         dataType: "json",
@@ -494,7 +495,7 @@
       });
       }
       
-      if(isEdit) {
+      if(isId) {
         $.ajax({
           url: "http://meterial.cxhy.cn/getRecordDetail/",
           type: "GET",
@@ -504,7 +505,7 @@
               },
           success: function (res) {
             if (res.code == 200) {
-              if (isEdit && res.data.status == 1) {
+              if (isId && res.data.status == 1) {
                 $(".record").addClass("hidden");
                 // $(".cancleWitness").removeClass("hidden");
               }
@@ -592,7 +593,7 @@
               form_data: $.base64.encode(JSON.stringify(submitData), "UTF-8"), // checkbox 只有选中的才会提交
               target_day: queryObj.target_day, // 获取当前年月日
             };
-            isEdit && (params.record_id = queryObj.id);
+            isId && (params.record_id = queryObj.id);
             console.log('请求参数', params, submitData)
             $.ajax({
               url: "http://meterial.cxhy.cn/saveFormRecord/",
@@ -604,7 +605,7 @@
                 if (res.code == 200) {
                   toastr && toastr.success("合同保存成功");
                   setTimeout(function () {
-                    window.location.href = "./index-y.html";
+                    // window.location.href = "./index-y.html";
                   }, 1000);
                 }
               },
@@ -649,7 +650,7 @@
               }
               //点击过生成见证记录后，置灰
               $(".record").addClass("hidden");
-              //   !isEdit && window.location.search;
+              //   !isId && window.location.search;
             }
           },
           error: function (error) {},
