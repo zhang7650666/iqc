@@ -18,7 +18,6 @@ function crateThead(item, rules, messages) {
       }
     default:
       var required = rules["sid_" + item.submitId] ? 'required="true"' : "";
-
       thHtml +=
         '<th colspan="' +
         item.tagColumCount +
@@ -63,7 +62,6 @@ function formatTableHeadItem(datas, rules, messages) {
         }
       });
     }
-
     for (var i in dataMap) {
       htmlstr += crateThead(dataMap[i], rules, messages);
     }
@@ -98,11 +96,10 @@ function dataToTable(tableData, parentId, map) {
               : ""; // to do 增加选中状态后放开
           tdHtml =
             '<span class="font-weight">' + item.name + "</span> " + isCheckBox;
-          parentAttr = 'style="text-align:center"';
-
+          parentAttr = "text-align:center";
           if (!!item.is_required) {
-            map.rules["sid_" + item.submitId] = { required: true };
-            map.messages["sid_" + item.submitId] = { required: "必填项" };
+            map.rules["sid_" + item.submitId + '_0'] = { required: true };
+            map.messages["sid_" + item.submitId + '_0'] = { required: "必填项" };
           }
           break;
         case "text":
@@ -121,7 +118,7 @@ function dataToTable(tableData, parentId, map) {
             (isRight ? ' style="width:70%"' : "") +
             ' value="' +
             (item.value || "") +
-            '"/><span class="hidden placeholder"></span> ' +
+            '"/></span> ' +
             place +
             (item.valueExt || "");
           break;
@@ -150,7 +147,7 @@ function dataToTable(tableData, parentId, map) {
             item.submitId +
             ' value="' +
             value +
-            '"/><span class="hidden placeholder"></span>';
+            '"/>';
           break;
         case "checkbox":
           var checkStr = "";
@@ -202,35 +199,45 @@ function dataToTable(tableData, parentId, map) {
           break;
       }
       var columnCount = item.tagColumCount || item.columnCount;
-      var colspan =
-        columnCount && columnCount > 1 ? "colspan=" + columnCount : "";
-      var rowspan =
-        item.tag_height && item.tag_height > 1
-          ? "rowspan=" + item.tag_height
-          : "";
-      var dataid = item.id != null ? "data-id=" + item.id : "";
-      var classNams = item.direction == 1 ? "txt-left" : ""; //table-center
-      tdStr +=
-        "<td " +
-        colspan +
-        rowspan +
-        dataid +
-        ' class=" ' +
-        classNams +
-        ' "' +
-        parentAttr +
-        " >" +
-        tdHtml +
-        "</td>";
+      var classNams = item.direction == 1 ? "txt-left" : ""; //table-center      
+      if(item.name && item.name.indexOf('见证记录<br/>表') != -1) {
+        var jzStr1 = item.name.split('<br/>')[0];
+        var jzStr2 = item.name.split('<br/>')[1];
+        var testHtml ='';
+        testHtml += '<div class="jz-str1">'+jzStr1+'</div>'
+        testHtml += '<div class="jz-str2">'+jzStr2+'</div>'
+        tdStr +=
+        "<td \
+          colspan='"+ columnCount +"'\
+          rowspan='"+ item.tag_height  +"'\
+          data-id='"+  item.id  +"'\
+          class='"+classNams+"'\
+          style='"+parentAttr+"'\
+          >"+testHtml +"</td>";
+      } else {
+        tdStr +=
+        "<td \
+          colspan='"+ columnCount +"'\
+          rowspan='"+ item.tag_height  +"'\
+          data-id='"+  item.id  +"'\
+          class='"+classNams+"'\
+          style='"+parentAttr+"'\
+          >"+tdHtml +"</td>";
+      }
+      
     });
     trHtml += "<tr>" + tdStr + "</tr>";
   });
 
   var temp = $("#tableTemp").html();
+  
   temp = temp.replace("__TABLE_HEADER__", theadHtml);
   temp = temp.replace("__TABLE_BODY", trHtml);
   temp = temp.replace("__TABLE_DESC", tableData.desc || "");
   $(parentId).find(".table-donwload-section").append(temp);
+  if(headData.length == 0) {
+    $(parentId).find('.table-header').remove();
+  }
   dateInits.forEach(function (idx) {
     $("#datapicker" + idx).datepicker({
       language: "zh-CN",

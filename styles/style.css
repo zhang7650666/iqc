@@ -3273,6 +3273,7 @@ h6 {
   border-color: #e74c3c !important;
 }
 label.error,
+[aria-required="true"] + .error,
 label span.error {
   color: #e74c3c;
   margin: 5px 0 0 0;
@@ -4112,4 +4113,13 @@ ul.h-list li:hover a {
   padding: 0px 15px;
   font-size: 20px;
   border-bottom: 2px solid #000;
+}
+
+td {
+  position: relative;
+}
+.error-fixed {
+  position:absolute;
+  bottom: 30%;
+  right: 5px;
 }

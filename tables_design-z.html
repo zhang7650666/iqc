@@ -317,10 +317,24 @@
                 -ms-flex-negative: 1;
                 flex-shrink: 1;
               }
-              #loginForm2 table tr th,
-              #loginForm2 table tr td {
+              table tr th,
+              table tr td {
                   height: 46px;
                   line-height:23px;
+                  font-size: 10px;
+                  font-family:"SimHei";
+                  text-align:center;
+              }
+              table tr td .jz-str1{
+                  border-bottom:1px solid #ccc;
+                  font-size: 17px;
+                  font-family:"SimHei";
+                  font-weight: 500;
+              }
+              table tr td .jz-str2{
+                  font-size: 12px;
+                  font-family:"SimHei";
+                  font-weight: 500;
               }
               .table-donwload-section label {
                   font-weight: 500;
@@ -405,6 +419,7 @@
       var isWitness = queryObj.type === "witness"; // 从首页点击"见证详情" 跳转过来
       var isEdit = queryObj.type === "edit"; // 从首页点击"编辑" 跳转过来
       var createWitnessId = "";
+      var nullTable = JSON.stringify({tableHead: [], tableBody: [], desc: null}) // 空表对比模板
 
       // contractTable
       // witnessTable
@@ -476,14 +491,19 @@
             // 表头信息
             if (data.tableData) {
               data.tableData.forEach(function (item) {
-                dataToTable(item, "#loginForm1", loginForm1Map);
-                saveFn();
+                if(nullTable != JSON.stringify(item)) {
+                  dataToTable(item, "#loginForm1", loginForm1Map);
+                  // saveFn();
+                }
+                
               });
             }
             if (data.witnessData && data.witnessData.tableData) {
               createWitnessId = data.witnessData.id;
               data.witnessData.tableData.forEach(function (item) {
-                dataToTable(item, "#loginForm2", loginForm2Map);
+                if(nullTable != JSON.stringify(item)) {
+                  dataToTable(item, "#loginForm2", loginForm1Map);
+                }
                 // saveFn();
               });
             }
@@ -523,14 +543,20 @@
               // 表头信息
               if (data.tableData) {
                 data.tableData.forEach(function (item) {
-                  dataToTable(item, "#loginForm1", loginForm1Map);
-                  saveFn();
+                  // 如果是空表不在渲染
+                  if(nullTable != JSON.stringify(item)) {
+                    dataToTable(item, "#loginForm1", loginForm1Map);
+                  }
                 });
+               // validateFn()
+                    // saveFn(true);
               }
               if (data.witnessData && data.witnessData.tableData) {
                 createWitnessId = data.witnessData.id;
                 data.witnessData.tableData.forEach(function (item) {
-                  dataToTable(item, "#loginForm2", loginForm2Map);
+                  if(nullTable != JSON.stringify(item)) {
+                    dataToTable(item, "#loginForm2", loginForm2Map);
+                  }
                   // saveFn();
                 });
               }
@@ -541,39 +567,42 @@
           },
         });
       }
-      
+      function validateFn() {
+        // 提交校验
+        console.log("近来没有")
+       $("#loginForm1").validate({
+          rules: loginForm1Map.rules,
+          messages: loginForm1Map.messages,
+          onfocusout: false,
+          // focusCleanup: true, // 当未通过验证的元素获得焦点时,并移除错误提示 （避免和 focusInvalid.一起使用）
+          submitHandler: function (form) {
+          //  debugger;
+          },
+          errorPlacement: function (error, element) {
+          $(error).addClass('error-fixed')
+          $(element).parent().append(error)
+          },
+          errorElement: "span",
+        });
+        $("#loginForm1").submit()
+      }
 
       // 点击下载
       $(".download").click(function () {
         var parentId = $(this).attr("data-id");
-        changeImgToDataurl();
-        // 处理输入框内容替换
-        var entrys = $("#" + parentId).find("input[type='text']");
-        var selects = $("#" + parentId).find('input[type="checkbox"]');
-        entrys = Array.prototype.slice.call(entrys);
-        entrys.forEach(function (inputEle) {
-          // inputEle.checked
-          var val = $(inputEle).val() || "";
-          $(inputEle).siblings(".placeholder").text(val);
-        });
-
-        selects.each(function (idx, inputEle) {
-          var checked = inputEle.checked;
-          $(inputEle)
-            .siblings(".placeholder")
-            .text(checked ? "■" : "□");
-        });
-
-        $(".table-donwload-section").wordExport(
+        var htmlStr = $('#' + parentId).clone(true);
+        replaceEl(parentId)
+        $('#' + parentId).find('.table-donwload-section').wordExport(
           tableNum + (parentId == "loginForm2" ? "见证记录" : tableName)
         );
-        entrys.forEach(function (inputEle) {
-          var val = $(inputEle).val() || "";
-          $(inputEle).siblings(".placeholder").text("");
-        });
+        // entrys.forEach(function (inputEle) {
+        //   var val = $(inputEle).val() || "";
+        //   $(inputEle).siblings(".placeholder").text("");
+        // });
+        $('#' + parentId).html(htmlStr)
       });
       // 点击保存
-      function saveFn() {
+      function saveFn(isInit) {
         $("#loginForm1").validate({
           rule: loginForm1Map.rule,
           messages: loginForm1Map.messages,
@@ -612,7 +641,14 @@
               error: function (error) {},
             });
           },
+          errorPlacement: function (error, element) {
+          $(error).addClass('error-fixed')
+          $(element).parent().append(error)
+          },
+          errorElement: "span",
         });
+
+        isInit && $("#loginForm1").submit();
       }
 
       //非编辑才添加事件 点击生成见证记录
@@ -633,7 +669,9 @@
             if (res.code == 200) {
               createWitnessId = res.data.id || "";
               res.data.tableData.forEach(function (item) {
-                dataToTable(item, "#loginForm2", loginForm2Map);
+                if(nullTable != JSON.stringify(item)) {
+                  dataToTable(item, "#loginForm2", loginForm2Map);
+                }
               });
               //   不刷新 向路由中添加参数，刷新后，保持功能
               if (iscontract) {
@@ -656,12 +694,16 @@
           error: function (error) {},
         });
       });
+      
       // 点击打印
       $(".print").click(function () {
         var fromId = $(this).attr("data-id");
+        var htmlStr = $('#' + fromId).clone(true);
+        replaceEl(fromId)
         $("#" + fromId)
           .find(".table-donwload-section")
           .jqprint();
+        $('#' + fromId).html(htmlStr)
       });
 
       $(".cancleWitness").on("click", function () {
@@ -694,6 +736,29 @@
           error: function (error) {},
         });
       });
+
+      // 替换标签
+      function replaceEl(fromId) {
+        changeImgToDataurl();
+        // 处理输入框内容替换
+        var entrys = $("#" + fromId).find("input[type='text']");
+        var selects = $("#" + fromId).find('input[type="checkbox"]');
+        entrys = Array.prototype.slice.call(entrys);
+        entrys.forEach(function (inputEle) {
+          // inputEle.checked
+          var val = $(inputEle).val() || "";
+          $(inputEle).parent().attr('style', 'text-align:center')
+          $(inputEle).parent().html(val)
+          // $(inputEle).siblings(".placeholder").text(val);
+        });
+
+        selects.each(function (idx, inputEle) {
+          var checked = inputEle.checked;
+          $(inputEle)
+            .siblings(".placeholder")
+            .text(checked ? "■" : "□");
+        });
+      }
     </script>
   </body>
 </html>
