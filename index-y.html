@@ -89,6 +89,14 @@
             </ul>
           </div>
         </div>
+        <!-- 面包线 -->
+        <div id="hbreadcrumb">
+          <ol class="hbreadcrumb breadcrumb">
+            <li class="active">
+              <span>首页</span>
+            </li>
+          </ol>
+        </div>
         <!-- 常屏 顶部导航 -->
         <div class="navbar-right">
           <ul class="nav navbar-nav no-borders">
@@ -265,8 +273,21 @@
             <tfoot id="tableFoot" class="hidden">
               <tr>
                 <td colspan="6">
-                  <nav aria-label="Page navigation">
-                    <ul class="pagination pull-right" id="paginationBox"></ul>
+                  <nav
+                    aria-label="Page navigation"
+                    style="position: relative; padding-bottom: 15px"
+                  >
+                    <div
+                      class="total"
+                      style="position: absolute; left: 0px; top: 5px"
+                    >
+                      总共 <span style="color: #3498db"></span> 数据
+                    </div>
+                    <ul
+                      class="pagination pull-right"
+                      id="paginationBox"
+                      style="margin: 0px"
+                    ></ul>
                   </nav>
                 </td>
               </tr>
@@ -295,6 +316,8 @@
     <script src="vendor/bootstrap-datepicker-master/dist/js/bootstrap-datepicker.min.js"></script>
     <script src="vendor/clockpicker/dist/bootstrap-clockpicker.min.js"></script>
     <script src="vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="vendor/datatables/media/js/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
     <!-- App scripts -->
     <script src="scripts/jquery.jqprint-0.3.js"></script>
     <script src="scripts/homer.js"></script>
@@ -412,11 +435,17 @@
       });
       //生成分页元素
       function getPaginatLi(pagesCount) {
-        if (pagesCount == 0 || pagesCount == "" || pagesCount === undefined) {
+        console.log(666, pagesCount);
+        if (
+          pagesCount == 0 ||
+          pagesCount == 1 ||
+          pagesCount == "" ||
+          pagesCount === undefined
+        ) {
           return "";
         }
         var num = "";
-        for (var i = 1; i < pagesCount; i++) {
+        for (var i = 1; i <= pagesCount; i++) {
           num +=
             '<li class="' +
             (i == 1 ? "active" : "") +
@@ -445,7 +474,7 @@
         // 下一页
         $(".page-next").click(function () {
           var pageIndex = parseInt($("#paginationBox .page.active a").html());
-          if (pagesCount > pageIndex + 1) {
+          if (pagesCount >= pageIndex + 1) {
             $("#paginationBox .page.active").next().addClass("active");
             $("#paginationBox .page")
               .eq(pageIndex - 1)
@@ -501,6 +530,13 @@
             '" data-target_day="' +
             target_day +
             '">取消见证</button>';
+          var edit =
+            " <a style='color:#3498db' href='tables_design-z.html?id=" +
+            item.id +
+            "&target_day=" +
+            target_day +
+            "&type=edit'> " +
+            "编辑</a>";
           trs.push(
             "<tr> " +
               [
@@ -510,7 +546,7 @@
                 "<td> " + item.entrustName + "</td>",
                 "<td> " + item.witnessName + "</td>",
                 "<td> " + item.witness_group + "</td>",
-                "<td><button class='btn btn-info' type='button'>编辑</button></td>",
+                "<td>" + edit + "</td>",
                 "<td> " + (isWitness ? "已见证" : "非见证") + "</td>",
                 "<td class='td-set'>" +
                   readDetail +
@@ -560,17 +596,18 @@
           },
           function (res) {
             var data = res.data;
-            var total = data.total || 80;
+            var total = data.length || 1;
+            $(".total span").html(total);
             var pagesCount = parseInt(total) / 20;
 
             if (!$("#paginationBox").html()) {
-              getPaginatLi(pagesCount);
+              getPaginatLi(Math.ceil(pagesCount));
             }
             createTr(data);
           }
         );
       }
-
+      // 取消见证
       $("document").on("click", "cancleWitness", function () {
         var id = $(this).attr("data-id");
         // cancelWitness/

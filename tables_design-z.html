@@ -67,6 +67,38 @@
         <div class="small-logo">
           <span class="text-primary">材料检验客户端</span>
         </div>
+        <div class="mobile-menu">
+          <button
+            type="button"
+            class="navbar-toggle mobile-menu-toggle"
+            data-toggle="collapse"
+            data-target="#mobile-collapse"
+          >
+            <i class="fa fa-chevron-down"></i>
+          </button>
+          <div class="collapse mobile-navbar" id="mobile-collapse">
+            <ul class="nav navbar-nav">
+              <!-- <li>
+                <a class="" href="login.html">Login</a>
+              </li> -->
+              <li>
+                <a type="button" class="btn btn-text logoutBtn">Logout</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- 面包线 -->
+        <div id="hbreadcrumb" class="m-b-n-i">
+          <ol class="hbreadcrumb breadcrumb">
+            <li><a href="index-y.html">首页</a></li>
+            <li>
+              <span>新建表单</span>
+            </li>
+            <li class="active">
+              <span>新建表单</span>
+            </li>
+          </ol>
+        </div>
         <!-- 常屏 顶部导航 -->
         <div class="navbar-right">
           <ul class="nav navbar-nav no-borders">
@@ -84,12 +116,6 @@
     <div id="wrapper" class="m-n">
       <div class="content animate-panel content-width">
         <div class="hpanel">
-          <div class="panel-heading">
-            <ol class="breadcrumb m-n">
-              <li><a href="./index-y.html">返回首页</a></li>
-              <li><a href="#" onclick="goBack()">返回上一层</a></li>
-            </ol>
-          </div>
           <div class="row">
             <div id="contractTable" class="col-xs-12 col-md-12 col-lg-12">
               <div class="panel-body">
@@ -115,7 +141,6 @@
                             text-align: center;
                             height: 80px;
                             line-height: 80px;
-                            padding-left: 100px;
                             font-size: 18px;
                           "
                         ></h3>
@@ -213,7 +238,7 @@
                     <button
                       type="button"
                       data-id="loginForm2"
-                      class="btn w-xs btn-primary download"
+                      class="btn w-xs btn-primary download m-l-lg"
                     >
                       下载
                     </button>
@@ -221,7 +246,7 @@
                     <button
                       type="button"
                       data-id="loginForm2"
-                      class="btn w-xs btn-primary2 hidden cancleWitness"
+                      class="btn w-xs btn-primary2 hidden cancleWitness m-l-lg"
                     >
                       取消见证
                     </button>
@@ -236,7 +261,7 @@
           <div class="no-border" style="text-align: center">
             <style type="text/css">
               .table-header tr th {
-                border: 1px solid #fff; 
+                border: 1px solid #fff;
                 text-align: left;
                 width: 16%;
                 font-size: 12px;
@@ -267,7 +292,7 @@
               .table-header {
                 border: 1px solid #fff;
               }
-             
+
 
               .table-desc {
                 font-size: 12px;
@@ -400,9 +425,10 @@
       //   编辑初始
       var exclusiveClass = "col-xs-12 col-md-12 col-lg-12";
       var averageClass = "col-xs-12 col-md-12 col-lg-6";
-      var isEdit = !!queryObj.id; // 从首页跳转过来叫编辑
-      var iscontract = queryObj.type === "contract";
-      var isWitness = queryObj.type === "witness";
+      var isId = !!queryObj.id; // url上带id字段都可编辑
+      var iscontract = queryObj.type === "contract"; // 从首页点击"合同详情"跳转过来
+      var isWitness = queryObj.type === "witness"; // 从首页点击"见证详情" 跳转过来
+      var isEdit = queryObj.type === "edit"; // 从首页点击"编辑" 跳转过来
       var createWitnessId = "";
 
       // contractTable
@@ -417,7 +443,7 @@
       //   record
       //   编辑状态，置灰重置按钮
       //   type暂设置。1：有操作权限 ，2有查看权限， 3
-      if (isEdit) {
+      if (isId) {
         $(".save").html("编辑");
         // if (userInfo.type == 2) {
         $(".record").removeClass("hidden");
@@ -435,7 +461,7 @@
       };
       var tableName = "";
       var tableNum = "";
-      console.log('userInfo', userInfo)
+      console.log("userInfo", userInfo);
       // classify_name: "螺纹钢"
       // create_at: "2021-05-24T18:31:23"
       // form_id: 1
@@ -445,66 +471,69 @@
       // order_id: 1
       // parent_id: 2
       // update_at: "2021-05-24T18:31:25"
-      var form_style_query = JSON.parse(localStorage.getItem("form_style_query"));
+      var form_style_query = JSON.parse(
+        localStorage.getItem("form_style_query")
+      );
       var formStyle = {
-        token:	userInfo.token, //	Y	用户临时标识
-        form_id: 	queryObj.form_id || 8, // 	Y	表格样式id
-        classifyId:	queryObj.classifyId, // 	Y	分类id
-      }
-      var formData = Object.assign(formStyle, form_style_query)
-      if(!isEdit) {
+        token: userInfo.token, //	Y	用户临时标识
+        form_id: queryObj.form_id || 8, // 	Y	表格样式id
+        classifyId: queryObj.classifyId, // 	Y	分类id
+      };
+      var formData = Object.assign(formStyle, form_style_query);
+      if (!isId) {
         $.ajax({
-        url: "http://meterial.cxhy.cn/getFormStyle/",
-        dataType: "json",
-        contentType: "application/json",
-        type:"POST",
-        data: JSON.stringify(formData),
-        success: function (res) {
-          if (res.code == 200) {
-            var data = res.data;
-            // 工程编号
-            tableNum = data.numbers;
-            tableName = data.title;
-            $("#loginForm1 .table-donwload-section .table-order").html(
-              data.numbers
-            );
-            // title 信息
-            $("#loginForm1 .table-donwload-section .table-title").html(
-              data.title
-            );
-            // 表头信息
-            if (data.tableData) {
-              data.tableData.forEach(function (item) {
-                dataToTable(item, "#loginForm1", loginForm1Map);
-                saveFn();
-              });
-            }
-            if (data.witnessData && data.witnessData.tableData) {
-              createWitnessId = data.witnessData.id;
-              data.witnessData.tableData.forEach(function (item) {
-                dataToTable(item, "#loginForm2", loginForm2Map);
-                // saveFn();
-              });
-            }
+          url: "http://meterial.cxhy.cn/getFormStyle/",
+          dataType: "json",
+          contentType: "application/json",
+          type: "POST",
+          data: JSON.stringify(formData),
+          success: function (res) {
+            if (res.code == 200) {
+              var data = res.data;
+              // 工程编号
+              tableNum = data.numbers;
+              tableName = data.title;
+              $("#hbreadcrumb .active span").html(data.title);
+              $("#loginForm1 .table-donwload-section .table-order").html(
+                data.numbers
+              );
+              // title 信息
+              $("#loginForm1 .table-donwload-section .table-title").html(
+                data.title
+              );
+              // 表头信息
+              if (data.tableData) {
+                data.tableData.forEach(function (item) {
+                  dataToTable(item, "#loginForm1", loginForm1Map);
+                  saveFn();
+                });
+              }
+              if (data.witnessData && data.witnessData.tableData) {
+                createWitnessId = data.witnessData.id;
+                data.witnessData.tableData.forEach(function (item) {
+                  dataToTable(item, "#loginForm2", loginForm2Map);
+                  // saveFn();
+                });
+              }
 
-            //最后的错误信息
-            res.msg && res.msg != "ok" && toastr && toastr.warning(res.msg);
-          }
-        },
-      });
+              //最后的错误信息
+              res.msg && res.msg != "ok" && toastr && toastr.warning(res.msg);
+            }
+          },
+        });
       }
-      
-      if(isEdit) {
+
+      if (isId) {
         $.ajax({
           url: "http://meterial.cxhy.cn/getRecordDetail/",
           type: "GET",
           data: {
-                id: queryObj.id,
-                target_day: queryObj.target_day,
-              },
+            id: queryObj.id,
+            target_day: queryObj.target_day,
+          },
           success: function (res) {
             if (res.code == 200) {
-              if (isEdit && res.data.status == 1) {
+              if (isId && res.data.status == 1) {
                 $(".record").addClass("hidden");
                 // $(".cancleWitness").removeClass("hidden");
               }
@@ -540,7 +569,6 @@
           },
         });
       }
-      
 
       // 点击下载
       $(".download").click(function () {
@@ -592,8 +620,8 @@
               form_data: $.base64.encode(JSON.stringify(submitData), "UTF-8"), // checkbox 只有选中的才会提交
               target_day: queryObj.target_day, // 获取当前年月日
             };
-            isEdit && (params.record_id = queryObj.id);
-            console.log('请求参数', params, submitData)
+            isId && (params.record_id = queryObj.id);
+            console.log("请求参数", params, submitData);
             $.ajax({
               url: "http://meterial.cxhy.cn/saveFormRecord/",
               type: "POST",
@@ -649,7 +677,7 @@
               }
               //点击过生成见证记录后，置灰
               $(".record").addClass("hidden");
-              //   !isEdit && window.location.search;
+              //   !isId && window.location.search;
             }
           },
           error: function (error) {},
