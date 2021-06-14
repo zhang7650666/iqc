@@ -697,7 +697,7 @@
               createWitnessId = res.data.id || "";
               res.data.tableData.forEach(function (item) {
                 if(nullTable != JSON.stringify(item)) {
-                  dataToTable(item, "#loginForm2", loginForm2Map, data);
+                  dataToTable(item, "#loginForm2", loginForm2Map, res.data);
                 }
               });
               //   不刷新 向路由中添加参数，刷新后，保持功能
