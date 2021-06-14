@@ -92,6 +92,15 @@
             </ul>
           </div>
         </div>
+        <!-- 面包线 -->
+        <div id="hbreadcrumb">
+          <ol class="hbreadcrumb breadcrumb">
+            <li><a href="index-y.html">首页</a></li>
+            <li class="active">
+              <span>新建表单</span>
+            </li>
+          </ol>
+        </div>
         <!-- 常屏 顶部导航 -->
         <div class="navbar-right">
           <ul class="nav navbar-nav no-borders">
@@ -129,8 +138,12 @@
             <form action="#" id="loginForm" class="form-horizontal label-right">
               <div class="row create-item"></div>
               <div class="p-t-md txt-center">
-                <button type="button" class="btn btn-info btn-back">返回列表</button>
-                <button type="reset" class="btn btn-default reset-form m-l-lg">重置表单</button>
+                <button type="button" class="btn btn-info btn-back">
+                  返回列表
+                </button>
+                <button type="reset" class="btn btn-default reset-form m-l-lg">
+                  重置表单
+                </button>
                 <button type="submit" class="btn btn-primary m-l-lg">
                   新建表单
                 </button>
@@ -247,7 +260,7 @@
           value: "",
         },
       ];
-      
+
       // var formData = {
       //   usedPart:	'string', //	Y	使用部位
       //   specimenNumber:	'string', // 	Y	试件编号
@@ -269,7 +282,9 @@
       var messages = {};
       formData.forEach(function (item) {
         formStr +=
-          '<div class="form-group col-md-6 col-lg-4 '+item.key+'">\
+          '<div class="form-group col-md-6 col-lg-4 ' +
+          item.key +
+          '">\
           <label class="col-xs-4 control-label label-p7" for="' +
           item.key +
           '">' +
@@ -307,13 +322,15 @@
       </div>';
       $(".create-item").html(formStr);
       $(".create-item").append(radioStr);
-      $('.oriTestNumber').hide(); // 初始化隐藏原试验编号
+      $(".oriTestNumber").hide(); // 初始化隐藏原试验编号
       function isShowOTN() {
-         // 判断 见证和复试当前选中的状态，如果复试选中显示“原试验编号”
-        $(':radio[name="testStatus"]:checked').val() == "1" ? $('.oriTestNumber').show() : $('.oriTestNumber').hide();
+        // 判断 见证和复试当前选中的状态，如果复试选中显示“原试验编号”
+        $(':radio[name="testStatus"]:checked').val() == "1"
+          ? $(".oriTestNumber").show()
+          : $(".oriTestNumber").hide();
       }
       isShowOTN();
-      $('input[type=radio][name=testStatus]').change(function() {
+      $("input[type=radio][name=testStatus]").change(function () {
         isShowOTN();
       });
       // 提交校验
@@ -331,7 +348,7 @@
           localStorage.setItem("form_style_query", JSON.stringify(formData));
           var queryObj = query2obj(window.location.href);
           queryObj.target_day = ymd();
-          
+
           window.location.href =
             "./tables_design-z.html?" + obj2query(queryObj);
         },
@@ -343,9 +360,9 @@
       });
 
       // 返回列表
-      $('.btn-back').click(function() {
-        window.history.go(-1)
-      })
+      $(".btn-back").click(function () {
+        window.history.go(-1);
+      });
       // $('.reset-form').click(function() {
       //   $('#loginForm')[0].reset();
       // })

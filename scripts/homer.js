@@ -19,7 +19,7 @@ $(document).ready(function () {
   });
 
   // Initialize metsiMenu plugin to sidebar menu
-  $("#side-menu").metisMenu();
+  // $("#side-menu").metisMenu();
 
   // Initialize iCheck plugin
   $(".i-checks").iCheck({
@@ -308,7 +308,7 @@ $.ajaxSetup({
     if (errorCodeMap[jsonData.code]) {
       toastr && toastr.warning(errorCodeMap[jsonData.code]);
       setTimeout(() => {
-        window.location.href = "./login-y.html"
+        window.location.href = "./login-y.html";
       }, 2000);
     }
     //正常情况就不统一处理了
@@ -424,12 +424,16 @@ function menuUnit(data, num) {
     var isChild = opt.items && opt.items.length ? true : false;
     var child = isChild ? getMemu(opt.items, num) : "";
     // "<a href='#' class='targetPoint' data-id=" + opt.id + "'>"
-    var isActive = queryObj.classifyId == opt.id ? 'active': '';
+    var isActive = queryObj.classifyId == opt.id ? "active" : "";
     str +=
-      "<li class='"+isActive+"'>" +
+      "<li class='" +
+      isActive +
+      "'>" +
       (isChild
         ? "<a href='javascript:void()'>"
-        : "<a href='javascript:void()' class='targetPoint "+ (isActive ? 'hight' : '') +"' data-form_id=" +
+        : "<a href='javascript:void()' class='targetPoint " +
+          (isActive ? "hight" : "") +
+          "' data-form_id=" +
           opt.form_id +
           "  data-id=" +
           opt.id +
@@ -478,7 +482,12 @@ function createList(cb) {
 
     var menus = getMemu(data);
     $("#side-menu").append(menus);
-    $("#navigation").metisMenu();
+    $("#side-menu").metisMenu({
+      //阻止默认行为
+      // preventDefault: false,
+      // 关闭
+      toggle: false,
+    });
 
     $("#navigation").on("click", "a[data-id]", function (e) {
       e.preventDefault();
