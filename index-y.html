@@ -596,7 +596,7 @@
           },
           function (res) {
             var data = res.data;
-            var total = data.length || 1;
+            var total = data.length || 0;
             $(".total span").html(total);
             var pagesCount = parseInt(total) / 20;
 

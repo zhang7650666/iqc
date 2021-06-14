@@ -70,15 +70,18 @@ function formatTableHeadItem(datas, rules, messages) {
   return "<tr>" + htmls + "</tr>";
 }
 
-function dataToTable(tableData, parentId, map) {
+function dataToTable(tableData, parentId, map, sourceData) {
   // var theadHtml = "";
   var dateInits = [];
   var headData = $.extend([], tableData.tableHead);
   var theadHtml = formatTableHeadItem(headData, map.rules, map.messages);
   // 表体信息
+  console.log(6666, tableData)
   var trHtml = "";
   tableData.tableBody.forEach(function (tb) {
+
     var tdStr = "";
+    var tdW = 100 / parseInt(sourceData.columns);
     tb.forEach(function (item) {
       var tdHtml = "";
       var parentAttr = "";
@@ -215,6 +218,7 @@ function dataToTable(tableData, parentId, map) {
           style='"+parentAttr+"'\
           >"+testHtml +"</td>";
       } else {
+        parentAttr += "width:" + tdW * columnCount + '%'
         tdStr +=
         "<td \
           colspan='"+ columnCount +"'\

@@ -159,35 +159,35 @@
                     <button
                       type="button"
                       data-id="loginForm1"
-                      class="btn w-xs btn-primary download"
+                      class="btn w-xs btn-primary download m-b"
                     >
                       下载
                     </button>
                     <button
                       type="button"
                       data-id="loginForm1"
-                      class="btn w-xs btn-info print m-l-lg"
+                      class="btn w-xs btn-info print m-l-lg m-b"
                     >
                       打印
                     </button>
                     <button
                       type="reset"
                       data-id="loginForm1"
-                      class="btn w-xs btn-default resetBtn m-l-lg"
+                      class="btn w-xs btn-default resetBtn m-l-lg m-b"
                     >
                       重置内容
                     </button>
                     <button
                       type="submit"
                       data-id="loginForm1"
-                      class="btn w-xs btn-primary2 save m-l-lg"
+                      class="btn w-xs btn-primary2 save m-l-lg m-b"
                     >
                       保存
                     </button>
                     <button
                       type="button"
                       data-id="loginForm1"
-                      class="btn w-xs btn-success record hidden m-l-lg"
+                      class="btn w-xs btn-success record hidden m-l-lg m-b"
                     >
                       生成见证记录
                     </button>
@@ -263,7 +263,7 @@
               .table-header tr th {
                 border: 1px solid #fff;
                 text-align: left;
-                width: 16%;
+                /* width: 12.5%; */
                 font-size: 12px;
                 /* padding: 0px; */
               }
@@ -282,7 +282,7 @@
 
               .table-body tr td,
               .table-body tr th {
-                width: 16%;
+                /* width: 16%; */
                   border-right: 1px solid #ccc;
                   border-bottom: 1px solid #ccc;
                   font-size: 12px;
@@ -519,7 +519,7 @@
             if (data.tableData) {
               data.tableData.forEach(function (item) {
                 if(nullTable != JSON.stringify(item)) {
-                  dataToTable(item, "#loginForm1", loginForm1Map);
+                  dataToTable(item, "#loginForm1", loginForm1Map, data);
                   // saveFn();
                 }
                 
@@ -529,7 +529,7 @@
               createWitnessId = data.witnessData.id;
               data.witnessData.tableData.forEach(function (item) {
                 if(nullTable != JSON.stringify(item)) {
-                  dataToTable(item, "#loginForm2", loginForm1Map);
+                  dataToTable(item, "#loginForm2", loginForm1Map, data);
                 }
                 // saveFn();
               });
@@ -572,7 +572,7 @@
                 data.tableData.forEach(function (item) {
                   // 如果是空表不在渲染
                   if(nullTable != JSON.stringify(item)) {
-                    dataToTable(item, "#loginForm1", loginForm1Map);
+                    dataToTable(item, "#loginForm1", loginForm1Map, data);
                   }
                 });
                // validateFn()
@@ -582,7 +582,7 @@
                 createWitnessId = data.witnessData.id;
                 data.witnessData.tableData.forEach(function (item) {
                   if(nullTable != JSON.stringify(item)) {
-                    dataToTable(item, "#loginForm2", loginForm2Map);
+                    dataToTable(item, "#loginForm2", loginForm2Map, data);
                   }
                   // saveFn();
                 });
@@ -697,7 +697,7 @@
               createWitnessId = res.data.id || "";
               res.data.tableData.forEach(function (item) {
                 if(nullTable != JSON.stringify(item)) {
-                  dataToTable(item, "#loginForm2", loginForm2Map);
+                  dataToTable(item, "#loginForm2", loginForm2Map, data);
                 }
               });
               //   不刷新 向路由中添加参数，刷新后，保持功能
