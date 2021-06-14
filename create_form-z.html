@@ -330,6 +330,7 @@
           }
           localStorage.setItem("form_style_query", JSON.stringify(formData));
           var queryObj = query2obj(window.location.href);
+          queryObj.target_day = ymd();
           
           window.location.href =
             "./tables_design-z.html?" + obj2query(queryObj);
