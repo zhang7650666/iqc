@@ -178,7 +178,7 @@
                       重置内容
                     </button>
                     <button
-                      type="submit"
+                      type="button"
                       data-id="loginForm1"
                       class="btn w-xs btn-primary2 save m-l-lg m-b"
                     >
@@ -494,6 +494,7 @@
         form_id: queryObj.form_id || 8, // 	Y	表格样式id
         classifyId: queryObj.classifyId, // 	Y	分类id
       };
+      console.log(5555, queryObj)
       var formData = Object.assign(formStyle, form_style_query);
       if (!isId) {
         $.ajax({
@@ -629,7 +630,12 @@
         $('#' + parentId).html(htmlStr)
       });
       // 点击保存
+      $('.save').click(function() {
+        console.log('进来没有')
+        saveFn()
+      })
       function saveFn(isInit) {
+
         $("#loginForm1").validate({
           rule: loginForm1Map.rule,
           messages: loginForm1Map.messages,
@@ -675,7 +681,7 @@
           errorElement: "span",
         });
 
-        isInit && $("#loginForm1").submit();
+        $("#loginForm1").submit();
       }
 
       //非编辑才添加事件 点击生成见证记录
