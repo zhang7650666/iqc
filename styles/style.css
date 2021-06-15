@@ -4132,7 +4132,12 @@ td {
   position: relative;
 }
 .error-fixed {
-  position:absolute;
+  position: absolute;
   bottom: 30%;
   right: 5px;
+}
+
+.text-gary {
+  font-size: 12px;
+  color: #ccc;
 }
