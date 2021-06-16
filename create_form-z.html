@@ -135,15 +135,15 @@
           <div class="panel-heading"></div>
           <div class="panel-body">
             <h3 class="txt-center p-b-lg create-form-title">新建表单</h3>
-            <form action="#" id="loginForm" class="form-horizontal label-right">
+            <form action="#" id="formData" class="form-horizontal label-right">
               <div class="row create-item"></div>
               <div class="p-t-md txt-center">
                 <button type="button" class="btn btn-info btn-back">
                   返回列表
                 </button>
                 <button type="reset" class="btn btn-default reset-form m-l-lg">
-                  重置表单
-                </button>
+                  <!-- 重置表单
+                </button> -->
                 <button type="submit" class="btn btn-primary m-l-lg">
                   新建表单
                 </button>
@@ -234,7 +234,7 @@
           label: "材料进厂时间",
           key: "entryTime",
           type: "date",
-          value: "",
+          value: moment().format('YYYY-MM-DD'),
         },
         {
           label: "出厂编号",
@@ -290,7 +290,7 @@
         var name = " name=" + item.key;
         var placeholder = " placeholder=请输入" + item.label;
         formStr += [
-          "<div class='form-group col-md-6 col-lg-4 '" + item.key + ">",
+          "<div class='col-md-6 col-lg-4 '>",
           "<label class='col-xs-4 control-label label-p7'>" +
             item.label +
             "</label>",
@@ -304,7 +304,9 @@
             value +
             placeholder +
             " />",
-          "<div class='error-block-" + item.key + " text-danger'></div>",
+          "<div class='error-block error-block-" +
+            item.key +
+            " text-danger'></div>",
           "</div>",
           "</div>",
         ].join("");
@@ -313,12 +315,15 @@
         var errTips = item.label + "不能为空";
         messages[item.key] = { required: errTips };
       });
+
       var radioStr =
-        '<div class="col-md-6 col-lg-6 txt-center">\
-          <div class="radio col-xs-4"></div>\
-          <div class="radio col-xs-3"><label> <input type="radio" checked value="0" id="optionsRadios1" name="testStatus"> 见证 </label></div>\
-          <div class="radio col-xs-3"><label> <input type="radio"  value="1" id="optionsRadios2" name="testStatus"> 复试 </label></div>\
-      </div>';
+        '<div class="col-md-6 col-lg-4" >\
+          <label class="col-xs-4 control-label label-p7"></label>\
+          <div class="col-xs-8" flex>\
+            <label class="p-r-md"> <input type="radio" checked value="0" id="optionsRadios1" name="testStatus"> 见证 </label>\
+            <label> <input type="radio"  value="1" id="optionsRadios2" name="testStatus"> 复试 </label>\
+          </div>\
+        </div>';
       $(".create-item").html(formStr);
       $(".create-item").append(radioStr);
       $(".oriTestNumber").hide(); // 初始化隐藏原试验编号
@@ -341,9 +346,9 @@
         setDate: moment().format("YYYY-MM-DD"),
       });
 
-      $("input[name='entryTime']").val(moment().format("YYYY-MM-DD"));
+      // $("input[name='entryTime']").val(moment().format("YYYY-MM-DD"));
       // 提交校验
-      $("#loginForm").validate({
+      $("#formData").validate({
         rules: rules,
         messages: messages,
         onfocusout: false,
@@ -373,7 +378,7 @@
         window.history.go(-1);
       });
       // $('.reset-form').click(function() {
-      //   $('#loginForm')[0].reset();
+      //   $('#formData')[0].reset();
       // })
     </script>
   </body>

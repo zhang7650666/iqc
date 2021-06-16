@@ -494,6 +494,7 @@ function createList(cb) {
 
     $("#navigation").on("click", "a[data-id]", function (e) {
       e.preventDefault();
+      $("#formData")[0].reset();
       //导航点击处理
       $(".create-form-title").html($(this).html());
       $("#sampleName").val($(this).find("span").html());

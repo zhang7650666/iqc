@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <!-- Page title -->
-    <title>HOMER | WebApp admin theme</title>
+    <title>表单编辑</title>
 
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!--<link rel="shortcut icon" type="image/ico" href="favicon.ico" />-->
@@ -93,7 +93,7 @@
           <ol class="hbreadcrumb breadcrumb">
             <li><a href="index-y.html">首页</a></li>
             <li>
-              <span>新建表单</span>
+              <a href="create_form-z.html">新建表单</a>
             </li>
             <li class="active">
               <span>新建表单</span>
@@ -439,6 +439,7 @@
       var iscontract = queryObj.type === "contract"; // 从首页点击"合同详情"跳转过来
       var isWitness = queryObj.type === "witness"; // 从首页点击"见证详情" 跳转过来
       var isEdit = queryObj.type === "edit"; // 从首页点击"编辑" 跳转过来
+      var isSubmit = false;
 
       var createWitnessId = "";
       var nullTable = JSON.stringify({
@@ -504,12 +505,14 @@
               // 工程编号
               tableNum = data.numbers;
               tableName = data.title;
+              document.title = tableName;
+              $("#hbreadcrumb .active").find("span").html(tableName);
               $("#loginForm1 .table-donwload-section .table-order").html(
                 data.numbers
               );
               // title 信息
               $("#loginForm1 .table-donwload-section .table-title").html(
-                data.title
+                tableName
               );
               // 表头信息
               if (data.tableData) {
@@ -538,19 +541,28 @@
           success: function (res) {
             if (res.code == 200) {
               var data = res.data;
+              // var isWitness = data.witnessData && data.witnessData.tableData;
+              var isWitness = data.status == 1;
               //  有见证表，调整布局
-              if (data.witnessData && data.witnessData.tableData) {
+              if (isWitness) {
                 $("#witnessTable").removeClass("hidden");
                 mainWrapper.setAttribute("flex", "box:mean");
-                $(".record").addClass("hidden");
-                $(".resetBtn").addClass("hidden");
-                $(".save").addClass("hidden");
-                $(".cancleWitness").removeClass("hidden");
+                [".record", ".resetBtn", ".save", ".cancleWitness"].forEach(
+                  function (ele) {
+                    $(ele).addClass("hidden");
+                  }
+                );
+                // $(".record").addClass("hidden");
+                // $(".resetBtn").addClass("hidden");
+                // $(".save").addClass("hidden");
+                // $(".cancleWitness").removeClass("hidden");
               }
 
               // 工程编号
               tableNum = data.numbers;
               tableName = data.title;
+              document.title = tableName;
+              $("#hbreadcrumb .active span").html(tableName);
               $("#loginForm1 .table-donwload-section .table-order").html(
                 data.numbers
               );
@@ -558,7 +570,7 @@
               $("#loginForm1 .table-donwload-section .table-title").html(
                 data.title
               );
-              var isWitness = data.status == 1;
+
               // 表头信息
               if (data.tableData) {
                 data.tableData.forEach(function (item) {
@@ -574,9 +586,10 @@
                     );
                   }
                 });
+                !isWitness && $(".resetBtn").addClass("hidden");
                 // saveFn(true);
               }
-              if (data.witnessData && data.witnessData.tableData) {
+              if (isWitness) {
                 createWitnessId = data.witnessData.id;
                 data.witnessData.tableData.forEach(function (item) {
                   if (nullTable != JSON.stringify(item)) {
@@ -620,6 +633,7 @@
           rule: loginForm1Map.rule,
           messages: loginForm1Map.messages,
           submitHandler: function () {
+            isSubmit = true;
             var datas = $("#loginForm1").serializeArray();
             var radios = $("#loginForm1").find('input[type="radio"]');
             radios.each(function (idx, inputEle) {
@@ -659,8 +673,11 @@
                     window.location.href = "./index-y.html";
                   }, 1000);
                 }
+                isSubmit = false;
               },
-              error: function (error) {},
+              error: function (error) {
+                isSubmit = false;
+              },
             });
           },
           errorPlacement: function (error, element) {
