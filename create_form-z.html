@@ -134,7 +134,7 @@
         <div class="hpanel print-wp">
           <div class="panel-heading"></div>
           <div class="panel-body">
-            <h3 class="txt-center p-b-lg create-form-z">新建表单</h3>
+            <h3 class="txt-center p-b-lg create-form-title">新建表单</h3>
             <form action="#" id="loginForm" class="form-horizontal label-right">
               <div class="row create-item"></div>
               <div class="p-t-md txt-center">
@@ -283,37 +283,32 @@
       var rules = {};
       var messages = {};
       formData.forEach(function (item) {
+        var dateType =
+          item.type == "date" ? " data-date-format='yyyy-mm-dd'" : "";
+        var value = item.value ? " value=" + item.value : "";
+        // var isRequired = item.isRequired ? " required=" : "";
+        var name = " name=" + item.key;
+        var placeholder = " placeholder=请输入" + item.label;
+        formStr += [
+          "<div class='form-group col-md-6 col-lg-4 '" + item.key + ">",
+          "<label class='col-xs-4 control-label label-p7'>" +
+            item.label +
+            "</label>",
+          "<div class='col-xs-8'>",
+          "<input type='text' class='form-control' " +
+            "id=" +
+            item.key +
+            dateType +
+            name +
+            // isRequired +
+            value +
+            placeholder +
+            " />",
+          "<div class='error-block-" + item.key + " text-danger'></div>",
+          "</div>",
+          "</div>",
+        ].join("");
 
-        formStr +=
-          '<div class="form-group col-md-6 col-lg-4 ' +
-          item.key +
-          '">\
-          <label class="col-xs-4 control-label label-p7" for="' +
-          item.key +
-          '">' +
-          item.label +
-          '</label>\
-          <div class="col-xs-8">\
-            <input\
-              type="text"\
-              placeholder="请输入' +
-          item.label +
-          '"\
-              required=""\
-              value="' +
-          item.value +
-          '"\
-          data-date-format="yyyy-mm-dd"\
-              name="' +
-          item.key +
-          '"\
-              class="form-control"\
-            />\
-            <div class="error-block-' +
-          item.key +
-          ' text-danger"></div>\
-          </div>\
-        </div>';
         rules[item.key] = { required: true };
         var errTips = item.label + "不能为空";
         messages[item.key] = { required: errTips };
@@ -337,13 +332,16 @@
       $("input[type=radio][name=testStatus]").change(function () {
         isShowOTN();
       });
-      $("input[name='entryTime']").attr("readonly", "readonly"); 
-      $("input[name='entryTime']").attr("placeholder", "请选择");  
+      $("input[name='entryTime']").attr("readonly", "readonly");
+      $("input[name='entryTime']").attr("placeholder", "请选择");
       $("input[name='entryTime']").datepicker({
         language: "zh-CN", //语言
         autoclose: true, //选择后自动关闭
         todayHighlight: true, //今天日期高亮
+        setDate: moment().format("YYYY-MM-DD"),
       });
+
+      $("input[name='entryTime']").val(moment().format("YYYY-MM-DD"));
       // 提交校验
       $("#loginForm").validate({
         rules: rules,

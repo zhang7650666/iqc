@@ -333,7 +333,6 @@
           jQuery.browser.version = RegExp.$1;
         }
       })();
-      
     </script>
     <script>
       var opt_classify_id = ""; //分类id
@@ -342,10 +341,10 @@
       // 获取分类数据
       $.get("http://meterial.cxhy.cn/getClassifyList/", function (res) {
         // 默认传第一个分类id
-        opt_classify_id ='';
+        opt_classify_id = "";
         // 获取表格数据
         getList();
-        res.data.unshift({classify_name: '全部', id: ''})
+        res.data.unshift({ classify_name: "全部", id: "" });
         createOptions("class", res.data);
       });
       function createOptions(idEle, optList) {
@@ -533,7 +532,7 @@
 
       //获取表格数据
       function getList() {
-        var status = $("#status").val() || '';
+        var status = $("#status").val() || "";
         $.get(
           "http://meterial.cxhy.cn/getRecordList/",
           {
