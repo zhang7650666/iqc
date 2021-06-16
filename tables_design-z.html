@@ -42,6 +42,7 @@
     />
     <link rel="stylesheet" href="fonts/pe-icon-7-stroke/css/helper.css" />
     <link rel="stylesheet" href="styles/style.css" />
+    <link rel="stylesheet" href="styles/flex.css" />
   </head>
 
   <body class="fixed-navbar">
@@ -116,8 +117,10 @@
     <div id="wrapper" class="m-n">
       <div class="content animate-panel content-width">
         <div class="hpanel">
-          <div class="row">
-            <div id="contractTable" class="col-xs-12 col-md-12 col-lg-12">
+          <!-- class="row" -->
+          <div id="mainWrapper" flex="">
+            <!-- class="col-xs-12 col-md-12 col-lg-12" -->
+            <div id="contractTable" class="p-r-lg">
               <div class="panel-body">
                 <form
                   action="#"
@@ -195,7 +198,8 @@
                 </form>
               </div>
             </div>
-            <div id="witnessTable" class="col-xs-12 col-md-12 col-lg-12 hidden">
+            <!-- class="col-xs-12 col-md-12 col-lg-12 hidden" -->
+            <div id="witnessTable" class="hidden">
               <div class="panel-body">
                 <form
                   action="#"
@@ -209,22 +213,6 @@
                         class="col-lg-12 table-order"
                         style="font-size: 12px; text-align: left"
                       ></div>
-                    </div>
-                    <div flex>
-                      <!-- title -->
-                      <div flex-box="1">
-                        <h3
-                          class="table-title txt-center"
-                          style="
-                            text-align: center;
-                            height: 80px;
-                            line-height: 80px;
-                            font-size: 18px;
-                          "
-                        >
-                          见证记录详情
-                        </h3>
-                      </div>
                     </div>
                   </div>
                   <div class="row txt-center">
@@ -293,7 +281,9 @@
                 border: 1px solid #fff;
               }
 
-
+              .p-xs {
+                padding: 0 5px
+              }
               .table-desc {
                 font-size: 12px;
                 word-wrap: break-word;
@@ -314,6 +304,12 @@
               }
               .txt-right {
                   text-align: right;
+              }
+              textarea {
+                width:100%;
+                border: 0px;
+                outline: none;
+                margin: 0px;
               }
 
               [flex] {
@@ -444,17 +440,12 @@
       var isWitness = queryObj.type === "witness"; // 从首页点击"见证详情" 跳转过来
       var isEdit = queryObj.type === "edit"; // 从首页点击"编辑" 跳转过来
       var createWitnessId = "";
-      var nullTable = JSON.stringify({tableHead: [], tableBody: [], desc: null}) // 空表对比模板
+      var nullTable = JSON.stringify({
+        tableHead: [],
+        tableBody: [],
+        desc: null,
+      }); // 空表对比模板
 
-      // contractTable
-      // witnessTable
-      // 这里用原生，方便直接替换类名
-      var contractTableEle = document.getElementById("contractTable");
-      var witnessTableEle = document.getElementById("witnessTable");
-      if (isWitness) {
-        contractTableEle.className = averageClass;
-        witnessTableEle.className = averageClass;
-      }
       //   record
       //   编辑状态，置灰重置按钮
       //   type暂设置。1：有操作权限 ，2有查看权限， 3
@@ -494,48 +485,37 @@
         form_id: queryObj.form_id || 8, // 	Y	表格样式id
         classifyId: queryObj.classifyId, // 	Y	分类id
       };
-      console.log(5555, queryObj)
+      console.log(5555, queryObj);
       var formData = Object.assign(formStyle, form_style_query);
       if (!isId) {
         $.ajax({
-        url: "http://meterial.cxhy.cn/getFormStyle/",
-        dataType: "json",
-        contentType: "application/json",
-        type:"POST",
-        data: JSON.stringify(formData),
-        success: function (res) {
-          if (res.code == 200) {
-            var data = res.data;
-            // 工程编号
-            tableNum = data.numbers;
-            tableName = data.title;
-            $("#loginForm1 .table-donwload-section .table-order").html(
-              data.numbers
-            );
-            // title 信息
-            $("#loginForm1 .table-donwload-section .table-title").html(
-              data.title
-            );
-            // 表头信息
-            if (data.tableData) {
-              data.tableData.forEach(function (item) {
-                if(nullTable != JSON.stringify(item)) {
-                  dataToTable(item, "#loginForm1", loginForm1Map, data);
-                  // saveFn();
-                }
-                
-              });
-            }
-            if (data.witnessData && data.witnessData.tableData) {
-              createWitnessId = data.witnessData.id;
-              data.witnessData.tableData.forEach(function (item) {
-                if(nullTable != JSON.stringify(item)) {
-                  dataToTable(item, "#loginForm2", loginForm1Map, data);
-                }
-                // saveFn();
-              });
-            }
-
+          url: "http://meterial.cxhy.cn/getFormStyle/",
+          dataType: "json",
+          contentType: "application/json",
+          type: "POST",
+          data: JSON.stringify(formData),
+          success: function (res) {
+            if (res.code == 200) {
+              var data = res.data;
+              // 工程编号
+              tableNum = data.numbers;
+              tableName = data.title;
+              $("#loginForm1 .table-donwload-section .table-order").html(
+                data.numbers
+              );
+              // title 信息
+              $("#loginForm1 .table-donwload-section .table-title").html(
+                data.title
+              );
+              // 表头信息
+              if (data.tableData) {
+                data.tableData.forEach(function (item) {
+                  if (nullTable != JSON.stringify(item)) {
+                    dataToTable(item, "#loginForm1", loginForm1Map, data);
+                    // saveFn();
+                  }
+                });
+              }
               //最后的错误信息
               res.msg && res.msg != "ok" && toastr && toastr.warning(res.msg);
             }
@@ -553,11 +533,18 @@
           },
           success: function (res) {
             if (res.code == 200) {
-              if (isId && res.data.status == 1) {
-                $(".record").addClass("hidden");
-                // $(".cancleWitness").removeClass("hidden");
-              }
               var data = res.data;
+              //  有见证表，调整布局
+              if (data.witnessData && data.witnessData.tableData) {
+                var mainWrapper = document.getElementById("mainWrapper");
+                $("#witnessTable").removeClass("hidden");
+                mainWrapper.setAttribute("flex", "box:mean");
+                $(".record").addClass("hidden");
+                $(".resetBtn").addClass("hidden");
+                $(".save").addClass("hidden");
+                $(".cancleWitness").removeClass("hidden");
+              }
+
               // 工程编号
               tableNum = data.numbers;
               tableName = data.title;
@@ -568,22 +555,29 @@
               $("#loginForm1 .table-donwload-section .table-title").html(
                 data.title
               );
+              var isWitness = data.status == 1;
               // 表头信息
               if (data.tableData) {
                 data.tableData.forEach(function (item) {
                   // 如果是空表不在渲染
-                  if(nullTable != JSON.stringify(item)) {
-                    dataToTable(item, "#loginForm1", loginForm1Map, data);
+                  if (nullTable != JSON.stringify(item)) {
+                    dataToTable(
+                      item,
+                      "#loginForm1",
+                      loginForm1Map,
+                      data,
+                      false,
+                      isWitness
+                    );
                   }
                 });
-               // validateFn()
-                    // saveFn(true);
+                // saveFn(true);
               }
               if (data.witnessData && data.witnessData.tableData) {
                 createWitnessId = data.witnessData.id;
                 data.witnessData.tableData.forEach(function (item) {
-                  if(nullTable != JSON.stringify(item)) {
-                    dataToTable(item, "#loginForm2", loginForm2Map, data);
+                  if (nullTable != JSON.stringify(item)) {
+                    dataToTable(item, "#loginForm2", loginForm2Map, data, true);
                   }
                   // saveFn();
                 });
@@ -595,39 +589,22 @@
           },
         });
       }
-      function validateFn() {
-        // 提交校验
-        console.log("近来没有")
-       $("#loginForm1").validate({
-          rules: loginForm1Map.rules,
-          messages: loginForm1Map.messages,
-          onfocusout: false,
-          // focusCleanup: true, // 当未通过验证的元素获得焦点时,并移除错误提示 （避免和 focusInvalid.一起使用）
-          submitHandler: function (form) {
-          //  debugger;
-          },
-          errorPlacement: function (error, element) {
-          $(error).addClass('error-fixed')
-          $(element).parent().append(error)
-          },
-          errorElement: "span",
-        });
-        $("#loginForm1").submit()
-      }
 
       // 点击下载
       $(".download").click(function () {
         var parentId = $(this).attr("data-id");
-        var htmlStr = $('#' + parentId).clone(true);
-        replaceEl(parentId)
-        $('#' + parentId).find('.table-donwload-section').wordExport(
-          tableNum + (parentId == "loginForm2" ? "见证记录" : tableName)
-        );
+        var htmlStr = $("#" + parentId).clone(true);
+        replaceEl(parentId);
+        $("#" + parentId)
+          .find(".table-donwload-section")
+          .wordExport(
+            tableNum + (parentId == "loginForm2" ? "见证记录" : tableName)
+          );
         // entrys.forEach(function (inputEle) {
         //   var val = $(inputEle).val() || "";
         //   $(inputEle).siblings(".placeholder").text("");
         // });
-        $('#' + parentId).html(htmlStr)
+        $("#" + parentId).html(htmlStr);
       });
       // 点击保存
       $('.save').click(function() {
@@ -637,7 +614,6 @@
      
       
       function saveFn(isInit) {
-
         $("#loginForm1").validate({
           rule: loginForm1Map.rule,
           messages: loginForm1Map.messages,
@@ -675,7 +651,8 @@
               data: JSON.stringify(params),
               success: function (res) {
                 if (res.code == 200) {
-                  toastr && toastr.success("合同保存成功");
+                  toastr &&
+                    toastr.success(isId ? "合同编辑成功" : "合同保存成功");
                   setTimeout(function () {
                     window.location.href = "./index-y.html";
                   }, 1000);
@@ -685,8 +662,8 @@
             });
           },
           errorPlacement: function (error, element) {
-          $(error).addClass('error-fixed')
-          $(element).parent().append(error)
+            $(error).addClass("error-fixed");
+            $(element).parent().append(error);
           },
           errorElement: "span",
         });
@@ -712,8 +689,14 @@
             if (res.code == 200) {
               createWitnessId = res.data.id || "";
               res.data.tableData.forEach(function (item) {
-                if(nullTable != JSON.stringify(item)) {
-                  dataToTable(item, "#loginForm2", loginForm2Map, res.data);
+                if (nullTable != JSON.stringify(item)) {
+                  dataToTable(
+                    item,
+                    "#loginForm2",
+                    loginForm2Map,
+                    res.data,
+                    true
+                  );
                 }
               });
               //   不刷新 向路由中添加参数，刷新后，保持功能
@@ -737,16 +720,16 @@
           error: function (error) {},
         });
       });
-      
+
       // 点击打印
       $(".print").click(function () {
         var fromId = $(this).attr("data-id");
-        var htmlStr = $('#' + fromId).clone(true);
-        replaceEl(fromId)
+        var htmlStr = $("#" + fromId).clone(true);
+        replaceEl(fromId);
         $("#" + fromId)
           .find(".table-donwload-section")
           .jqprint();
-        $('#' + fromId).html(htmlStr)
+        $("#" + fromId).html(htmlStr);
       });
 
       $(".cancleWitness").on("click", function () {
@@ -810,8 +793,8 @@
         areas.each(function (idx, inputEle) {
           // inputEle.checked
           var val = $(inputEle).val() || "";
-          $(inputEle).parent().attr('style', 'text-align:center')
-          $(inputEle).parent().html(val)
+          $(inputEle).parent().attr("style", "text-align:center");
+          $(inputEle).parent().html(val);
           // $(inputEle).siblings(".placeholder").text(val);
         });
 

@@ -4150,7 +4150,17 @@ td {
   position: relative;
 }
 .error-fixed {
+<<<<<<< HEAD
   position:absolute;
   bottom: 0%;
+=======
+  position: absolute;
+  bottom: 30%;
+>>>>>>> 3037534fb0df6f2f3cb4d5316068f4ddf545c206
   right: 5px;
+}
+
+.text-gary {
+  font-size: 12px;
+  color: #ccc;
 }

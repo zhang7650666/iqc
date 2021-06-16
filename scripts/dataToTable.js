@@ -70,7 +70,23 @@ function formatTableHeadItem(datas, rules, messages) {
   return "<tr>" + htmls + "</tr>";
 }
 
-function dataToTable(tableData, parentId, map, sourceData) {
+/**
+ *
+ * @param {*} tableData  要处理的表格数据
+ * @param {*} parentId 父级元素id
+ * @param {*} map 校验的map
+ * @param {*} sourceData 接口全数据
+ * @param {*} isProhibitEdit 是否禁止编辑 to:用于见证记录内容不可编辑
+ * @param {*} disabledEdit 禁止编辑
+ */
+function dataToTable(
+  tableData,
+  parentId,
+  map,
+  sourceData,
+  isProhibitEdit,
+  disabledEdit
+) {
   // var theadHtml = "";
   var dateInits = [];
   var headData = $.extend([], tableData.tableHead);
@@ -78,12 +94,13 @@ function dataToTable(tableData, parentId, map, sourceData) {
   // 表体信息
   var trHtml = "";
   tableData.tableBody.forEach(function (tb) {
-
     var tdStr = "";
     var tdW = 100 / parseInt(sourceData.columns);
     tb.forEach(function (item) {
       var tdHtml = "";
       var parentAttr = "";
+      // 禁止编辑
+      var disab = disabledEdit && ' disabled="true"';
       switch (item.columnType) {
         case "label":
           var checked = item.value ? " checked=checked" : "";
@@ -106,37 +123,70 @@ function dataToTable(tableData, parentId, map, sourceData) {
                 " value=" +
                 item.id +
                 checked +
+                disab +
                 ">"
               : ""; // to do 增加选中状态后放开
           }
           
           tdHtml =
             '<span class="font-weight">' + item.name + "</span> " + isCheckBox;
-          parentAttr = "text-align:center";
+          parentAttr = "text-align:center;";
           if (!!item.is_required) {
-            map.rules["sid_" + item.submitId + '_0'] = { required: true };
-            map.messages["sid_" + item.submitId + '_0'] = { required: "必填项" };
+            map.rules["sid_" + item.submitId + "_0"] = { required: true };
+            map.messages["sid_" + item.submitId + "_0"] = {
+              required: "必填项",
+            };
           }
           break;
         case "text":
-          // debugger;
-          var place = item.valueExtPos == "bottom" ? "<br/>" : "";
-          var isRight = item.valueExtPos == "right";
+          if (!isProhibitEdit || (isProhibitEdit && !item.value)) {
+            // debugger;
+            var place = item.valueExtPos == "bottom" ? "<br/>" : "";
+            var isRight = item.valueExtPos == "right";
+            var required = map.rules["sid_" + item.submitId]
+              ? 'required="true"'
+              : "";
+
+            tdHtml =
+              '<input type="text" ' +
+              required +
+              " name=sid_" +
+              item.submitId +
+              (isRight ? ' style="width:70%"' : "") +
+              ' value="' +
+              (item.value || "") +
+              '" ' +
+              disab +
+              "/> " +
+              place +
+              (item.valueExt || "");
+            // (item.valueExt
+            //   ? '<span class="text-gary">' + item.valueExt + "</span>"
+            //   : "");
+          } else {
+            tdHtml = "<div class='txt-left p-xs'>" + item.value + "</div> ";
+          }
+          break;
+        case "textarea":
+          // var place = item.valueExtPos == "bottom" ? "<br/>" : "";
+          // var isRight = item.valueExtPos == "right";
           var required = map.rules["sid_" + item.submitId]
             ? 'required="true"'
             : "";
-
+          value = (item.valueExt || "").replace(/<br\/>\n/g, "");
           tdHtml =
-            '<input type="text" ' +
+            "<textarea " +
+            (value ? " placeholder=" + value : "") +
             required +
             " name=sid_" +
             item.submitId +
-            (isRight ? ' style="width:70%"' : "") +
+            // (isRight ? ' style="width:70%"' : "") +
             ' value="' +
             (item.value || "") +
-            '"/></span> ' +
-            place +
-            (item.valueExt || "");
+            '" ' +
+            disab +
+            "></textarea>";
+
           break;
         case "date":
           dateInits.push(item.submitId);
@@ -163,7 +213,9 @@ function dataToTable(tableData, parentId, map, sourceData) {
             item.submitId +
             ' value="' +
             value +
-            '"/>';
+            '" ' +
+            disab +
+            "/>";
           break;
         case "checkbox":
           var checkStr = "";
@@ -187,9 +239,11 @@ function dataToTable(tableData, parentId, map, sourceData) {
               // joint = "";
               break;
           }
-          var ids = (item.value && item.value.toString() || "").split(",").filter(function (v) {
-            return v;
-          });
+          var ids = ((item.value && item.value.toString()) || "")
+            .split(",")
+            .filter(function (v) {
+              return v;
+            });
           (item.options || []).forEach(function (checkItem) {
             var checked =
               ids.indexOf(checkItem.id + "") > -1 ? " checked=checked" : "";
@@ -199,13 +253,14 @@ function dataToTable(tableData, parentId, map, sourceData) {
               checkItem.id +
               " name=sid_" +
               item.submitId +
+              disab +
               checked +
               ' class="form-check-input"> ' +
               checkItem.name +
               "</label>" +
               joint;
           });
-          
+
           tdHtml +=
             '<div style="padding:0 15px;" class="' +
             className +
@@ -232,46 +287,69 @@ function dataToTable(tableData, parentId, map, sourceData) {
             place +
             (item.valueExt || "");
       }
-      var columnCount = item.tagColumCount || item.columnCount;
-      var classNams = item.direction == 1 ? "txt-left" : ""; //table-center      
-      if(item.name && item.name.indexOf('见证记录<br/>表') != -1) {
-        var jzStr1 = item.name.split('<br/>')[0];
-        var jzStr2 = item.name.split('<br/>')[1];
-        var testHtml ='';
-        testHtml += '<div class="jz-str1">'+jzStr1+'</div>'
-        testHtml += '<div class="jz-str2">'+jzStr2+'</div>'
+      var columnCount = item.tagColumCount || item.columnCount || 1;
+      var classNams = item.direction == 1 ? "txt-left" : ""; //table-center
+      if (item.name && item.name.indexOf("见证记录<br/>表") != -1) {
+        var jzStr1 = item.name.split("<br/>")[0];
+        var jzStr2 = item.name.split("<br/>")[1];
+        var testHtml = "";
+        testHtml += '<div class="jz-str1">' + jzStr1 + "</div>";
+        testHtml += '<div class="jz-str2">' + jzStr2 + "</div>";
         tdStr +=
-        "<td \
-          colspan='"+ columnCount +"'\
-          rowspan='"+ item.tag_height  +"'\
-          data-id='"+  item.id  +"'\
-          class='"+classNams+"'\
-          style='"+parentAttr+"'\
-          >"+testHtml +"</td>";
+          "<td \
+          colspan='" +
+          columnCount +
+          "'\
+          rowspan='" +
+          item.tag_height +
+          "'\
+          data-id='" +
+          (item.id || "") +
+          "'\
+          class='" +
+          classNams +
+          "'\
+          style='" +
+          parentAttr +
+          "'\
+          >" +
+          testHtml +
+          "</td>";
       } else {
-        parentAttr += "width:" + tdW * columnCount + '%'
+        parentAttr += " width:" + tdW + "%";
         tdStr +=
-        "<td \
-          colspan='"+ columnCount +"'\
-          rowspan='"+ item.tag_height  +"'\
-          data-id='"+  item.id  +"'\
-          class='"+classNams+"'\
-          style='"+parentAttr+"'\
-          >"+tdHtml +"</td>";
+          "<td \
+          colspan='" +
+          columnCount +
+          "'\
+          rowspan='" +
+          item.tag_height +
+          "'\
+          data-id='" +
+          item.id +
+          "'\
+          class='" +
+          classNams +
+          "'\
+          style='" +
+          parentAttr +
+          "'\
+          >" +
+          tdHtml +
+          "</td>";
       }
-      
     });
     trHtml += "<tr>" + tdStr + "</tr>";
   });
 
   var temp = $("#tableTemp").html();
-  
+
   temp = temp.replace("__TABLE_HEADER__", theadHtml);
   temp = temp.replace("__TABLE_BODY", trHtml);
   temp = temp.replace("__TABLE_DESC", tableData.desc || "");
   $(parentId).find(".table-donwload-section").append(temp);
-  if(headData.length == 0) {
-    $(parentId).find('.table-header').remove();
+  if (headData.length == 0) {
+    $(parentId).find(".table-header").remove();
   }
   dateInits.forEach(function (idx) {
     $("#datapicker" + idx).datepicker({

@@ -262,9 +262,9 @@
                     <th>委托人</th>
                     <th>见证人</th>
                     <th>检验机构</th>
-                    <th>检测表单</th>
                     <th>状态</th>
-                    <th>操作</th>
+                    <th>检测表单</th>
+                    <th>见证报告</th>
                   </tr>
                 </thead>
                 <tbody id="tableBody"></tbody>
@@ -462,13 +462,6 @@
         $(data).each(function (idx, item) {
           var target_day = item.create_at.split(" ")[0];
           var isWitness = item.status == 1;
-          var readDetail =
-            " <a style='color:#3498db' href='tables_design-z.html?id=" +
-            item.id +
-            "&target_day=" +
-            target_day +
-            "&type=contract'> " +
-            "合同详情</a>";
           var witnessDetail =
             " <a style='color:#3498db' href='tables_design-z.html?id=" +
             item.id +
@@ -482,13 +475,17 @@
             '" data-target_day="' +
             target_day +
             '">取消见证</button>';
+
           var edit =
             " <a style='color:#3498db' href='tables_design-z.html?id=" +
             item.id +
             "&target_day=" +
             target_day +
-            "&type=edit'> " +
-            "编辑</a>";
+            "&type=" +
+            (isWitness ? "view" : "edit") +
+            "'> " +
+            (isWitness ? "查看" : "编辑") +
+            "</a>";
           trs.push(
             "<tr> " +
               [
@@ -498,10 +495,9 @@
                 "<td> " + item.entrustName + "</td>",
                 "<td> " + item.witnessName + "</td>",
                 "<td> " + item.witness_group + "</td>",
-                "<td>" + edit + "</td>",
                 "<td> " + (isWitness ? "已见证" : "非见证") + "</td>",
+                "<td>" + edit + "</td>",
                 "<td class='td-set'>" +
-                  readDetail +
                   (isWitness ? witnessDetail : "") +
                   (item.witness_record_id == 1 ? cancleDetail : "") +
                   "</td>",
