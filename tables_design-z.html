@@ -439,12 +439,16 @@
       var iscontract = queryObj.type === "contract"; // 从首页点击"合同详情"跳转过来
       var isWitness = queryObj.type === "witness"; // 从首页点击"见证详情" 跳转过来
       var isEdit = queryObj.type === "edit"; // 从首页点击"编辑" 跳转过来
+
       var createWitnessId = "";
       var nullTable = JSON.stringify({
         tableHead: [],
         tableBody: [],
         desc: null,
       }); // 空表对比模板
+
+      //
+      var mainWrapper = document.getElementById("mainWrapper");
 
       //   record
       //   编辑状态，置灰重置按钮
@@ -536,7 +540,6 @@
               var data = res.data;
               //  有见证表，调整布局
               if (data.witnessData && data.witnessData.tableData) {
-                var mainWrapper = document.getElementById("mainWrapper");
                 $("#witnessTable").removeClass("hidden");
                 mainWrapper.setAttribute("flex", "box:mean");
                 $(".record").addClass("hidden");
@@ -607,12 +610,11 @@
         $("#" + parentId).html(htmlStr);
       });
       // 点击保存
-      $('.save').click(function() {
-        console.log('进来没有')
-        saveFn()
-      })
-     
-      
+      $(".save").click(function () {
+        console.log("进来没有");
+        saveFn();
+      });
+
       function saveFn(isInit) {
         $("#loginForm1").validate({
           rule: loginForm1Map.rule,
@@ -622,11 +624,11 @@
             var radios = $("#loginForm1").find('input[type="radio"]');
             radios.each(function (idx, inputEle) {
               var checked = inputEle.checked;
-              var sid = $(inputEle).attr('sid');
-              var val = checked ? $(inputEle).val() : '';
-              datas.push({name: sid, value: val})
+              var sid = $(inputEle).attr("sid");
+              var val = checked ? $(inputEle).val() : "";
+              datas.push({ name: sid, value: val });
             });
-            console.log('datas', datas)
+            console.log("datas", datas);
             var submitData = {};
             $(datas).each(function (idx, item) {
               //   debugger;
@@ -673,8 +675,6 @@
 
       //非编辑才添加事件 点击生成见证记录
       $(".record").click(function () {
-        contractTableEle.className = averageClass;
-        witnessTableEle.className = averageClass;
         var params = {
           record_id: queryObj.id, //  $("#loginForm1 .table-wp .table-order").html(),
           target_day: queryObj.target_day,
@@ -687,34 +687,22 @@
           data: JSON.stringify(params),
           success: function (res) {
             if (res.code == 200) {
+              var data = res.data;
               createWitnessId = res.data.id || "";
-              res.data.tableData.forEach(function (item) {
+              //  有见证表，调整布局
+              // if (data.witnessData && data.witnessData.tableData) {
+              $("#witnessTable").removeClass("hidden");
+              mainWrapper.setAttribute("flex", "box:mean");
+              $(".record").addClass("hidden");
+              $(".resetBtn").addClass("hidden");
+              $(".save").addClass("hidden");
+              $(".cancleWitness").removeClass("hidden");
+              // }
+              data.tableData.forEach(function (item) {
                 if (nullTable != JSON.stringify(item)) {
-                  dataToTable(
-                    item,
-                    "#loginForm2",
-                    loginForm2Map,
-                    res.data,
-                    true
-                  );
+                  dataToTable(item, "#loginForm2", loginForm2Map, data, true);
                 }
               });
-              //   不刷新 向路由中添加参数，刷新后，保持功能
-              if (iscontract) {
-                queryObj.type = "witness";
-                // queryObj.id = res.data.id;
-                var query = obj2query(queryObj);
-                query = "?" + query;
-                setTimeout(function () {
-                  if (window.history) {
-                    // 支持History API
-                    history.replaceState(null, "", query);
-                  }
-                });
-              }
-              //点击过生成见证记录后，置灰
-              $(".record").addClass("hidden");
-              //   !isId && window.location.search;
             }
           },
           error: function (error) {},
@@ -745,18 +733,11 @@
           success: function (res) {
             if (res.code == 200) {
               toastr && toastr.success("取消见证记录成功！");
+              $("#witnessTable").addClass("hidden");
+              mainWrapper.setAttribute("flex", "");
+              $(".cancleWitness").addClass("hidden");
               //   恢复委托表独占
-              contractTableEle.className = exclusiveClass;
-              witnessTableEle.className = exclusiveClass + " hidden";
               $(".record").removeClass("hidden");
-              if (window.history) {
-                queryObj = query2obj(window.location.href);
-                queryObj.type = "contract";
-                var query = obj2query(queryObj);
-                query = "?" + query;
-                // 支持History API
-                history.replaceState(null, "", query);
-              }
             }
           },
           error: function (error) {},
@@ -770,26 +751,23 @@
         var entrys = $("#" + fromId).find("input[type='text']");
         var selects = $("#" + fromId).find('input[type="checkbox"]');
         var radios = $("#" + fromId).find('input[type="radio"]');
-        var areas = $("#" + fromId).find('textarea');
+        var areas = $("#" + fromId).find("textarea");
         entrys = Array.prototype.slice.call(entrys);
         entrys.forEach(function (inputEle) {
           // inputEle.checked
-          if( !$(inputEle).hasClass('ipt-self')) {
+          if (!$(inputEle).hasClass("ipt-self")) {
             var val = $(inputEle).val() || "";
-            $(inputEle).parent().attr('style', 'text-align:center')
-            $(inputEle).parent().html(val)
+            $(inputEle).parent().attr("style", "text-align:center");
+            $(inputEle).parent().html(val);
             // $(inputEle).siblings(".placeholder").text(val);
           } else {
             var val = $(inputEle).val() || "";
-            $(inputEle).parent().attr('style', 'text-align:center')
-            $(inputEle).parent().append('<span>666666</span>')
+            $(inputEle).parent().attr("style", "text-align:center");
+            $(inputEle).parent().append("<span>666666</span>");
             $(inputEle).remove();
-           
-
           }
-          
         });
-       
+
         areas.each(function (idx, inputEle) {
           // inputEle.checked
           var val = $(inputEle).val() || "";
@@ -816,22 +794,22 @@
       setTimeout(() => {
         var selects = $("#loginForm1").find('input[type="checkbox"]');
         selects.each(function (idx, inputEle) {
-          // .is(':checked'); 
-          $(inputEle).change(function() {
-            var checked = $(inputEle).is(':checked')
-            if(checked) {
-              $(inputEle).parent().append('<input type="text" value="" class="ipt-self"/>')
+          // .is(':checked');
+          $(inputEle).change(function () {
+            var checked = $(inputEle).is(":checked");
+            if (checked) {
+              $(inputEle)
+                .parent()
+                .append('<input type="text" value="" class="ipt-self"/>');
               // $(inputEle).parent()
             } else {
-              if($(inputEle).parent().find('.ipt-self')) {
-                $(inputEle).parent().find('.ipt-self').remove();
+              if ($(inputEle).parent().find(".ipt-self")) {
+                $(inputEle).parent().find(".ipt-self").remove();
               }
             }
-          })
-            
+          });
         });
       }, 3000);
-      
     </script>
   </body>
 </html>
