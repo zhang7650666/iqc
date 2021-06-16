@@ -76,7 +76,6 @@ function dataToTable(tableData, parentId, map, sourceData) {
   var headData = $.extend([], tableData.tableHead);
   var theadHtml = formatTableHeadItem(headData, map.rules, map.messages);
   // 表体信息
-  console.log(6666, tableData)
   var trHtml = "";
   tableData.tableBody.forEach(function (tb) {
 
@@ -88,7 +87,19 @@ function dataToTable(tableData, parentId, map, sourceData) {
       switch (item.columnType) {
         case "label":
           var checked = item.value ? " checked=checked" : "";
-          var isCheckBox =
+          var isCheckBox = '';
+          if(item.name =="见证" || item.name =="复试") {
+            isCheckBox = '<span class="hidden placeholder">□</span><input type="radio" class="form-check-input"  name=' +
+            "testStatus" +
+            " value=" +
+            item.id +
+            checked +
+            " sid=sid_" +
+            item.submitId +
+            " style=position:relative;top:2px />"
+         
+          } else {
+            isCheckBox =
             item.extendType == "checkbox"
               ? '<span class="hidden placeholder">□</span><input type="checkbox" class="form-check-input"  name=sid_' +
                 item.submitId +
@@ -97,6 +108,8 @@ function dataToTable(tableData, parentId, map, sourceData) {
                 checked +
                 ">"
               : ""; // to do 增加选中状态后放开
+          }
+          
           tdHtml =
             '<span class="font-weight">' + item.name + "</span> " + isCheckBox;
           parentAttr = "text-align:center";
@@ -200,6 +213,24 @@ function dataToTable(tableData, parentId, map, sourceData) {
             checkStr +
             " </div>";
           break;
+        case "textarea":
+          var place = item.valueExtPos == "bottom" ? "<br/>" : "";
+          var isRight = item.valueExtPos == "right";
+          var required = map.rules["sid_" + item.submitId]
+            ? 'required="true"'
+            : "";
+
+          tdHtml =
+            '<textarea type="text" ' +
+            required +
+            " name=sid_" +
+            item.submitId +
+            (isRight ? ' style="width:70%"' : "") +
+            ' value="' +
+            (item.value || "") +
+            '"></textarea></br></span> ' +
+            place +
+            (item.valueExt || "");
       }
       var columnCount = item.tagColumCount || item.columnCount;
       var classNams = item.direction == 1 ? "txt-left" : ""; //table-center      

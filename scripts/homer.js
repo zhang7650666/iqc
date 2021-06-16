@@ -488,10 +488,13 @@ function createList(cb) {
       // 关闭
       toggle: false,
     });
-
+    data[0] && data[0].items.length ? $('.create-form-z').html(data[0].items[0].classify_name) :  $('.create-form-z').html(data[0].classify_name);
+   
+    
     $("#navigation").on("click", "a[data-id]", function (e) {
       e.preventDefault();
       //导航点击处理
+      $('.create-form-z').html($(this).html())
       var id = $(this).attr("data-id");
       var form_id = $(this).attr("data-form_id");
       $("a[data-id]").each(function (idx, aele) {

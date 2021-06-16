@@ -321,6 +321,7 @@
     <!-- App scripts -->
     <script src="scripts/jquery.jqprint-0.3.js"></script>
     <script src="scripts/homer.js"></script>
+    <script src="scripts/zh.js"></script>
     <script>
       // 解决打印报错
       jQuery.browser = {};
@@ -332,56 +333,7 @@
           jQuery.browser.version = RegExp.$1;
         }
       })();
-      // 日期控件中文
-      (function ($) {
-        $.fn.datepicker.dates["zh-CN"] = {
-          days: [
-            "星期日",
-            "星期一",
-            "星期二",
-            "星期三",
-            "星期四",
-            "星期五",
-            "星期六",
-          ],
-          daysShort: ["周日", "周一", "周二", "周三", "周四", "周五", "周六"],
-          daysMin: ["日", "一", "二", "三", "四", "五", "六"],
-          months: [
-            "一月",
-            "二月",
-            "三月",
-            "四月",
-            "五月",
-            "六月",
-            "七月",
-            "八月",
-            "九月",
-            "十月",
-            "十一月",
-            "十二月",
-          ],
-          monthsShort: [
-            "1月",
-            "2月",
-            "3月",
-            "4月",
-            "5月",
-            "6月",
-            "7月",
-            "8月",
-            "9月",
-            "10月",
-            "11月",
-            "12月",
-          ],
-          today: "今天",
-          monthsTitle: "选择月份",
-          clear: "清除",
-          format: "yyyy-mm-dd",
-          titleFormat: "yyyy年mm月",
-          weekStart: 1,
-        };
-      })(jQuery);
+      
     </script>
     <script>
       var opt_classify_id = ""; //分类id
@@ -390,18 +342,18 @@
       // 获取分类数据
       $.get("http://meterial.cxhy.cn/getClassifyList/", function (res) {
         // 默认传第一个分类id
-        opt_classify_id = res.data[0].id;
+        opt_classify_id ='';
         // 获取表格数据
         getList();
+        res.data.unshift({classify_name: '全部', id: ''})
         createOptions("class", res.data);
       });
       function createOptions(idEle, optList) {
         var optStr = "";
-        console.log("optList", optList);
         optList.forEach(function (item) {
           optStr +=
             '<option value="' +
-            item.id +
+            item.classifyId +
             '">' +
             item.classify_name +
             "</option>";
@@ -518,7 +470,7 @@
             "&type=contract'> " +
             "合同详情</a>";
           var witnessDetail =
-            " <a href='tables_design-z.html?id=" +
+            " <a style='color:#3498db' href='tables_design-z.html?id=" +
             item.id +
             "&target_day=" +
             target_day +
@@ -585,14 +537,14 @@
 
       //获取表格数据
       function getList() {
-        var status = $("#status").val() || 0;
+        var status = $("#status").val() || '';
         $.get(
           "http://meterial.cxhy.cn/getRecordList/",
           {
             status: status,
             target_month: $("#WHC_PayDate").val(), // 开始日期
             classifyId: opt_classify_id,
-            // page: pageIndex,
+            page: pageIndex,
           },
           function (res) {
             var data = res.data;

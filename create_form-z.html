@@ -134,7 +134,7 @@
         <div class="hpanel print-wp">
           <div class="panel-heading"></div>
           <div class="panel-body">
-            <h3 class="txt-center p-b-lg">新建表单</h3>
+            <h3 class="txt-center p-b-lg create-form-z">新建表单</h3>
             <form action="#" id="loginForm" class="form-horizontal label-right">
               <div class="row create-item"></div>
               <div class="p-t-md txt-center">
@@ -178,6 +178,7 @@
     <!-- App scripts -->
     <script src="scripts/jquery.jqprint-0.3.js"></script>
     <script src="scripts/homer.js"></script>
+    <script src="scripts/zh.js"></script>
     <script>
       // 解决打印报错
       jQuery.browser = {};
@@ -202,57 +203,58 @@
         {
           label: "使用部位",
           key: "usedPart",
-          value: "111",
+          value: "",
         },
         {
           label: "试件编号",
           key: "specimenNumber",
-          value: "222",
+          value: "",
         },
         {
           label: "样品名称",
           key: "sampleName",
-          value: "333",
+          value: "",
         },
         {
           label: "试件品种",
           key: "specimenType",
-          value: "444",
+          value: "",
         },
         {
           label: "规格型号(牌号)",
           key: "modelName",
-          value: "555",
+          value: "",
         },
         {
           label: "代表数量",
           key: "quantity",
-          value: "666",
+          value: "",
         },
         {
           label: "材料进厂时间",
           key: "entryTime",
-          value: "777",
+          type: "date",
+          value: "",
         },
         {
           label: "出厂编号",
           key: "factoryNumber",
-          value: "888",
+          value: "",
         },
         {
           label: "生产厂家",
           key: "factoryName",
-          value: "999",
+          value: "",
         },
         {
           label: "取样组数",
           key: "samplingQuantity",
-          value: "101",
+          value: "",
         },
         {
           label: "取样地点",
           key: "samplingAddress",
-          value: "102",
+          value: "",
         },
         {
           label: "原试验编号",
@@ -281,6 +283,7 @@
       var rules = {};
       var messages = {};
       formData.forEach(function (item) {
+
         formStr +=
           '<div class="form-group col-md-6 col-lg-4 ' +
           item.key +
@@ -300,6 +303,7 @@
               value="' +
           item.value +
           '"\
+          data-date-format="yyyy-mm-dd"\
               name="' +
           item.key +
           '"\
@@ -332,6 +336,13 @@
       isShowOTN();
       $("input[type=radio][name=testStatus]").change(function () {
         isShowOTN();
+      });
+      $("input[name='entryTime']").attr("readonly", "readonly"); 
+      $("input[name='entryTime']").attr("placeholder", "请选择");  
+      $("input[name='entryTime']").datepicker({
+        language: "zh-CN", //语言
+        autoclose: true, //选择后自动关闭
+        todayHighlight: true, //今天日期高亮
       });
       // 提交校验
       $("#loginForm").validate({

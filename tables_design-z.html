@@ -139,8 +139,8 @@
                           class="table-title txt-center"
                           style="
                             text-align: center;
-                            height: 80px;
-                            line-height: 80px;
+                            height: 30px;
+                            line-height: 30px;
                             font-size: 18px;
                           "
                         ></h3>
@@ -286,7 +286,7 @@
                   border-right: 1px solid #ccc;
                   border-bottom: 1px solid #ccc;
                   font-size: 12px;
-                  height: 30px;
+                  height: 23px;
               }
 
               .table-header {
@@ -344,7 +344,7 @@
               }
               table tr th,
               table tr td {
-                  height: 46px;
+                  height: 23px;
                   line-height:23px;
                   font-size: 10px;
                   font-family:"SimHei";
@@ -634,6 +634,8 @@
         console.log('进来没有')
         saveFn()
       })
+     
+      
       function saveFn(isInit) {
 
         $("#loginForm1").validate({
@@ -641,6 +643,14 @@
           messages: loginForm1Map.messages,
           submitHandler: function () {
             var datas = $("#loginForm1").serializeArray();
+            var radios = $("#loginForm1").find('input[type="radio"]');
+            radios.each(function (idx, inputEle) {
+              var checked = inputEle.checked;
+              var sid = $(inputEle).attr('sid');
+              var val = checked ? $(inputEle).val() : '';
+              datas.push({name: sid, value: val})
+            });
+            console.log('datas', datas)
             var submitData = {};
             $(datas).each(function (idx, item) {
               //   debugger;
@@ -776,8 +786,28 @@
         // 处理输入框内容替换
         var entrys = $("#" + fromId).find("input[type='text']");
         var selects = $("#" + fromId).find('input[type="checkbox"]');
+        var radios = $("#" + fromId).find('input[type="radio"]');
+        var areas = $("#" + fromId).find('textarea');
         entrys = Array.prototype.slice.call(entrys);
         entrys.forEach(function (inputEle) {
+          // inputEle.checked
+          if( !$(inputEle).hasClass('ipt-self')) {
+            var val = $(inputEle).val() || "";
+            $(inputEle).parent().attr('style', 'text-align:center')
+            $(inputEle).parent().html(val)
+            // $(inputEle).siblings(".placeholder").text(val);
+          } else {
+            var val = $(inputEle).val() || "";
+            $(inputEle).parent().attr('style', 'text-align:center')
+            $(inputEle).parent().append('<span>666666</span>')
+            $(inputEle).remove();
+           
+
+          }
+          
+        });
+       
+        areas.each(function (idx, inputEle) {
           // inputEle.checked
           var val = $(inputEle).val() || "";
           $(inputEle).parent().attr('style', 'text-align:center')
@@ -791,7 +821,34 @@
             .siblings(".placeholder")
             .text(checked ? "■" : "□");
         });
+        radios.each(function (idx, inputEle) {
+          var checked = inputEle.checked;
+          $(inputEle)
+            .siblings(".placeholder")
+            .text(checked ? "■" : "□");
+        });
       }
+
+      // 点击“其他" 添加输入框
+      setTimeout(() => {
+        var selects = $("#loginForm1").find('input[type="checkbox"]');
+        selects.each(function (idx, inputEle) {
+          // .is(':checked'); 
+          $(inputEle).change(function() {
+            var checked = $(inputEle).is(':checked')
+            if(checked) {
+              $(inputEle).parent().append('<input type="text" value="" class="ipt-self"/>')
+              // $(inputEle).parent()
+            } else {
+              if($(inputEle).parent().find('.ipt-self')) {
+                $(inputEle).parent().find('.ipt-self').remove();
+              }
+            }
+          })
+            
+        });
+      }, 3000);
+      
     </script>
   </body>
 </html>
