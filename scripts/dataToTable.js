@@ -96,15 +96,22 @@ function dataToTable(
   tableData.tableBody.forEach(function (tb) {
     var tdStr = "";
     var tdW = 100 / parseInt(sourceData.columns);
+    var trLine4 = ""; // 设置th class的目的是为了打印时可以有行高
+    var trLine1 = "";
     tb.forEach(function (item) {
       var tdHtml = "";
       var parentAttr = "";
       // 禁止编辑
       var disab = disabledEdit && ' readonly="readonly"';
+      if(parentId == '#loginForm2') {
+        trLine1 = "tr-line1";
+        if(item.name =="有见证送检章") {
+          trLine4 = "tr-line4";
+        }
+      }
       switch (item.columnType) {
         case "label":
           var checked = item.value ? " checked=checked" : "";
-          var line4 = item.name =="有见证送检章" ? " line4 " : "";
           var isCheckBox = '';
           if(item.name =="见证" || item.name =="复试") {
             isCheckBox = '<span class="hidden placeholder">□</span><input type="radio" class="form-check-input"  name=' +
@@ -322,7 +329,8 @@ function dataToTable(
           testHtml +
           "</td>";
       } else {
-        parentAttr += " width:" + tdW + "%";
+        // parentAttr += " width:" + tdW + "%";
+        
         tdStr +=
           "<td \
           colspan='" +
@@ -335,17 +343,25 @@ function dataToTable(
           item.id +
           "'\
           class='" +
-          classNams + line4 +
+          classNams + 
           "'\
           style='" +
           parentAttr +
           "'\
           >" +
-          tdHtml +
+          tdHtml + 
           "</td>";
       }
     });
-    trHtml += "<tr>" + tdStr + "</tr>";
+    trLine1 = trLine4 ?  '' : trLine1;
+    trHtml += "<tr \
+    class='" +
+    trLine1 + trLine4 +
+    "'\
+    >" + tdStr + "</tr>";
+    //  + trLine4 +
+    // "'\ 
+    
   });
 
   var temp = $("#tableTemp").html();
@@ -359,8 +375,8 @@ function dataToTable(
   }
   if('#loginForm2' == parentId) {
     $(parentId).find('table tbody').addClass('table-win')
+    $(parentId).find('table').attr('style', 'border: 2px solid #000;');
   }
-  console.log(777778,)
   dateInits.forEach(function (idx) {
     $("#datapicker" + idx).datepicker({
       language: "zh-CN",
