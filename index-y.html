@@ -211,8 +211,8 @@
                 class="form-group p-l-md"
                 style="margin-bottom: 15px !important"
               >
-                <label for="class">分类选择：</label>
-                <select class="form-control" name="account" id="class">
+                <label for="classify">分类选择：</label>
+                <select class="form-control" name="account" id="classify">
                   <option value="">不限</option>
                   <option value="0" selected="true">未见证</option>
                   <option value="1">已见证</option>
@@ -340,22 +340,21 @@
       var queryObj = query2obj(window.location.href);
       // 获取分类数据
       $.get("http://meterial.cxhy.cn/getClassifyList/", function (res) {
-        if(res.code == 200) {
+        if (res.code == 200) {
           // 默认传第一个分类id
-          opt_classify_id ='';
+          opt_classify_id = "";
           // 获取表格数据
           getList();
-          res.data.unshift({classify_name: '全部', id: ''})
-          createOptions("class", res.data);
+          res.data.unshift({ classify_name: "全部", id: "" });
+          createOptions("classify", res.data);
         }
-       
       });
       function createOptions(idEle, optList) {
         var optStr = "";
         optList.forEach(function (item) {
           optStr +=
             '<option value="' +
-            item.classifyId +
+            item.id +
             '">' +
             item.classify_name +
             "</option>";
@@ -364,7 +363,7 @@
       }
       // 下拉选择选中事件
 
-      $("#class").change(function () {
+      $("#classify").change(function () {
         opt_classify_id = $(this).val();
       });
       getUnitDetail();
@@ -509,28 +508,6 @@
         });
 
         $("#tableBody").html(trs.join(""));
-
-        // $(".cancleWitness").on("click", function () {
-        //   var id = $(this).attr("data-id");
-        //   // cancelWitness/
-        //   $.ajax({
-        //     url: "http://meterial.cxhy.cn/cancelWitness/",
-        //     type: "POST",
-        //     dataType: "json",
-        //     contentType: "application/json",
-        //     data: JSON.stringify({
-        //       id: id,
-        //       target_month: $("#WHC_PayDate").val(),
-        //     }),
-        //     success: function (res) {
-        //       if (res.code == 200) {
-        //         toastr && toastr.success("取消见证记录成功！");
-        //         getList();
-        //       }
-        //     },
-        //     error: function (error) {},
-        //   });
-        // });
       }
 
       //获取表格数据

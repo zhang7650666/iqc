@@ -135,14 +135,18 @@
           <div class="panel-heading"></div>
           <div class="panel-body">
             <h3 class="txt-center p-b-lg create-form-z">新建表单</h3>
-            <form action="#" id="loginForm" class="form-horizontal label-right create_form_reset">
+            <form
+              action="#"
+              id="formData"
+              class="form-horizontal label-right create_form_reset"
+            >
               <div class="row create-item"></div>
               <div class="p-t-md txt-center">
                 <button type="button" class="btn btn-info btn-back">
                   返回列表
                 </button>
-                <button type="reset" class="btn btn-default reset-form m-l-lg">
-                  <!-- 重置表单
+                <!-- <button type="reset" class="btn btn-default reset-form m-l-lg">
+                  重置表单
                 </button> -->
                 <button type="submit" class="btn btn-primary m-l-lg">
                   新建表单
@@ -234,7 +238,7 @@
           label: "材料进厂时间",
           key: "entryTime",
           type: "date",
-          value: moment().format('YYYY-MM-DD'),
+          value: moment().format("YYYY-MM-DD"),
         },
         {
           label: "出厂编号",
