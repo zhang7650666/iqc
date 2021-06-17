@@ -270,11 +270,14 @@
 
               .table-body tr td,
               .table-body tr th {
-                /* width: 16%; */
+                  width: 16%;
                   border-right: 1px solid #000;
                   border-bottom: 1px solid #000;
                   font-size: 12px;
-                  height: 23px;
+                 
+              }
+              .table-body tr{
+                height: 42px;
               }
               
               .table-header {
@@ -375,7 +378,6 @@
               }
               .tr-line1{
                 height: 38px;
-               
               }
               .tr-line4{
                 height: 160px;
@@ -510,7 +512,6 @@
         form_id: queryObj.form_id || 8, // 	Y	表格样式id
         classifyId: queryObj.classifyId, // 	Y	分类id
       };
-      console.log(5555, queryObj);
       var formData = Object.assign(formStyle, form_style_query);
       if (!isId) {
         $.ajax({
@@ -644,7 +645,6 @@
       });
       // 点击保存
       $(".save").click(function () {
-        console.log("进来没有");
         saveFn();
       });
 
@@ -679,26 +679,26 @@
             };
             isId && (params.record_id = queryObj.id);
             console.log("请求参数", params, submitData);
-            $.ajax({
-              url: "http://meterial.cxhy.cn/saveFormRecord/",
-              type: "POST",
-              dataType: "json",
-              contentType: "application/json",
-              data: JSON.stringify(params),
-              success: function (res) {
-                if (res.code == 200) {
-                  toastr &&
-                    toastr.success(isId ? "合同编辑成功" : "合同保存成功");
-                  setTimeout(function () {
-                    window.location.href = "./index-y.html";
-                  }, 1000);
-                }
-                isSubmit = false;
-              },
-              error: function (error) {
-                isSubmit = false;
-              },
-            });
+            // $.ajax({
+            //   url: "http://meterial.cxhy.cn/saveFormRecord/",
+            //   type: "POST",
+            //   dataType: "json",
+            //   contentType: "application/json",
+            //   data: JSON.stringify(params),
+            //   success: function (res) {
+            //     if (res.code == 200) {
+            //       toastr &&
+            //         toastr.success(isId ? "合同编辑成功" : "合同保存成功");
+            //       setTimeout(function () {
+            //         window.location.href = "./index-y.html";
+            //       }, 1000);
+            //     }
+            //     isSubmit = false;
+            //   },
+            //   error: function (error) {
+            //     isSubmit = false;
+            //   },
+            // });
           },
           errorPlacement: function (error, element) {
             $(error).addClass("error-fixed");
@@ -754,7 +754,8 @@
         $("#" + fromId)
           .find(".table-donwload-section")
           .jqprint();
-        $("#" + fromId).html(htmlStr);
+          $("#" + fromId).find('.table-donwload-section').remove();
+          $("#" + fromId).prepend(htmlStr)
       });
 
       $(".cancleWitness").on("click", function () {
@@ -790,7 +791,8 @@
         ths.each(function (idx, inputEle) {
             var spanText = $(inputEle).find('span').text();
             var iptVal = $(inputEle).find('input').val();
-            $(inputEle).html(spanText + iptVal)
+            $(inputEle).html(spanText + iptVal);
+            $(inputEle).attr('style','width: 300px')
         })
         // 处理输入框内容替换
         var entrys = $("#" + fromId).find("input[type='text']");

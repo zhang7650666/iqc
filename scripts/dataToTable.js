@@ -221,7 +221,7 @@ function dataToTable(
             '" name=sid_' +
             item.submitId +
             ' value="' +
-            value +
+            (item.value ? item.value : value) +
             '" ' +
             disab +
             "/>";
@@ -256,7 +256,6 @@ function dataToTable(
           (item.options || []).forEach(function (checkItem) {
             var checked =
               ids.indexOf(checkItem.id + "") > -1 ? " checked=checked" : "";
-              console.log(66664646, checkItem.name == "其他：")
             var classOther = checkItem.name == "其他：" ? "form-check-input class-other" : "form-check-input "
             checkStr +=
               '<label class="form-check-label" style="padding-right:10px;">' +

@@ -274,7 +274,6 @@ function getUserInfo() {
 }
 
 var userInfo = getUserInfo();
-console.log(1111, (userInfo));
 
 var whiteList = ["login/", "register/", "logout/"];
 var baseUrl = "http://meterial.cxhy.cn/";
