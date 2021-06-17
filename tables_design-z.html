@@ -276,7 +276,7 @@
                   font-size: 12px;
                   height: 23px;
               }
-
+              
               .table-header {
                 border: 1px solid #fff;
               }
@@ -340,8 +340,8 @@
               }
               table tr th,
               table tr td {
-                  height: 23px;
-                  line-height:23px;
+                  /* height: 23px;
+                  line-height:23px; */
                   font-size: 10px;
                   font-family:"SimHei";
                   text-align:center;
@@ -359,6 +359,20 @@
               }
               .table-donwload-section label {
                   font-weight: 500;
+              }
+              .table-win{
+                border: 2px solid #ccc;
+              } 
+             .table-win tr td,
+              .table-win tr th{
+                font-size: 10px !important;
+                height: 45px;
+              }
+              .table-win td div{
+                text-align:center !important;
+              }
+              .line4{
+                height: 180px !important;
               }
             </style>
             <!-- 测试图片 -->
@@ -673,8 +687,6 @@
 
       //非编辑才添加事件 点击生成见证记录
       $(".record").click(function () {
-        contractTableEle.className = averageClass;
-        witnessTableEle.className = averageClass;
         var params = {
           record_id: queryObj.id, //  $("#loginForm1 .table-wp .table-order").html(),
           target_day: queryObj.target_day,
@@ -724,7 +736,7 @@
       // 点击打印
       $(".print").click(function () {
         var fromId = $(this).attr("data-id");
-        var htmlStr = $("#" + fromId).clone(true);
+        var htmlStr = $("#" + fromId).find('.table-donwload-section').clone(true);
         replaceEl(fromId);
         $("#" + fromId)
           .find(".table-donwload-section")
@@ -746,8 +758,7 @@
             if (res.code == 200) {
               toastr && toastr.success("取消见证记录成功！");
               //   恢复委托表独占
-              contractTableEle.className = exclusiveClass;
-              witnessTableEle.className = exclusiveClass + " hidden";
+              // witnessTableEle.className = exclusiveClass + " hidden";
               $(".record").removeClass("hidden");
               if (window.history) {
                 queryObj = query2obj(window.location.href);
@@ -766,6 +777,13 @@
       // 替换标签
       function replaceEl(fromId) {
         changeImgToDataurl();
+         // 替换表头上的功能
+         var ths = $("#" + fromId).find('.table-header th');
+        ths.each(function (idx, inputEle) {
+            var spanText = $(inputEle).find('span').text();
+            var iptVal = $(inputEle).find('input').val();
+            $(inputEle).html(spanText + iptVal)
+        })
         // 处理输入框内容替换
         var entrys = $("#" + fromId).find("input[type='text']");
         var selects = $("#" + fromId).find('input[type="checkbox"]');
@@ -782,10 +800,8 @@
           } else {
             var val = $(inputEle).val() || "";
             $(inputEle).parent().attr('style', 'text-align:center')
-            $(inputEle).parent().append('<span>666666</span>')
+            $(inputEle).parent().append('<span></span>')
             $(inputEle).remove();
-           
-
           }
           
         });
@@ -810,15 +826,17 @@
             .siblings(".placeholder")
             .text(checked ? "■" : "□");
         });
+
+       
       }
 
       // 点击“其他" 添加输入框
       setTimeout(() => {
-        var selects = $("#loginForm1").find('input[type="checkbox"]');
+        var selects = $("#loginForm1").find('.class-other');
         selects.each(function (idx, inputEle) {
-          // .is(':checked'); 
           $(inputEle).change(function() {
-            var checked = $(inputEle).is(':checked')
+            var checked = $(inputEle).is(':checked');
+            var val = $(inputEle).val();
             if(checked) {
               $(inputEle).parent().append('<input type="text" value="" class="ipt-self"/>')
               // $(inputEle).parent()

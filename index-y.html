@@ -341,12 +341,15 @@
       var queryObj = query2obj(window.location.href);
       // 获取分类数据
       $.get("http://meterial.cxhy.cn/getClassifyList/", function (res) {
-        // 默认传第一个分类id
-        opt_classify_id ='';
-        // 获取表格数据
-        getList();
-        res.data.unshift({classify_name: '全部', id: ''})
-        createOptions("class", res.data);
+        if(res.code == 200) {
+          // 默认传第一个分类id
+          opt_classify_id ='';
+          // 获取表格数据
+          getList();
+          res.data.unshift({classify_name: '全部', id: ''})
+          createOptions("class", res.data);
+        }
+       
       });
       function createOptions(idEle, optList) {
         var optStr = "";

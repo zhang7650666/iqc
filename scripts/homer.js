@@ -261,6 +261,7 @@ var errorCodeMap = {
   203: "用户不存在",
   204: "用户已存在",
   205: "工程编号不正确",
+  206: "请求参数校验失败"
 };
 
 //获取token
@@ -273,6 +274,7 @@ function getUserInfo() {
 }
 
 var userInfo = getUserInfo();
+console.log(1111, (userInfo));
 
 var whiteList = ["login/", "register/"];
 var baseUrl = "http://meterial.cxhy.cn/";
@@ -288,7 +290,7 @@ $.ajaxSetup({
       ajaxobj.url =
         ajaxobj.url +
         (ajaxobj.url.indexOf("?") > -1 ? "&token=" : "?token=") +
-        (userInfo.token || "");
+        ((userInfo && userInfo.token) || "");
     }
 
     if (ajaxobj.type === "POST" && ajaxobj.data) {
@@ -305,11 +307,11 @@ $.ajaxSetup({
     //通过XMLHttpRequest取得响应结果
     var res = XMLHttpRequest.responseText;
     var jsonData = JSON.parse(res);
+    if(jsonData.code == 0) {
+        window.location.href = "./login-y.html";
+    }
     if (errorCodeMap[jsonData.code]) {
       toastr && toastr.warning(errorCodeMap[jsonData.code]);
-      setTimeout(() => {
-        window.location.href = "./login-y.html";
-      }, 2000);
     }
     //正常情况就不统一处理了
   },
@@ -493,8 +495,11 @@ function createList(cb) {
     
     $("#navigation").on("click", "a[data-id]", function (e) {
       e.preventDefault();
+      // 切换时清空前置输入内容
+      $('.create_form_reset')[0].reset();
       //导航点击处理
-      $('.create-form-z').html($(this).html())
+      $('.create-form-z').html($(this).html()) // 切换内容标题
+      
       var id = $(this).attr("data-id");
       var form_id = $(this).attr("data-form_id");
       $("a[data-id]").each(function (idx, aele) {

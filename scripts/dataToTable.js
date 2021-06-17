@@ -4,7 +4,7 @@ function crateThead(item, rules, messages) {
     case "label":
       thHtml +=
         '<th colspan="' +
-        item.tagColumCount +
+        item.columnType +
         '"  rowspan="' +
         item.tag_height +
         '"><label> ' +
@@ -20,7 +20,7 @@ function crateThead(item, rules, messages) {
       var required = rules["sid_" + item.submitId] ? 'required="true"' : "";
       thHtml +=
         '<th colspan="' +
-        item.tagColumCount +
+        item.columnType +
         '" rowspan="' +
         item.tag_height +
         '"><label flex><span flex-box="0">' +
@@ -104,6 +104,7 @@ function dataToTable(
       switch (item.columnType) {
         case "label":
           var checked = item.value ? " checked=checked" : "";
+          var line4 = item.name =="有见证送检章" ? " line4 " : "";
           var isCheckBox = '';
           if(item.name =="见证" || item.name =="复试") {
             isCheckBox = '<span class="hidden placeholder">□</span><input type="radio" class="form-check-input"  name=' +
@@ -157,6 +158,7 @@ function dataToTable(
               (item.value || "") +
               '" ' +
               disab +
+              (item.valueExt ? ' class="value-ext"' : "") +
               "/> " +
               place +
               (item.valueExt || "");
@@ -164,7 +166,7 @@ function dataToTable(
             //   ? '<span class="text-gary">' + item.valueExt + "</span>"
             //   : "");
           } else {
-            tdHtml = "<div class='txt-left p-xs'>" + item.value + "</div> ";
+            tdHtml = "<div class='txt-left'>" + item.value + "</div> ";
           }
           break;
         case "textarea":
@@ -247,6 +249,8 @@ function dataToTable(
           (item.options || []).forEach(function (checkItem) {
             var checked =
               ids.indexOf(checkItem.id + "") > -1 ? " checked=checked" : "";
+              console.log(66664646, checkItem.name == "其他：")
+            var classOther = checkItem.name == "其他：" ? "form-check-input class-other" : "form-check-input "
             checkStr +=
               '<label class="form-check-label" style="padding-right:10px;">' +
               '<span class="hidden placeholder">□</span><input type="checkbox" value=' +
@@ -255,7 +259,9 @@ function dataToTable(
               item.submitId +
               disab +
               checked +
-              ' class="form-check-input"> ' +
+              ' class="' +
+              classOther +
+              '"> ' +
               checkItem.name +
               "</label>" +
               joint;
@@ -329,7 +335,7 @@ function dataToTable(
           item.id +
           "'\
           class='" +
-          classNams +
+          classNams + line4 +
           "'\
           style='" +
           parentAttr +
@@ -351,6 +357,10 @@ function dataToTable(
   if (headData.length == 0) {
     $(parentId).find(".table-header").remove();
   }
+  if('#loginForm2' == parentId) {
+    $(parentId).find('table tbody').addClass('table-win')
+  }
+  console.log(777778,)
   dateInits.forEach(function (idx) {
     $("#datapicker" + idx).datepicker({
       language: "zh-CN",
