@@ -333,7 +333,6 @@
           jQuery.browser.version = RegExp.$1;
         }
       })();
-      
     </script>
     <script>
       var opt_classify_id = ""; //分类id
@@ -536,7 +535,7 @@
 
       //获取表格数据
       function getList() {
-        var status = $("#status").val() || '';
+        var status = $("#status").val() || "";
         $.get(
           "http://meterial.cxhy.cn/getRecordList/",
           {

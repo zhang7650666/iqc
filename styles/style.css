@@ -475,10 +475,10 @@
   line-height: 34px;
 }
 
-.content-width {
+/* .content-width {
   max-width: 1200px;
   margin: auto;
-}
+} */
 
 .sweet-alert button {
   background-color: #34495e;
@@ -4076,7 +4076,7 @@ ul.h-list li:hover a {
   width: 100%;
   padding: 0 5px;
   box-sizing: border-box;
-  resize:none;
+  resize: none;
 }
 .table-donwload-section .value-ext {
   height: auto !important;
@@ -4089,7 +4089,7 @@ ul.h-list li:hover a {
   width: 50% !important;
   padding: 0 5px;
   box-sizing: border-box;
-  resize:none;
+  resize: none;
 }
 
 .table-donwload-section input[type="checkbox"] {
@@ -4176,3 +4176,6 @@ td {
 :-ms-input-placeholder { /* Internet Explorer 10+ */
   color: #999;
 }   
+.error-block{
+  height: 24px;
+}

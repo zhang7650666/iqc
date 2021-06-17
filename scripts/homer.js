@@ -276,7 +276,7 @@ function getUserInfo() {
 var userInfo = getUserInfo();
 console.log(1111, (userInfo));
 
-var whiteList = ["login/", "register/"];
+var whiteList = ["login/", "register/", "logout/"];
 var baseUrl = "http://meterial.cxhy.cn/";
 //ajax错误信息统一捕获处理
 $.ajaxSetup({
@@ -490,16 +490,16 @@ function createList(cb) {
       // 关闭
       toggle: false,
     });
-    data[0] && data[0].items.length ? $('.create-form-z').html(data[0].items[0].classify_name) :  $('.create-form-z').html(data[0].classify_name);
-   
-    
+    var className = activeData.classify_name;
+    $(".create-form-title").html(className);
+    $("#sampleName").val(className);
+
     $("#navigation").on("click", "a[data-id]", function (e) {
       e.preventDefault();
-      // 切换时清空前置输入内容
-      $('.create_form_reset')[0].reset();
+      $("#formData")[0].reset();
       //导航点击处理
-      $('.create-form-z').html($(this).html()) // 切换内容标题
-      
+      $(".create-form-title").html($(this).html());
+      $("#sampleName").val($(this).find("span").html());
       var id = $(this).attr("data-id");
       var form_id = $(this).attr("data-form_id");
       $("a[data-id]").each(function (idx, aele) {

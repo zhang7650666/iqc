@@ -100,7 +100,7 @@ function dataToTable(
       var tdHtml = "";
       var parentAttr = "";
       // 禁止编辑
-      var disab = disabledEdit && ' disabled="true"';
+      var disab = disabledEdit && ' readonly="readonly"';
       switch (item.columnType) {
         case "label":
           var checked = item.value ? " checked=checked" : "";
@@ -118,17 +118,17 @@ function dataToTable(
          
           } else {
             isCheckBox =
-            item.extendType == "checkbox"
-              ? '<span class="hidden placeholder">□</span><input type="checkbox" class="form-check-input"  name=sid_' +
-                item.submitId +
-                " value=" +
-                item.id +
-                checked +
-                disab +
-                ">"
-              : ""; // to do 增加选中状态后放开
+              item.extendType == "checkbox"
+                ? '<span class="hidden placeholder">□</span><input type="checkbox" class="form-check-input"  name=sid_' +
+                  item.submitId +
+                  " value=" +
+                  item.id +
+                  checked +
+                  disab +
+                  ">"
+                : ""; // to do 增加选中状态后放开
           }
-          
+
           tdHtml =
             '<span class="font-weight">' + item.name + "</span> " + isCheckBox;
           parentAttr = "text-align:center;";

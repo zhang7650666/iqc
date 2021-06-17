@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <!-- Page title -->
-    <title>HOMER | WebApp admin theme</title>
+    <title>表单编辑</title>
 
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!--<link rel="shortcut icon" type="image/ico" href="favicon.ico" />-->
@@ -93,7 +93,7 @@
           <ol class="hbreadcrumb breadcrumb">
             <li><a href="index-y.html">首页</a></li>
             <li>
-              <span>新建表单</span>
+              <a href="create_form-z.html">新建表单</a>
             </li>
             <li class="active">
               <span>新建表单</span>
@@ -453,12 +453,17 @@
       var iscontract = queryObj.type === "contract"; // 从首页点击"合同详情"跳转过来
       var isWitness = queryObj.type === "witness"; // 从首页点击"见证详情" 跳转过来
       var isEdit = queryObj.type === "edit"; // 从首页点击"编辑" 跳转过来
+      var isSubmit = false;
+
       var createWitnessId = "";
       var nullTable = JSON.stringify({
         tableHead: [],
         tableBody: [],
         desc: null,
       }); // 空表对比模板
+
+      //
+      var mainWrapper = document.getElementById("mainWrapper");
 
       //   record
       //   编辑状态，置灰重置按钮
@@ -514,12 +519,14 @@
               // 工程编号
               tableNum = data.numbers;
               tableName = data.title;
+              document.title = tableName;
+              $("#hbreadcrumb .active").find("span").html(tableName);
               $("#loginForm1 .table-donwload-section .table-order").html(
                 data.numbers
               );
               // title 信息
               $("#loginForm1 .table-donwload-section .table-title").html(
-                data.title
+                tableName
               );
               // 表头信息
               if (data.tableData) {
@@ -548,20 +555,28 @@
           success: function (res) {
             if (res.code == 200) {
               var data = res.data;
+              // var isWitness = data.witnessData && data.witnessData.tableData;
+              var isWitness = data.status == 1;
               //  有见证表，调整布局
-              if (data.witnessData && data.witnessData.tableData) {
-                var mainWrapper = document.getElementById("mainWrapper");
+              if (isWitness) {
                 $("#witnessTable").removeClass("hidden");
                 mainWrapper.setAttribute("flex", "box:mean");
-                $(".record").addClass("hidden");
-                $(".resetBtn").addClass("hidden");
-                $(".save").addClass("hidden");
-                $(".cancleWitness").removeClass("hidden");
+                [".record", ".resetBtn", ".save", ".cancleWitness"].forEach(
+                  function (ele) {
+                    $(ele).addClass("hidden");
+                  }
+                );
+                // $(".record").addClass("hidden");
+                // $(".resetBtn").addClass("hidden");
+                // $(".save").addClass("hidden");
+                // $(".cancleWitness").removeClass("hidden");
               }
 
               // 工程编号
               tableNum = data.numbers;
               tableName = data.title;
+              document.title = tableName;
+              $("#hbreadcrumb .active span").html(tableName);
               $("#loginForm1 .table-donwload-section .table-order").html(
                 data.numbers
               );
@@ -569,7 +584,7 @@
               $("#loginForm1 .table-donwload-section .table-title").html(
                 data.title
               );
-              var isWitness = data.status == 1;
+
               // 表头信息
               if (data.tableData) {
                 data.tableData.forEach(function (item) {
@@ -585,9 +600,10 @@
                     );
                   }
                 });
+                !isWitness && $(".resetBtn").addClass("hidden");
                 // saveFn(true);
               }
-              if (data.witnessData && data.witnessData.tableData) {
+              if (isWitness) {
                 createWitnessId = data.witnessData.id;
                 data.witnessData.tableData.forEach(function (item) {
                   if (nullTable != JSON.stringify(item)) {
@@ -621,26 +637,26 @@
         $("#" + parentId).html(htmlStr);
       });
       // 点击保存
-      $('.save').click(function() {
-        console.log('进来没有')
-        saveFn()
-      })
-     
-      
+      $(".save").click(function () {
+        console.log("进来没有");
+        saveFn();
+      });
+
       function saveFn(isInit) {
         $("#loginForm1").validate({
           rule: loginForm1Map.rule,
           messages: loginForm1Map.messages,
           submitHandler: function () {
+            isSubmit = true;
             var datas = $("#loginForm1").serializeArray();
             var radios = $("#loginForm1").find('input[type="radio"]');
             radios.each(function (idx, inputEle) {
               var checked = inputEle.checked;
-              var sid = $(inputEle).attr('sid');
-              var val = checked ? $(inputEle).val() : '';
-              datas.push({name: sid, value: val})
+              var sid = $(inputEle).attr("sid");
+              var val = checked ? $(inputEle).val() : "";
+              datas.push({ name: sid, value: val });
             });
-            console.log('datas', datas)
+            console.log("datas", datas);
             var submitData = {};
             $(datas).each(function (idx, item) {
               //   debugger;
@@ -671,8 +687,11 @@
                     window.location.href = "./index-y.html";
                   }, 1000);
                 }
+                isSubmit = false;
               },
-              error: function (error) {},
+              error: function (error) {
+                isSubmit = false;
+              },
             });
           },
           errorPlacement: function (error, element) {
@@ -699,34 +718,22 @@
           data: JSON.stringify(params),
           success: function (res) {
             if (res.code == 200) {
+              var data = res.data;
               createWitnessId = res.data.id || "";
-              res.data.tableData.forEach(function (item) {
+              //  有见证表，调整布局
+              // if (data.witnessData && data.witnessData.tableData) {
+              $("#witnessTable").removeClass("hidden");
+              mainWrapper.setAttribute("flex", "box:mean");
+              $(".record").addClass("hidden");
+              $(".resetBtn").addClass("hidden");
+              $(".save").addClass("hidden");
+              $(".cancleWitness").removeClass("hidden");
+              // }
+              data.tableData.forEach(function (item) {
                 if (nullTable != JSON.stringify(item)) {
-                  dataToTable(
-                    item,
-                    "#loginForm2",
-                    loginForm2Map,
-                    res.data,
-                    true
-                  );
+                  dataToTable(item, "#loginForm2", loginForm2Map, data, true);
                 }
               });
-              //   不刷新 向路由中添加参数，刷新后，保持功能
-              if (iscontract) {
-                queryObj.type = "witness";
-                // queryObj.id = res.data.id;
-                var query = obj2query(queryObj);
-                query = "?" + query;
-                setTimeout(function () {
-                  if (window.history) {
-                    // 支持History API
-                    history.replaceState(null, "", query);
-                  }
-                });
-              }
-              //点击过生成见证记录后，置灰
-              $(".record").addClass("hidden");
-              //   !isId && window.location.search;
             }
           },
           error: function (error) {},
@@ -757,17 +764,12 @@
           success: function (res) {
             if (res.code == 200) {
               toastr && toastr.success("取消见证记录成功！");
+              $("#witnessTable").addClass("hidden");
+              mainWrapper.setAttribute("flex", "");
+              $(".cancleWitness").addClass("hidden");
               //   恢复委托表独占
               // witnessTableEle.className = exclusiveClass + " hidden";
               $(".record").removeClass("hidden");
-              if (window.history) {
-                queryObj = query2obj(window.location.href);
-                queryObj.type = "contract";
-                var query = obj2query(queryObj);
-                query = "?" + query;
-                // 支持History API
-                history.replaceState(null, "", query);
-              }
             }
           },
           error: function (error) {},
@@ -788,14 +790,14 @@
         var entrys = $("#" + fromId).find("input[type='text']");
         var selects = $("#" + fromId).find('input[type="checkbox"]');
         var radios = $("#" + fromId).find('input[type="radio"]');
-        var areas = $("#" + fromId).find('textarea');
+        var areas = $("#" + fromId).find("textarea");
         entrys = Array.prototype.slice.call(entrys);
         entrys.forEach(function (inputEle) {
           // inputEle.checked
-          if( !$(inputEle).hasClass('ipt-self')) {
+          if (!$(inputEle).hasClass("ipt-self")) {
             var val = $(inputEle).val() || "";
-            $(inputEle).parent().attr('style', 'text-align:center')
-            $(inputEle).parent().html(val)
+            $(inputEle).parent().attr("style", "text-align:center");
+            $(inputEle).parent().html(val);
             // $(inputEle).siblings(".placeholder").text(val);
           } else {
             var val = $(inputEle).val() || "";
@@ -803,9 +805,8 @@
             $(inputEle).parent().append('<span></span>')
             $(inputEle).remove();
           }
-          
         });
-       
+
         areas.each(function (idx, inputEle) {
           // inputEle.checked
           var val = $(inputEle).val() || "";
@@ -838,18 +839,16 @@
             var checked = $(inputEle).is(':checked');
             var val = $(inputEle).val();
             if(checked) {
-              $(inputEle).parent().append('<input type="text" value="" class="ipt-self"/>')
+              $(inputEle).parent().append('<input type="text" value="'+val+'" class="ipt-self"/>')
               // $(inputEle).parent()
             } else {
-              if($(inputEle).parent().find('.ipt-self')) {
-                $(inputEle).parent().find('.ipt-self').remove();
+              if ($(inputEle).parent().find(".ipt-self")) {
+                $(inputEle).parent().find(".ipt-self").remove();
               }
             }
-          })
-            
+          });
         });
       }, 3000);
-      
     </script>
   </body>
 </html>
