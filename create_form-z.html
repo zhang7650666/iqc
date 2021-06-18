@@ -138,7 +138,7 @@
         <div class="hpanel print-wp">
           <div class="panel-heading"></div>
           <div class="panel-body">
-            <div class="p-m">
+            <div class="p-m" style="position: absolute;top: 0px;right: 0px;z-index: 99;">
               <button
                 type="button"
                 class="btn btn-primary print-hide pull-right query-other-form"
@@ -265,12 +265,12 @@
         {
           label: "取样组数",
           key: "samplingQuantity",
-          value: "",
+          value: "1组",
         },
         {
           label: "取样地点",
           key: "samplingAddress",
-          value: "",
+          value: "现场取样",
         },
         {
           label: "原试验编号",
@@ -305,6 +305,10 @@
         // var isRequired = item.isRequired ? " required=" : "";
         var name = " name=" + item.key;
         var placeholder = " placeholder=请输入" + item.label;
+        if(item.key == 'usedPart' || item.key == 'specimenType') {
+          var placeholder = " placeholder=输入" + item.label + '，无用/代替';
+        }
+        
         formStr += [
           "<div class='col-md-6 col-lg-4 is-reqiured'>",
           "<label class='col-xs-4 control-label label-p7'>" +

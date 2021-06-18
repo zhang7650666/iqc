@@ -490,20 +490,29 @@ function createList(cb) {
       //阻止默认行为
       // preventDefault: false,
       // 关闭
-      toggle: false,
+      toggle: true,
     });
-    var className = activeData.classify_name;
-    $(".create-form-title").html(className);
+    var className = data[0] && data[0].items && data[0].items.length? (data[0].classify_name + ' ▪ ' + data[0].items[0].classify_name) : data[0].classify_name;
+  
+    // $(".create-form-title").html(className);
     $("#sampleName").val(className);
 
     $("#navigation").on("click", "a[data-id]", function (e) {
       e.preventDefault();
       $("#formData")[0].reset();
       //导航点击处理
-      $(".create-form-title").html($(this).html());
-      $("#sampleName").val($(this).find("span").html());
+      // $(".create-form-title").html($(this).html());
+      console.log(666,)
       var id = $(this).attr("data-id");
       var form_id = $(this).attr("data-form_id");
+      var that = this;
+      data.forEach(function(item) {
+        if(item.form_id == form_id) {
+          var subTitleName = $(that).find("span").html()
+          $("#sampleName").val(item.classify_name + ' ▪ ' + subTitleName);
+        }
+      })
+      
       $("a[data-id]").each(function (idx, aele) {
         $(aele).removeClass("hight");
       });

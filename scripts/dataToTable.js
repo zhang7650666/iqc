@@ -93,6 +93,7 @@ function dataToTable(
   var theadHtml = formatTableHeadItem(headData, map.rules, map.messages);
   // 表体信息
   var trHtml = "";
+  console.log(666, disabledEdit)
   tableData.tableBody.forEach(function (tb) {
     var tdStr = "";
     var tdW = 100 / parseInt(sourceData.columns);
@@ -102,8 +103,8 @@ function dataToTable(
       var tdHtml = "";
       var parentAttr = "";
       // 禁止编辑
-      // var disab = disabledEdit && ' readonly="readonly"';
-      var disab = ''; // to do 放开
+      var disab = disabledEdit && ' disabled="disabled"';
+      // var disab = ''; // to do 放开
       if(parentId == '#loginForm2') {
         trLine1 = "tr-line1";
         if(item.name =="有见证送检章") {
@@ -122,6 +123,7 @@ function dataToTable(
             checked +
             " sid=sid_" +
             item.submitId +
+            disab +
             " style=position:relative;top:2px />"
          
           } else {

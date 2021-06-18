@@ -240,7 +240,7 @@
                       data-id="loginForm2"
                       class="btn w-xs btn-primary2 hidden cancleWitness m-l-lg"
                     >
-                      取消见证
+                      修改
                     </button>
                   </div>
                 </form>
@@ -493,7 +493,7 @@
       /**
        * 创建表的时候只显示【下载】【重置内容】【保存】
       */
-      if(isCreate) {
+      if(isCreate || isEdit) {
         $(".print").addClass("hidden");
       }
       //   生成表格校验信息
@@ -627,7 +627,7 @@
                 createWitnessId = data.witnessData.id;
                 data.witnessData.tableData.forEach(function (item) {
                   if (nullTable != JSON.stringify(item)) {
-                    dataToTable(item, "#loginForm2", loginForm2Map, data, true);
+                    dataToTable(item, "#loginForm2", loginForm2Map, data, false, isWitness);
                   }
                   // saveFn();
                 });
