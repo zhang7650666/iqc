@@ -103,6 +103,20 @@
                   </div>
                 </div>
                 <div class="form-group">
+                  <label class="col-xs-3 control-label" for="witness_group"
+                    >检测单位</label
+                  >
+                  <div class="col-xs-8">
+                    <input
+                      type="text"
+                      value=""
+                      class="form-control"
+                      name="test_group"
+                    />
+                    <div class="error-block-test_group text-danger"></div>
+                  </div>
+                </div>
+                <div class="form-group">
                   <label class="col-xs-3 control-label" for="project_name"
                     >工程名称</label
                   >
@@ -161,6 +175,9 @@
           witness_group: {
             required: true,
           },
+          test_group: {
+            required: true,
+          },
           project_name: {
             required: true,
           },
@@ -174,6 +191,9 @@
           },
           witness_group: {
             required: "请输入见证单位",
+          },
+          test_group: {
+            required: "请输入检测单位",
           },
           project_name: {
             required: "请输入工程名称",
@@ -213,6 +233,7 @@
                     entrust_group: formData.entrust_group,
                     name: formData.project_name,
                     witness_group: formData.witness_group,
+                    test_group: formData.test_group,
                   }
                 } )
                 localStorage.setItem(

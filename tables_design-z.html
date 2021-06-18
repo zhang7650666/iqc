@@ -103,6 +103,10 @@
         <!-- 常屏 顶部导航 -->
         <div class="navbar-right">
           <ul class="nav navbar-nav no-borders">
+            <li class="word-no-wp">
+              <span>工程编号：</span>
+              <span class="word-no"></span>
+            </li>
             <li class="dropdown">
               <a type="button" class="btn btn-text logoutBtn">
                 <i class="pe-7s-upload pe-rotate-90"></i>
@@ -274,7 +278,7 @@
                   border-right: 1px solid #000;
                   border-bottom: 1px solid #000;
                   font-size: 12px;
-                 
+                  height:42px;
               }
               .table-body tr{
                 height: 42px;
@@ -461,6 +465,7 @@
       var iscontract = queryObj.type === "contract"; // 从首页点击"合同详情"跳转过来
       var isWitness = queryObj.type === "witness"; // 从首页点击"见证详情" 跳转过来
       var isEdit = queryObj.type === "edit"; // 从首页点击"编辑" 跳转过来
+      var isCreate = queryObj.type === "create"; // 创建表单
       var isSubmit = false;
 
       var createWitnessId = "";
@@ -482,6 +487,14 @@
         $(".record").removeClass("hidden");
         $(".cancleWitness").removeClass("hidden");
         // }
+      }
+
+
+      /**
+       * 创建表的时候只显示【下载】【重置内容】【保存】
+      */
+      if(isCreate) {
+        $(".print").addClass("hidden");
       }
       //   生成表格校验信息
       var loginForm1Map = {
@@ -655,6 +668,7 @@
           submitHandler: function () {
             isSubmit = true;
             var datas = $("#loginForm1").serializeArray();
+            console.log(66666, datas)
             var radios = $("#loginForm1").find('input[type="radio"]');
             radios.each(function (idx, inputEle) {
               var checked = inputEle.checked;
@@ -670,6 +684,7 @@
               submitData[item.name] =
                 (already ? already + "," : "") + $.trim(item.value) || "";
             });
+            console.log("请求参数", params, submitData);
             var params = {
               classifyId: queryObj.classifyId || 1,
               form_id: queryObj.form_id || 1,
@@ -678,27 +693,27 @@
               target_day: queryObj.target_day, // 获取当前年月日
             };
             isId && (params.record_id = queryObj.id);
-            console.log("请求参数", params, submitData);
-            // $.ajax({
-            //   url: "http://meterial.cxhy.cn/saveFormRecord/",
-            //   type: "POST",
-            //   dataType: "json",
-            //   contentType: "application/json",
-            //   data: JSON.stringify(params),
-            //   success: function (res) {
-            //     if (res.code == 200) {
-            //       toastr &&
-            //         toastr.success(isId ? "合同编辑成功" : "合同保存成功");
-            //       setTimeout(function () {
-            //         window.location.href = "./index-y.html";
-            //       }, 1000);
-            //     }
-            //     isSubmit = false;
-            //   },
-            //   error: function (error) {
-            //     isSubmit = false;
-            //   },
-            // });
+           
+            $.ajax({
+              url: "http://meterial.cxhy.cn/saveFormRecord/",
+              type: "POST",
+              dataType: "json",
+              contentType: "application/json",
+              data: JSON.stringify(params),
+              success: function (res) {
+                if (res.code == 200) {
+                  toastr &&
+                    toastr.success(isId ? "合同编辑成功" : "合同保存成功");
+                  setTimeout(function () {
+                    window.location.href = "./index-y.html";
+                  }, 1000);
+                }
+                isSubmit = false;
+              },
+              error: function (error) {
+                isSubmit = false;
+              },
+            });
           },
           errorPlacement: function (error, element) {
             $(error).addClass("error-fixed");

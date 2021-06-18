@@ -104,6 +104,10 @@
         <!-- 常屏 顶部导航 -->
         <div class="navbar-right">
           <ul class="nav navbar-nav no-borders">
+            <li class="word-no-wp">
+              <span>工程编号：</span>
+              <span class="word-no"></span>
+            </li>
             <li class="dropdown">
               <a type="button" class="btn btn-text logoutBtn">
                 <i class="pe-7s-upload pe-rotate-90"></i>
@@ -134,6 +138,14 @@
         <div class="hpanel print-wp">
           <div class="panel-heading"></div>
           <div class="panel-body">
+            <div class="p-m">
+              <button
+                type="button"
+                class="btn btn-primary print-hide pull-right query-other-form"
+              >
+                查看其它表单
+              </button>
+            </div>
             <h3 class="txt-center p-b-lg create-form-z">新建表单</h3>
             <form
               action="#"
@@ -294,7 +306,7 @@
         var name = " name=" + item.key;
         var placeholder = " placeholder=请输入" + item.label;
         formStr += [
-          "<div class='col-md-6 col-lg-4 '>",
+          "<div class='col-md-6 col-lg-4 is-reqiured'>",
           "<label class='col-xs-4 control-label label-p7'>" +
             item.label +
             "</label>",
@@ -366,6 +378,7 @@
           localStorage.setItem("form_style_query", JSON.stringify(formData));
           var queryObj = query2obj(window.location.href);
           queryObj.target_day = ymd();
+          queryObj.type = 'create';
 
           window.location.href =
             "./tables_design-z.html?" + obj2query(queryObj);
@@ -381,6 +394,11 @@
       $(".btn-back").click(function () {
         window.history.go(-1);
       });
+      // 返回首页
+      $(".query-other-form").click(function () {
+        window.location.href="./index-y.html"
+      });
+      
       // $('.reset-form').click(function() {
       //   $('#formData')[0].reset();
       // })

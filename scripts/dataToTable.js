@@ -102,7 +102,8 @@ function dataToTable(
       var tdHtml = "";
       var parentAttr = "";
       // 禁止编辑
-      var disab = disabledEdit && ' readonly="readonly"';
+      // var disab = disabledEdit && ' readonly="readonly"';
+      var disab = ''; // to do 放开
       if(parentId == '#loginForm2') {
         trLine1 = "tr-line1";
         if(item.name =="有见证送检章") {

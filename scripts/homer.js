@@ -275,6 +275,9 @@ function getUserInfo() {
 
 var userInfo = getUserInfo();
 
+// 设置导航上的工程编号
+$('.word-no-wp .word-no').html(userInfo.project_cid)
+
 var whiteList = ["login/", "register/", "logout/"];
 var baseUrl = "http://meterial.cxhy.cn/";
 //ajax错误信息统一捕获处理
