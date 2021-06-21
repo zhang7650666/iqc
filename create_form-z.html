@@ -310,7 +310,7 @@
         }
         
         formStr += [
-          "<div class='col-md-6 col-lg-4 is-reqiured'>",
+          "<div class='col-md-6 col-lg-4 is-reqiured "+item.key+"'>",
           "<label class='col-xs-4 control-label label-p7'>" +
             item.label +
             "</label>",
@@ -354,7 +354,8 @@
           : $(".oriTestNumber").hide();
       }
       isShowOTN();
-      $("input[type=radio][name=testStatus]").change(function () {
+      $("input[type='radio'][name='testStatus']").change(function () {
+        
         isShowOTN();
       });
       $("input[name='entryTime']").attr("readonly", "readonly");

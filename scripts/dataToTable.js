@@ -336,6 +336,7 @@ function dataToTable(
           "</td>";
       } else {
         // parentAttr += " width:" + tdW + "%";
+        parentAttr += " width: 13%";
 
         tdStr +=
           "<td \
