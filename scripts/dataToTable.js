@@ -257,7 +257,7 @@ function dataToTable(
             .filter(function (v) {
               return v;
             });
-          debugger;
+          // debugger;
           (item.options || []).forEach(function (checkItem) {
             var checked =
               ids.indexOf(checkItem.id + "") > -1 ? " checked=checked" : "";

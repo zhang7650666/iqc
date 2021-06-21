@@ -4155,7 +4155,7 @@ td {
   position: relative;
 }
 .error-fixed {
-  position:absolute;
+  position: absolute;
   bottom: 0%;
   right: 5px;
 }
@@ -4165,36 +4165,43 @@ td {
   color: #ccc;
 }
 
-::-webkit-input-placeholder { /* WebKit browsers */
+::-webkit-input-placeholder {
+  /* WebKit browsers */
   color: #999;
 }
 
-::-moz-placeholder { /* Mozilla Firefox 19+ */
+::-moz-placeholder {
+  /* Mozilla Firefox 19+ */
   color: #999;
 }
 
-:-ms-input-placeholder { /* Internet Explorer 10+ */
+:-ms-input-placeholder {
+  /* Internet Explorer 10+ */
   color: #999;
-}   
-.error-block{
+}
+.error-block {
   height: 24px;
 }
 
 /* 工程编号样式表 */
-.word-no-wp span{
+.word-no-wp span {
   line-height: 53px;
   color: #34495e;
   font-size: 12px;
 }
 
 /* 必填项型号 */
-.is-reqiured label{
+.is-reqiured label {
   position: relative;
 }
-.is-reqiured label::before{
-  content: '*';
+.is-reqiured label::before {
+  content: "*";
   font-size: 12px;
   color: red;
   display: inline-block;
   margin-right: 3px;
+}
+
+.ovh {
+  overflow: hidden;
 }
