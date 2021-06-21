@@ -93,7 +93,7 @@ function dataToTable(
   var theadHtml = formatTableHeadItem(headData, map.rules, map.messages);
   // 表体信息
   var trHtml = "";
-  console.log(666, disabledEdit)
+  console.log(666, disabledEdit);
   tableData.tableBody.forEach(function (tb) {
     var tdStr = "";
     var tdW = 100 / parseInt(sourceData.columns);
@@ -103,29 +103,29 @@ function dataToTable(
       var tdHtml = "";
       var parentAttr = "";
       // 禁止编辑
-      var disab = disabledEdit && ' disabled="disabled"';
+      var disab = disabledEdit ? ' readonlay="readonlay"' : "";
       // var disab = ''; // to do 放开
-      if(parentId == '#loginForm2') {
+      if (parentId == "#loginForm2") {
         trLine1 = "tr-line1";
-        if(item.name =="有见证送检章") {
+        if (item.name == "有见证送检章") {
           trLine4 = "tr-line4";
         }
       }
       switch (item.columnType) {
         case "label":
           var checked = item.value ? " checked=checked" : "";
-          var isCheckBox = '';
-          if(item.name =="见证" || item.name =="复试") {
-            isCheckBox = '<span class="hidden placeholder">□</span><input type="radio" class="form-check-input"  name=' +
-            "testStatus" +
-            " value=" +
-            item.id +
-            checked +
-            " sid=sid_" +
-            item.submitId +
-            disab +
-            " style=position:relative;top:2px />"
-         
+          var isCheckBox = "";
+          if (item.name == "见证" || item.name == "复试") {
+            isCheckBox =
+              '<span class="hidden placeholder">□</span><input type="radio" class="form-check-input"  name=' +
+              "testStatus" +
+              " value=" +
+              item.id +
+              checked +
+              " sid=sid_" +
+              item.submitId +
+              disab +
+              " style=position:relative;top:2px />";
           } else {
             isCheckBox =
               item.extendType == "checkbox"
@@ -235,6 +235,7 @@ function dataToTable(
           var joint = "";
           var className = "";
           // 0-无序，1-横向，2-纵向
+          // debugger;
           switch (item.direction) {
             case 1:
               // joint = "";
@@ -256,10 +257,14 @@ function dataToTable(
             .filter(function (v) {
               return v;
             });
+          debugger;
           (item.options || []).forEach(function (checkItem) {
             var checked =
               ids.indexOf(checkItem.id + "") > -1 ? " checked=checked" : "";
-            var classOther = checkItem.name == "其他：" ? "form-check-input class-other" : "form-check-input "
+            var classOther =
+              checkItem.name == "其他："
+                ? "form-check-input class-other"
+                : "form-check-input ";
             checkStr +=
               '<label class="form-check-label" style="padding-right:10px;">' +
               '<span class="hidden placeholder">□</span><input type="checkbox" value=' +
@@ -283,24 +288,23 @@ function dataToTable(
             checkStr +
             " </div>";
           break;
-        case "textarea":
-          var place = item.valueExtPos == "bottom" ? "<br/>" : "";
-          var isRight = item.valueExtPos == "right";
-          var required = map.rules["sid_" + item.submitId]
-            ? 'required="true"'
-            : "";
-
-          tdHtml =
-            '<textarea type="text" ' +
-            required +
-            " name=sid_" +
-            item.submitId +
-            (isRight ? ' style="width:70%"' : "") +
-            ' value="' +
-            (item.value || "") +
-            '"></textarea></br></span> ' +
-            place +
-            (item.valueExt || "");
+        // case "textarea":
+        //   var place = item.valueExtPos == "bottom" ? "<br/>" : "";
+        //   var isRight = item.valueExtPos == "right";
+        //   var required = map.rules["sid_" + item.submitId]
+        //     ? 'required="true"'
+        //     : "";
+        //   tdHtml =
+        //     '<textarea type="text" ' +
+        //     required +
+        //     " name=sid_" +
+        //     item.submitId +
+        //     (isRight ? ' style="width:70%"' : "") +
+        //     ' value="' +
+        //     (item.value || "") +
+        //     '"></textarea></br></span> ' +
+        //     place +
+        //     (item.valueExt || "");
       }
       var columnCount = item.tagColumCount || item.columnCount || 1;
       var classNams = item.direction == 1 ? "txt-left" : ""; //table-center
@@ -332,7 +336,7 @@ function dataToTable(
           "</td>";
       } else {
         // parentAttr += " width:" + tdW + "%";
-        
+
         tdStr +=
           "<td \
           colspan='" +
@@ -345,25 +349,23 @@ function dataToTable(
           item.id +
           "'\
           class='" +
-          classNams + 
+          classNams +
           "'\
           style='" +
           parentAttr +
           "'\
           >" +
-          tdHtml + 
+          tdHtml +
           "</td>";
       }
     });
-    trLine1 = trLine4 ?  '' : trLine1;
-    trHtml += "<tr \
-    class='" +
-    trLine1 + trLine4 +
-    "'\
+    trLine1 = trLine4 ? "" : trLine1;
+    trHtml +=
+      "<tr \
+    class='" + trLine1 + trLine4 + "'\
     >" + tdStr + "</tr>";
     //  + trLine4 +
-    // "'\ 
-    
+    // "'\
   });
 
   var temp = $("#tableTemp").html();
@@ -375,9 +377,9 @@ function dataToTable(
   if (headData.length == 0) {
     $(parentId).find(".table-header").remove();
   }
-  if('#loginForm2' == parentId) {
-    $(parentId).find('table tbody').addClass('table-win')
-    $(parentId).find('table').attr('style', 'border: 2px solid #000;');
+  if ("#loginForm2" == parentId) {
+    $(parentId).find("table tbody").addClass("table-win");
+    $(parentId).find("table").attr("style", "border: 2px solid #000;");
   }
   dateInits.forEach(function (idx) {
     $("#datapicker" + idx).datepicker({
