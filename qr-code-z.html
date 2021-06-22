@@ -43,6 +43,11 @@
     <link rel="stylesheet" href="fonts/pe-icon-7-stroke/css/helper.css" />
     <link rel="stylesheet" href="styles/style.css" />
     <link rel="stylesheet" href="styles/flex.css" />
+    <style>
+      .fixed-navbar #wrapper{
+        top: 0px;
+      }
+    </style>
   </head>
 
   <body class="fixed-navbar">
@@ -54,69 +59,7 @@
       </p>
     <![endif]-->
 
-    <!-- Header -->
-    <div id="header">
-      <div class="color-line"></div>
-      <!-- 常屏 项目名 -->
-      <div id="logo" class="light-version">
-        <span> 材料检验客户端 </span>
-      </div>
-
-      <!--  小屏 顶部导航 -->
-      <nav role="navigation">
-        <!-- <div class="header-link hide-menu"><i class="fa fa-bars"></i></div> -->
-        <div class="small-logo">
-          <span class="text-primary">材料检验客户端</span>
-        </div>
-        <div class="mobile-menu">
-          <button
-            type="button"
-            class="navbar-toggle mobile-menu-toggle"
-            data-toggle="collapse"
-            data-target="#mobile-collapse"
-          >
-            <i class="fa fa-chevron-down"></i>
-          </button>
-          <div class="collapse mobile-navbar" id="mobile-collapse">
-            <ul class="nav navbar-nav">
-              <!-- <li>
-                <a class="" href="login.html">Login</a>
-              </li> -->
-              <li>
-                <a type="button" class="btn btn-text logoutBtn">Logout</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <!-- 面包线 -->
-        <div id="hbreadcrumb" class="m-b-n-i">
-          <ol class="hbreadcrumb breadcrumb">
-            <li><a href="index-y.html">首页</a></li>
-            <li>
-              <a href="create_form-z.html">新建表单</a>
-            </li>
-            <li class="active">
-              <span>新建表单</span>
-            </li>
-          </ol>
-        </div>
-        <!-- 常屏 顶部导航 -->
-        <div class="navbar-right">
-          <ul class="nav navbar-nav no-borders">
-            <li class="word-no-wp">
-              <span>工程编号：</span>
-              <span class="word-no"></span>
-            </li>
-            <li class="dropdown">
-              <a type="button" class="btn btn-text logoutBtn">
-                <i class="pe-7s-upload pe-rotate-90"></i>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </nav>
-    </div>
-
+   
     <!-- Main Wrapper -->
     <div id="wrapper" class="m-n">
       <div class="content animate-panel content-width">
@@ -482,12 +425,15 @@
       var isEdit = queryObj.type === "edit"; // 从首页点击"编辑" 跳转过来
       var isCreate = queryObj.type === "create"; // 创建表单
       var isSubmit = false;
+      var isEwm = queryObj.ewm; // ewm 1 表示委托表    2表示见证表
       // var mainWrapper = document.getElementById("mainWrapper");
       // var mainWrapper = document.getElementById("mainWrapper");
       // var mainWrapper = document.getElementById("mainWrapper");
       var contractTable = $("#contractTable");
       var witnessTable = $("#witnessTable");
-
+      $("#contractTable").hide()
+      $("#witnessTable").hide();
+      isEwm == 1 ? $("#contractTable").show() : $("#witnessTable").show();
       var createWitnessId = "";
       var nullTable = JSON.stringify({
         tableHead: [],
@@ -587,10 +533,6 @@
           data: {
             id: queryObj.id,
             target_day: queryObj.target_day,
-            qr_code_obj: {
-              contract: window.location.href.split('?')[0] + "?" + obj2query(queryObj) + '&ewm=1',
-              witness: window.location.href.split('?')[0] + "?" + obj2query(queryObj) + '&ewm=2',
-            },          
           },
           success: function (res) {
             if (res.code == 200) {

@@ -288,6 +288,29 @@ function dataToTable(
             checkStr +
             " </div>";
           break;
+          case "fill":
+            var place = item.valueExtPos == "bottom" ? "<br/>" : "";
+            var isRight = item.valueExtPos == "right";
+            var required = map.rules["sid_" + item.submitId]
+              ? 'required="true"'
+              : "";
+              // item.valueExt= "<div class='main'>第<span style='text-decoration:underline'>&nbsp;&nbsp;</span>步～<span style='text-decoration:underline'>&nbsp;&nbsp;</span>步<br/>第<span style='text-decoration:underline'>&nbsp;&nbsp;</span>点~<span style='text-decoration:underline'>&nbsp;&nbsp;</span>点<br/>共<span style='text-decoration:underline'>&nbsp;&nbsp;</span>步，<span style='text-decoration:underline'>&nbsp;&nbsp;</span>点</div>" // 让服务端改成这种数据格式
+            var tempHtmls = item.value ? item.value: item.valueExt;
+
+            var resStr = '';
+            var spanHtml = "<span style='text-decoration:underline'>&nbsp;&nbsp;</span>"
+            var iptHtml = '<input type="text" value="'+(item.value ? item.value : '')+'" name="sid_'+item.submitId+'" '+disab+'  class="class-step">'
+            var iptHtmls = item.valueExt.split('<br/>')
+            iptHtmls.forEach(function(iptEle, index) {
+              if(iptEle.length -1 == index) {
+                resStr += iptEle.replaceAll(spanHtml, iptHtml)
+              } else {
+                resStr += iptEle.replaceAll(spanHtml, iptHtml) + "</br>"
+              }
+            })
+            tdHtml +='<label class="form-check-label step-wp" style="padding-right:10px;">\
+              <div class="div-step-wp hidden">'+tempHtmls+'</div>'+resStr+'\
+            </label>'
         // case "textarea":
         //   var place = item.valueExtPos == "bottom" ? "<br/>" : "";
         //   var isRight = item.valueExtPos == "right";
@@ -305,6 +328,7 @@ function dataToTable(
         //     '"></textarea></br></span> ' +
         //     place +
         //     (item.valueExt || "");
+
       }
       var columnCount = item.tagColumCount || item.columnCount || 1;
       var classNams = item.direction == 1 ? "txt-left" : ""; //table-center
@@ -335,9 +359,7 @@ function dataToTable(
           testHtml +
           "</td>";
       } else {
-        // parentAttr += " width:" + tdW + "%";
-        parentAttr += " width: 13%";
-
+        parentAttr += " width:" + tdW + "%";
         tdStr +=
           "<td \
           colspan='" +
