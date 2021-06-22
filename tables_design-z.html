@@ -254,7 +254,7 @@
         </div>
         <!-- 模版 -->
         <script type="text/template" id="tableTemp">
-          <div class="no-border" style="text-align: center">
+          <div class="no-border form-apend-block" style="text-align: center">
             <style type="text/css">
               .table-header tr th {
                 border: 1px solid #fff;
@@ -795,6 +795,7 @@
               [".record", ".resetBtn", ".save"].forEach(function (ele) {
                 $(ele).addClass("hidden");
               });
+              $(".cancleWitness").removeClass("hidden");
               // }
               data.tableData.forEach(function (item) {
                 if (nullTable != JSON.stringify(item)) {
@@ -847,8 +848,10 @@
                 .removeClass("col-lg-6 ")
                 .addClass("col-lg-12")
                 .addClass("hidden");
-              $(".cancleWitness").removeClass("hidden");
+              $("#loginForm2 .form-apend-block").remove();
+              $(".cancleWitness").addClass("hidden");
               $(".record").removeClass("hidden");
+              $(".save").removeClass("hidden");
               //   恢复委托表独占
               // witnessTableEle.className = exclusiveClass + " hidden";
             }
