@@ -150,8 +150,7 @@ function dataToTable(
                 : ""; // to do 增加选中状态后放开
           }
 
-          tdHtml =
-            '<span class="font-weight">' + item.name + "</span> " + isCheckBox;
+          tdHtml = "<span>" + item.name + "</span> " + isCheckBox;
           parentAttr = "text-align:center;";
           if (!!item.is_required) {
             map.rules["sid_" + item.submitId + "_0"] = { required: true };
