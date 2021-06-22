@@ -99,9 +99,20 @@ function dataToTable(
     var tdW = 100 / parseInt(sourceData.columns);
     var trLine4 = ""; // 设置th class的目的是为了打印时可以有行高
     var trLine1 = "";
+    var isRowAnExclusiveLine = false;
+    var isFlog = false;
+    var tagHeight = 1;
     tb.forEach(function (item) {
       var tdHtml = "";
       var parentAttr = "";
+      // 计算高度
+      if (!isFlog) {
+        tagHeight = item.tag_height;
+        isFlog = true;
+      } else {
+        isRowAnExclusiveLine = !!(tagHeight == item.tag_height);
+      }
+
       // 禁止编辑
       var disab = disabledEdit ? ' disabled="disabled"' : "";
       // var disab = ''; // to do 放开
@@ -395,10 +406,22 @@ function dataToTable(
       }
     });
     trLine1 = trLine4 ? "" : trLine1;
+    var extendTd = "";
+    if (isRowAnExclusiveLine && tagHeight > 2) {
+      for (var i = 0; i < tagHeight - 1; i++) {
+        extendTd += "<tr></tr>";
+      }
+    }
     trHtml +=
       "<tr \
-    class='" + trLine1 + trLine4 + "'\
-    >" + tdStr + "</tr>";
+    class='" +
+      trLine1 +
+      trLine4 +
+      "'\
+    >" +
+      tdStr +
+      "</tr>" +
+      extendTd;
     //  + trLine4 +
     // "'\
   });
