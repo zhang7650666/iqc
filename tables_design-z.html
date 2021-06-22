@@ -199,7 +199,7 @@
                       data-id="loginForm1"
                       class="btn w-xs btn-success record hidden m-l-lg m-b"
                     >
-                      生成见证记录
+                      保存见证记录
                     </button>
                   </div>
                 </form>
@@ -588,9 +588,17 @@
             id: queryObj.id,
             target_day: queryObj.target_day,
             qr_code_obj: {
-              contract: window.location.href.split('?')[0] + "?" + obj2query(queryObj) + '&ewm=1',
-              witness: window.location.href.split('?')[0] + "?" + obj2query(queryObj) + '&ewm=2',
-            },          
+              contract:
+                window.location.href.split("?")[0] +
+                "?" +
+                obj2query(queryObj) +
+                "&ewm=1",
+              witness:
+                window.location.href.split("?")[0] +
+                "?" +
+                obj2query(queryObj) +
+                "&ewm=2",
+            },
           },
           success: function (res) {
             if (res.code == 200) {
