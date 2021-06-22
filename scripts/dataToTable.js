@@ -150,7 +150,8 @@ function dataToTable(
                 : ""; // to do 增加选中状态后放开
           }
 
-          tdHtml = "<span>" + item.name + "</span> " + isCheckBox;
+          tdHtml =
+            "<span class='label-text'>" + item.name + "</span> " + isCheckBox;
           parentAttr = "text-align:center;";
           if (!!item.is_required) {
             map.rules["sid_" + item.submitId + "_0"] = { required: true };
@@ -381,7 +382,8 @@ function dataToTable(
           testHtml +
           "</td>";
       } else {
-        parentAttr += " width:" + tdW + "%";
+        parentAttr +=
+          item.columnType == "label" ? " width:" + tdW.toFixed(2) + "%" : "";
         tdStr +=
           "<td \
           colspan='" +
