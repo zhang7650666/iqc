@@ -305,36 +305,15 @@ function dataToTable(
           var required = map.rules["sid_" + item.submitId]
             ? 'required="true"'
             : "";
-          // item.valueExt= "<div class='main'>第<span style='text-decoration:underline'>&nbsp;&nbsp;</span>步～<span style='text-decoration:underline'>&nbsp;&nbsp;</span>步<br/>第<span style='text-decoration:underline'>&nbsp;&nbsp;</span>点~<span style='text-decoration:underline'>&nbsp;&nbsp;</span>点<br/>共<span style='text-decoration:underline'>&nbsp;&nbsp;</span>步，<span style='text-decoration:underline'>&nbsp;&nbsp;</span>点</div>" // 让服务端改成这种数据格式
+            item.valueExt = "<div class='main'>第<span style='text-decoration:underline'></span>步～<span style='text-decoration:underline'></span>步<br/>第<span style='text-decoration:underline'></span>点～<span style='text-decoration:underline'></span>点<br/>共<span style='text-decoration:underline'></span>步，<span style='text-decoration:underline'></span>点</div>"
+          // item.valueExt= "<div class='main'>第<span style='text-decoration:underline'>&nbsp;&nbsp;</span>步～<span style='text-decoration:underline'>&nbsp;&nbsp;</span>步<br/>第<span style='text-decoration:underline'>&nbsp;&nbsp;</span>点~<span style='text-decoration:underline'>&nbsp;&nbsp;</span>点<br/>共<span style='text-decoration:underline'>&nbsp;&nbsp;</span>步，<span style='text-decoration:underline'>&nbsp;&nbsp;</span>点</div>"
           var tempHtmls = item.value ? item.value : item.valueExt;
 
-          var resStr = "";
-          var spanHtml =
-            "<span style='text-decoration:underline'>&nbsp;&nbsp;</span>";
-          var iptHtml =
-            '<input type="text" value="' +
-            (item.value ? item.value : "") +
-            '" name="sid_' +
-            item.submitId +
-            '" ' +
-            disab +
-            '  class="class-step">';
-          var iptHtmls = item.valueExt.split("<br/>");
-          iptHtmls.forEach(function (iptEle, index) {
-            if (iptEle.length - 1 == index) {
-              resStr += iptEle.replaceAll(spanHtml, iptHtml);
-            } else {
-              resStr += iptEle.replaceAll(spanHtml, iptHtml) + "</br>";
-            }
-          });
           tdHtml +=
-            '<label class="form-check-label step-wp" style="padding-right:10px;">\
-              <div class="div-step-wp hidden">' +
-            tempHtmls +
-            "</div>" +
-            resStr +
-            "\
-            </label>";
+            "<label class='form-check-label step-wp' style='padding-right:10px;' data-sid='sid_" +
+            item.submitId +"'>"+
+            item.valueExt +
+            "</label>"
         // case "textarea":
         //   var place = item.valueExtPos == "bottom" ? "<br/>" : "";
         //   var isRight = item.valueExtPos == "right";

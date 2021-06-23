@@ -145,6 +145,9 @@
                     <div flex>
                       <!-- title -->
                       <div flex-box="1">
+                        <div class="qr-code code-pos" style="text-align: right; width: 300px;height: 300px;">
+                          <img src="" alt="" class="contract-code">
+                        </div>
                         <h3
                           class="table-title txt-center"
                           style="
@@ -154,6 +157,7 @@
                             font-size: 20px;
                           "
                         ></h3>
+                       
                       </div>
                       <!-- <div flex-box="0">
                         <img
@@ -201,6 +205,13 @@
                     >
                       保存见证记录
                     </button>
+                    <button
+                    type="button"
+                    data-id="loginForm2"
+                    class="btn w-xs btn-default print-code m-l-lg m-b"
+                  >
+                    打印二维码
+                  </button>
                   </div>
                 </form>
               </div>
@@ -220,6 +231,9 @@
                         class="col-lg-12 table-order"
                         style="font-size: 12px; text-align: left"
                       ></div>
+                      <div class="qr-code" style="text-align: right;">
+                        <img src="" alt="" class="witness-code" style="width: 150px;height: 150px;background-size:150px 150px;">
+                      </div>
                     </div>
                   </div>
                   <div class="row txt-center">
@@ -245,6 +259,13 @@
                     >
                       修改
                     </button>
+                    <button
+                    type="button"
+                    data-id="loginForm2"
+                    class="btn w-xs btn-primary2 print-code m-l-lg"
+                  >
+                    打印二维码
+                  </button>
                   </div>
                 </form>
                 <div>打印和下载提醒</div>
@@ -256,6 +277,11 @@
         <script type="text/template" id="tableTemp">
           <div class="no-border form-apend-block" style="text-align: center">
             <style type="text/css">
+              img{
+                width: 300px;
+                height: 300px;
+                background-size: 300px 300px;
+              }
               .table-header tr th {
                 border: 1px solid #fff;
                 text-align: left;
@@ -442,7 +468,6 @@
         </script>
       </div>
     </div>
-
     <!-- Vendor scripts -->
     <script src="vendor/jquery/dist/jquery.min.js"></script>
     <script src="vendor/jquery-ui/jquery-ui.min.js"></script>
@@ -637,7 +662,10 @@
               $("#loginForm1 .table-donwload-section .table-title").html(
                 data.title
               );
-
+              // 二维码
+              data.qrCode && data.qrCode.contract && $('.contract-code').attr('src', data.qrCode.contract);
+              data.qrCode && data.qrCode.witness && $('.witness-code').attr('src', data.qrCode.witness);
+              
               // 表头信息
               if (data.tableData) {
                 data.tableData.forEach(function (item) {
@@ -702,11 +730,12 @@
         $("#loginForm1 .no-border:eq(1)").append(
           '<p style="text-align:right">生效时间：' + ymd() + "</p>"
         );
-        console.log(898989);
         saveFn();
       });
 
       function saveFn(isInit) {
+        setpFn('loginForm1', 'download');
+        console.log(88888, $("#loginForm1 .div-step-wp").attr('data-sid'))
         $("#loginForm1").validate({
           rule: loginForm1Map.rule,
           messages: loginForm1Map.messages,
@@ -727,6 +756,7 @@
               submitData[item.name] =
                 (already ? already + "," : "") + $.trim(item.value) || "";
             });
+            datas[$("#loginForm1 .step-wp").attr('data-sid')] = $("#loginForm1 .step-wp").html(); // 替换第几部的值
             var params = {
               classifyId: queryObj.classifyId || 1,
               form_id: queryObj.form_id || 1,
@@ -815,6 +845,7 @@
           .find(".table-donwload-section")
           .clone(true);
         replaceEl(fromId, "print");
+        
         $("#" + fromId)
           .find(".table-donwload-section")
           .jqprint();
@@ -859,27 +890,21 @@
           error: function (error) {},
         });
       });
-
-      // 替换标签
-      function replaceEl(fromId, isPrint) {
+      // 第几步fn
+      function setpFn(fromId, isPrint) {
         // 第xxx步替换
-        var stepWp = $("#loginForm1 label").hasClass("step-wp");
+        var stepWp = $("#" + fromId).find("label").hasClass("step-wp");
         if (stepWp) {
-          $("#loginForm1 .step-wp>div").removeClass("hidden");
-          var lens = $("#loginForm1 .step-wp .div-step-wp div span").length;
-          var ipts = $("#loginForm1 .step-wp input");
-          for (var i = 0; i < lens; i++) {
-            var val = $("#loginForm1 .step-wp input").eq(i).val();
-            var spaceCount =
-              isPrint == "print"
-                ? "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
-                : "&nbsp;&nbsp;";
-            val = val ? val : spaceCount;
-            $("#loginForm1 .step-wp .div-step-wp div span").eq(i).html(val);
-          }
-          $("#loginForm1 .step-wp>div").eq(1).addClass("hidden");
+          $("#loginForm1 label>.main input").each(function(){
+              var tempVal = $(this).val() ? $(this).val() : '&nbsp;';
+              $(this).replaceWith('<span style="text-decoration:underline;">' +tempVal+ '</span>');
+          });
         }
 
+      }
+      // 替换标签
+      function replaceEl(fromId, isPrint) {
+        setpFn(fromId, isPrint)
         changeImgToDataurl();
         // 替换表头上的功能
         var ths = $("#" + fromId).find(".table-header th");
@@ -934,6 +959,9 @@
 
       // 点击“其他" 添加输入框
       setTimeout(() => {
+        $("#loginForm1 .step-wp .main span").each(function(){
+            $(this).replaceWith('<input value="'+$(this).html()+'" maxLength="2" class="class-step">');
+        });
         var selects = $("#loginForm1").find(".class-other");
         selects.each(function (idx, inputEle) {
           $(inputEle).change(function () {
@@ -953,7 +981,17 @@
             }
           });
         });
-      }, 3000);
+      }, 1000);
+
+      // 打印二维码
+      $('.print-code').click(function() {
+        var fromId = $(this).attr("data-id");
+        $("#" + fromId).find(".qr-code").attr('style','position:absolute;top:50%;left:50%;margin-left:-150px;margin-top:-150px;');
+        $("#" + fromId).find(".qr-code img").attr('style','width:300px;height:300px;background-size:300px 300px;');
+        $("#" + fromId).find(".qr-code").jqprint();
+        $("#" + fromId).find(".qr-code").attr('style','text-align:right');
+        $("#" + fromId).find(".qr-code img").attr('style','width:150px;height:150px;background-size:150px 150px;');
+      })
     </script>
   </body>
 </html>
