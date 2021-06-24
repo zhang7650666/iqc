@@ -305,15 +305,10 @@ function dataToTable(
           var required = map.rules["sid_" + item.submitId]
             ? 'required="true"'
             : "";
-            item.valueExt = "<div class='main'>第<span style='text-decoration:underline'></span>步～<span style='text-decoration:underline'></span>步<br/>第<span style='text-decoration:underline'></span>点～<span style='text-decoration:underline'></span>点<br/>共<span style='text-decoration:underline'></span>步，<span style='text-decoration:underline'></span>点</div>"
-          // item.valueExt= "<div class='main'>第<span style='text-decoration:underline'>&nbsp;&nbsp;</span>步～<span style='text-decoration:underline'>&nbsp;&nbsp;</span>步<br/>第<span style='text-decoration:underline'>&nbsp;&nbsp;</span>点~<span style='text-decoration:underline'>&nbsp;&nbsp;</span>点<br/>共<span style='text-decoration:underline'>&nbsp;&nbsp;</span>步，<span style='text-decoration:underline'>&nbsp;&nbsp;</span>点</div>"
+          // var testStr = "<div class='main'>第<span style='text-decoration:underline'>&nbsp;&nbsp;</span>步～<span style='text-decoration:underline'>&nbsp;&nbsp;</span>步<br/>第<span style='text-decoration:underline'>&nbsp;&nbsp;</span>点~<span style='text-decoration:underline'>&nbsp;&nbsp;</span>点<br/>共<span style='text-decoration:underline'>&nbsp;&nbsp;</span>步，<span style='text-decoration:underline'>&nbsp;&nbsp;</span>点</div>"
           var tempHtmls = item.value ? item.value : item.valueExt;
-
-          tdHtml +=
-            "<label class='form-check-label step-wp' style='padding-right:10px;' data-sid='sid_" +
-            item.submitId +"'>"+
-            item.valueExt +
-            "</label>"
+          tdHtml +='<label class="form-check-label step-wp" style="padding-right:10px;" data-sid="sid_' +
+          item.submitId +'">'+tempHtmls+'</label>'
         // case "textarea":
         //   var place = item.valueExtPos == "bottom" ? "<br/>" : "";
         //   var isRight = item.valueExtPos == "right";

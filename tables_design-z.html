@@ -145,8 +145,8 @@
                     <div flex>
                       <!-- title -->
                       <div flex-box="1">
-                        <div class="qr-code code-pos" style="text-align: right; width: 300px;height: 300px;">
-                          <img src="" alt="" class="contract-code">
+                        <div class="qr-code code-pos" style="text-align: right;">
+                          <img src="" alt="" class="contract-code" width="150pt" height="150pt">
                         </div>
                         <h3
                           class="table-title txt-center"
@@ -232,7 +232,7 @@
                         style="font-size: 12px; text-align: left"
                       ></div>
                       <div class="qr-code" style="text-align: right;">
-                        <img src="" alt="" class="witness-code" style="width: 150px;height: 150px;background-size:150px 150px;">
+                        <img src="" alt="" class="witness-code" width="150pt" height="150pt" style="width: 150px;height: 150px;background-size:150px 150px;">
                       </div>
                     </div>
                   </div>
@@ -277,11 +277,6 @@
         <script type="text/template" id="tableTemp">
           <div class="no-border form-apend-block" style="text-align: center">
             <style type="text/css">
-              img{
-                width: 300px;
-                height: 300px;
-                background-size: 300px 300px;
-              }
               .table-header tr th {
                 border: 1px solid #fff;
                 text-align: left;
@@ -315,7 +310,7 @@
                   font-family:NSimSun,SimSun;
               }
               .table-body tr{
-                height: 45px;
+                height: 42px;
               }
 
               .table-header {
@@ -416,17 +411,17 @@
              .table-win tr td,
               .table-win tr th{
                 font-size: 13.2px !important;
-                height: 42px;
+                height: 25px;
                 width: 200px;
               }
               .table-win td div{
                 text-align:center !important;
               }
               .tr-line1{
-                height: 38px;
+                height: 25px;
               }
               .tr-line4{
-                height: 180px;
+                height: 100px;
               }
               .table-body tr td .class-step{
                 outline: none;
@@ -712,6 +707,7 @@
       $(".download").click(function () {
         var parentId = $(this).attr("data-id");
         var htmlStr = $("#" + parentId).clone(true);
+        $("#" + parentId).find('tr, th').attr('style', 'height:30px')
         replaceEl(parentId, "download");
         $("#" + parentId)
           .find(".table-donwload-section")
@@ -844,6 +840,7 @@
         var htmlStr = $("#" + fromId)
           .find(".table-donwload-section")
           .clone(true);
+          $("#" + fromId).find('tr, th').attr('style', 'height:42px')
         replaceEl(fromId, "print");
         
         $("#" + fromId)
@@ -959,7 +956,8 @@
 
       // 点击“其他" 添加输入框
       setTimeout(() => {
-        $("#loginForm1 .step-wp .main span").each(function(){
+        
+        $("#loginForm1 .main span").each(function(){
             $(this).replaceWith('<input value="'+$(this).html()+'" maxLength="2" class="class-step">');
         });
         var selects = $("#loginForm1").find(".class-other");
@@ -987,7 +985,9 @@
       $('.print-code').click(function() {
         var fromId = $(this).attr("data-id");
         $("#" + fromId).find(".qr-code").attr('style','position:absolute;top:50%;left:50%;margin-left:-150px;margin-top:-150px;');
-        $("#" + fromId).find(".qr-code img").attr('style','width:300px;height:300px;background-size:300px 300px;');
+        $("#" + fromId).find(".qr-code img").attr('style','width:300pt;height:300pt;background-size:300pt 300pt;');
+        $("#" + fromId).find(".qr-code img").attr('width','300pt');
+        $("#" + fromId).find(".qr-code img").attr('height','300pt');
         $("#" + fromId).find(".qr-code").jqprint();
         $("#" + fromId).find(".qr-code").attr('style','text-align:right');
         $("#" + fromId).find(".qr-code img").attr('style','width:150px;height:150px;background-size:150px 150px;');
