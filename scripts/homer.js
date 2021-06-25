@@ -276,7 +276,7 @@ function getUserInfo() {
 var userInfo = getUserInfo();
 
 // 设置导航上的工程编号
-$('.word-no-wp .word-no').html(userInfo.project_cid)
+$('.word-no-wp .word-no').html(userInfo.project_cid);
 
 var whiteList = ["login/", "register/", "logout/"];
 var baseUrl = "http://meterial.cxhy.cn/";
@@ -590,3 +590,16 @@ function getUnitDetail() {
       $("#project-title").html(userInfo.projectInfo.name);
   }
 }
+
+
+// 点击导航修改工程编号摸态框信息
+var workInfo = $('#model-word-info label');
+console.log(666, workInfo)
+for(var i = 0; i < workInfo.length; i ++) {
+
+  console.log('item',  workInfo[i])
+}
+// workInfo.forEach(function(item) {
+//   console.log('item', item)
+// })
+// var workInfo = ['project_cid', 'construction_group', 'entrust_group','witness_group','project_name']

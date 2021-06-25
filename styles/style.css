@@ -4188,6 +4188,7 @@ td {
   line-height: 53px;
   color: #34495e;
   font-size: 12px;
+  cursor: pointer;
 }
 
 /* 必填项型号 */

@@ -616,16 +616,8 @@
             id: queryObj.id,
             target_day: queryObj.target_day,
             qr_code_obj: {
-              contract:
-                window.location.href.split("?")[0] +
-                "?" +
-                obj2query(queryObj) +
-                "&ewm=1",
-              witness:
-                window.location.href.split("?")[0] +
-                "?" +
-                obj2query(queryObj) +
-                "&ewm=2",
+              contract: './qr-code-z.html?' + obj2query(queryObj) + "&witness=0",
+              witness: './qr-code-z.html?' + obj2query(queryObj) + "&witness=1",
             },
           },
           success: function (res) {
