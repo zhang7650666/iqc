@@ -77,23 +77,14 @@ function formatTableHeadItem(datas, rules, messages) {
  * @param {*} map 校验的map
  * @param {*} sourceData 接口全数据
  * @param {*} isProhibitEdit 是否禁止编辑 to:用于见证记录内容不可编辑
- * @param {*} disabledEdit 禁止编辑
  */
-function dataToTable(
-  tableData,
-  parentId,
-  map,
-  sourceData,
-  isProhibitEdit,
-  disabledEdit
-) {
+function dataToTable(tableData, parentId, map, sourceData, isProhibitEdit) {
   // var theadHtml = "";
   var dateInits = [];
   var headData = $.extend([], tableData.tableHead);
   var theadHtml = formatTableHeadItem(headData, map.rules, map.messages);
   // 表体信息
   var trHtml = "";
-  console.log(666, disabledEdit);
   tableData.tableBody.forEach(function (tb) {
     var tdStr = "";
     var tdW = 100 / parseInt(sourceData.columns);
@@ -114,7 +105,7 @@ function dataToTable(
       }
 
       // 禁止编辑
-      var disab = disabledEdit ? ' disabled="disabled"' : "";
+      var disab = isView || isCreate ? ' disabled="disabled"' : "";
       // var disab = ''; // to do 放开
       if (parentId == "#loginForm2") {
         trLine1 = "tr-line1";
@@ -293,7 +284,7 @@ function dataToTable(
           });
 
           tdHtml +=
-            '<div style="padding:0 15px;" class="' +
+            '<div style="padding:0 5px;" class="' +
             className +
             '">' +
             checkStr +
@@ -307,8 +298,12 @@ function dataToTable(
             : "";
           // var testStr = "<div class='main'>第<span style='text-decoration:underline'>&nbsp;&nbsp;</span>步～<span style='text-decoration:underline'>&nbsp;&nbsp;</span>步<br/>第<span style='text-decoration:underline'>&nbsp;&nbsp;</span>点~<span style='text-decoration:underline'>&nbsp;&nbsp;</span>点<br/>共<span style='text-decoration:underline'>&nbsp;&nbsp;</span>步，<span style='text-decoration:underline'>&nbsp;&nbsp;</span>点</div>"
           var tempHtmls = item.value ? item.value : item.valueExt;
-          tdHtml +='<label class="form-check-label step-wp" style="padding-right:10px;" data-sid="sid_' +
-          item.submitId +'">'+tempHtmls+'</label>'
+          tdHtml +=
+            '<label class="form-check-label step-wp" style="padding-right:10px;" data-sid="sid_' +
+            item.submitId +
+            '">' +
+            tempHtmls +
+            "</label>";
         // case "textarea":
         //   var place = item.valueExtPos == "bottom" ? "<br/>" : "";
         //   var isRight = item.valueExtPos == "right";

@@ -237,6 +237,14 @@ if ($.validator) {
     },
     "工程编号必须以大写W开头 W+年份+4位数字,年份必须在(1999-2999)之间 如W20001234"
   ); //可以自定义默认提示信息
+  $.validator.addMethod(
+    "isNumber",
+    function (value, element) {
+      var mobile = /^\d{1,9}$/.test(value);
+      return this.optional(element) || mobile;
+    },
+    "请输入数字"
+  ); //可以自定义默认提示信息
 }
 
 // toastr 提示配置
@@ -261,7 +269,7 @@ var errorCodeMap = {
   203: "用户不存在",
   204: "用户已存在",
   205: "工程编号不正确",
-  206: "请求参数校验失败"
+  206: "请求参数校验失败",
 };
 
 //获取token
@@ -276,7 +284,7 @@ function getUserInfo() {
 var userInfo = getUserInfo();
 
 // 设置导航上的工程编号
-$('.word-no-wp .word-no').html(userInfo.project_cid);
+$(".word-no-wp .word-no").html(userInfo.project_cid);
 
 var whiteList = ["login/", "register/", "logout/"];
 var baseUrl = "http://meterial.cxhy.cn/";
@@ -309,8 +317,8 @@ $.ajaxSetup({
     //通过XMLHttpRequest取得响应结果
     var res = XMLHttpRequest.responseText;
     var jsonData = JSON.parse(res);
-    if(jsonData.code == 0) {
-        window.location.href = "./login-y.html";
+    if (jsonData.code == 0) {
+      window.location.href = "./login-y.html";
     }
     if (errorCodeMap[jsonData.code]) {
       toastr && toastr.warning(errorCodeMap[jsonData.code]);
@@ -492,8 +500,11 @@ function createList(cb) {
       // 关闭
       toggle: true,
     });
-    var className = data[0] && data[0].items && data[0].items.length? (data[0].classify_name + ' ▪ ' + data[0].items[0].classify_name) : data[0].classify_name;
-  
+    var className =
+      data[0] && data[0].items && data[0].items.length
+        ? data[0].classify_name + " ▪ " + data[0].items[0].classify_name
+        : data[0].classify_name;
+
     // $(".create-form-title").html(className);
     $("#sampleName").val(className);
 
@@ -502,17 +513,17 @@ function createList(cb) {
       $("#formData")[0].reset();
       //导航点击处理
       // $(".create-form-title").html($(this).html());
-      console.log(666,)
+      console.log(666);
       var id = $(this).attr("data-id");
       var form_id = $(this).attr("data-form_id");
       var that = this;
-      data.forEach(function(item) {
-        if(item.form_id == form_id) {
-          var subTitleName = $(that).find("span").html()
-          $("#sampleName").val(item.classify_name + ' ▪ ' + subTitleName);
+      data.forEach(function (item) {
+        if (item.form_id == form_id) {
+          var subTitleName = $(that).find("span").html();
+          $("#sampleName").val(item.classify_name + " ▪ " + subTitleName);
         }
-      })
-      
+      });
+
       $("a[data-id]").each(function (idx, aele) {
         $(aele).removeClass("hight");
       });
@@ -591,13 +602,11 @@ function getUnitDetail() {
   }
 }
 
-
 // 点击导航修改工程编号摸态框信息
-var workInfo = $('#model-word-info label');
-console.log(666, workInfo)
-for(var i = 0; i < workInfo.length; i ++) {
-
-  console.log('item',  workInfo[i])
+var workInfo = $("#model-word-info label");
+console.log(666, workInfo);
+for (var i = 0; i < workInfo.length; i++) {
+  console.log("item", workInfo[i]);
 }
 // workInfo.forEach(function(item) {
 //   console.log('item', item)
