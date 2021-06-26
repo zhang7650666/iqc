@@ -345,8 +345,9 @@ function dataToTable(tableData, parentId, map, sourceData, isProhibitEdit) {
           testHtml +
           "</td>";
       } else {
-        parentAttr +=
-          item.columnType == "label" ? " width:" + tdW.toFixed(2) + "%" : "";
+        // parentAttr +=
+        //   item.columnType == "label" ? " width:" + tdW.toFixed(2) + "%" : "";
+        parentAttr +="width:" + parseInt(tdW) + "%;" + "padding: 0 5px;text-align:center;"
         tdStr +=
           "<td \
           colspan='" +

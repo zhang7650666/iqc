@@ -161,9 +161,7 @@
                       <h3
                         class="table-title txt-center"
                         style="
-                         
                           text-align: center;
-                         
                         "
                       ></h3>
                       
@@ -473,6 +471,16 @@
             </table>
             <!-- 表体 -->
             <table class="table-body" align="center">
+              <!-- <thead>
+                <tr>
+                  <th style="width: 16.67%">Name</th>
+                  <th style="width: 16.67%">Phone</th>
+                  <th style="width: 16.67%">Street Address</th>
+                  <th style="width: 16.67%">City</th>
+                  <th style="width: 16.67%">Country</th>
+                  <th style="width: 16.67%">Country</th>
+              </tr>
+              </thead> -->
               <tbody>
                 __TABLE_BODY
               </tbody>
@@ -978,10 +986,13 @@
           // inputEle.checked
           if (!$(inputEle).hasClass("ipt-self")) {
             var val = $(inputEle).val() || "";
-            $(inputEle).parent().attr("style", "text-align:center");
-            $(inputEle).parent().html(val);
+            $(inputEle).parent().append("<span></span>");
+             $(inputEle).siblings().text(val);
+            $(inputEle).remove();
+            // $(inputEle).parent().html(val);
             // $(inputEle).siblings(".placeholder").text(val);
           } else {
+            console.log('走这里没有')
             var val = $(inputEle).val() || "";
             $(inputEle).parent().attr("style", "text-align:center");
             $(inputEle).parent().append("<span></span>");
@@ -1020,6 +1031,7 @@
               '" maxLength="2" class="class-step">'
           );
         });
+        // 处理勾选其他的样式
         var selects = $("#loginForm1").find(".class-other");
         selects.each(function (idx, inputEle) {
           $(inputEle).change(function () {
