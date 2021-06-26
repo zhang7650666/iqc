@@ -105,7 +105,7 @@ function dataToTable(tableData, parentId, map, sourceData, isProhibitEdit) {
       }
 
       // 禁止编辑
-      var disab = isView || isCreate ? ' disabled="disabled"' : "";
+      var disab = isView ? ' disabled="disabled"' : "";
       // var disab = ''; // to do 放开
       if (parentId == "#loginForm2") {
         trLine1 = "tr-line1";
@@ -351,7 +351,8 @@ function dataToTable(tableData, parentId, map, sourceData, isProhibitEdit) {
       } else {
         // parentAttr +=
         //   item.columnType == "label" ? " width:" + tdW.toFixed(2) + "%" : "";
-        parentAttr +="width:" + parseInt(tdW) + "%;" + "padding: 0 5px;text-align:center;"
+        parentAttr +=
+          "width:" + parseInt(tdW) + "%;" + "padding: 0 5px;text-align:center;";
         tdStr +=
           "<td \
           colspan='" +
