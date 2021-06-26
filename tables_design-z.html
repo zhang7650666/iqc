@@ -146,10 +146,7 @@
                     <div
                       style="overflow: hidden; width: 100%; text-align: justify"
                     >
-                    <div
-                        class="qr-code code-pos"
-                        style="text-align: right;"
-                      >
+                      <div class="qr-code code-pos" style="text-align: right">
                         <img
                           src=""
                           alt=""
@@ -160,11 +157,8 @@
                       </div>
                       <h3
                         class="table-title txt-center"
-                        style="
-                          text-align: center;
-                        "
+                        style="text-align: center"
                       ></h3>
-                      
                     </div>
                     <div flex>
                       <!-- <div flex-box="0">
@@ -249,10 +243,7 @@
                   <div class="table-donwload-section">
                     <!-- 工程编号 -->
                     <div class="row">
-                      <div
-                        class="qr-code"
-                        style="text-align: right"
-                      >
+                      <div class="qr-code" style="text-align: right">
                         <img
                           src=""
                           alt=""
@@ -282,20 +273,26 @@
                     <button
                       type="button"
                       data-id="loginForm2"
-                      class="btn w-xs btn-primary2 hidden cancleWitness m-l-lg"
+                      class="btn w-xs btn-primary2 witnessEidt m-l-lg"
                     >
                       修改
                     </button>
                     <button
                       type="button"
                       data-id="loginForm2"
-                      class="btn w-xs btn-primary2 print-code m-l-lg"
+                      class="btn w-xs btn-primary2 hidden witnessSave m-l-lg"
+                    >
+                      保存
+                    </button>
+                    <button
+                      type="button"
+                      data-id="loginForm2"
+                      class="btn w-xs btn-default print-code m-l-lg"
                     >
                       打印二维码
                     </button>
                   </div>
                 </form>
-                <div>打印和下载提醒</div>
               </div>
             </div>
           </div>
@@ -558,6 +555,9 @@
       var contractTable = $("#contractTable");
       var witnessTable = $("#witnessTable");
       var contractEdit = $(".contractEdit"); // 合同编辑按钮
+      var contractSave = $(".save"); // 合同编辑按钮
+      var witnessEidt = $(".witnessEidt"); // 合同编辑按钮
+      var witnessSave = $(".witnessSave"); // 合同编辑按钮
 
       var createWitnessId = "";
       var nullTable = JSON.stringify({
@@ -566,27 +566,27 @@
         desc: null,
       }); // 空表对比模板
 
-      // 查看隐藏保存
-      isView && $(".save").addClass("hidden");
+      // 按钮更新
+      isView &&
+        (contractSave.addClass("hidden"), contractEdit.removeClass("hidden"));
+      isCreate && $(".print").addClass("hidden");
 
-      //   record
-      //   编辑状态，置灰重置按钮
-      //   type暂设置。1：有操作权限 ，2有查看权限， 3
-
-      if (isId) {
-        // 隐藏
-
-        // 显示
-        $(".contractEdit").removeClass("hidden");
-        $(".record").removeClass("hidden");
+      isId && $(".record").removeClass("hidden");
+      // 委托合同编辑
+      if (ctEdit) {
+        contractEdit.addClass("hidden");
+        contractSave.removeClass("hidden");
+        witnessSave.addClass("hidden");
+        witnessEidt.removeClass("hidden");
+      }
+      // 见证记录编辑
+      if (wnEdit) {
+        witnessSave.removeClass("hidden");
+        witnessEidt.addClass("hidden");
+        contractEdit.removeClass("hidden");
+        contractSave.addClass("hidden");
       }
 
-      /**
-       * 创建表的时候只显示【下载】【重置内容】【保存】
-       */
-      if (isCreate) {
-        $(".print").addClass("hidden");
-      }
       //   生成表格校验信息
       var loginForm1Map = {
         rules: {},
@@ -654,7 +654,6 @@
                 );
                 !isWitness && $(".resetBtn").addClass("hidden");
               }
-              // saveFn();
             }
           });
         }
@@ -704,7 +703,7 @@
                   .removeClass("col-lg-12 ")
                   .addClass("col-lg-5")
                   .removeClass("hidden");
-                [".record", ".resetBtn", ".save"].forEach(function (ele) {
+                [".record", ".resetBtn"].forEach(function (ele) {
                   $(ele).addClass("hidden");
                 });
               }
@@ -772,7 +771,7 @@
 
       function saveFn(isInit) {
         setpFn("loginForm1", "download");
-        console.log(88888, $("#loginForm1 .div-step-wp").attr("data-sid"));
+        queryObj = query2obj(window.location.href);
         $("#loginForm1").validate({
           rule: loginForm1Map.rule,
           messages: loginForm1Map.messages,
@@ -812,19 +811,23 @@
               contentType: "application/json",
               data: JSON.stringify(params),
               success: function (res) {
+                console.log("id", res.data.record_id);
                 if (res.code == 200) {
                   toastr &&
                     toastr.success(isId ? "合同编辑成功" : "合同保存成功");
-                  updateUrlParams({
-                    id: res.data.record_id,
+                  var params = {
+                    id: res.data.record_id || queryObj.id,
                     classifyId: "",
                     form_id: "",
-                  });
+                    type: "view",
+                  };
+                  updateUrlParams(params);
                 }
                 isSubmit = false;
               },
               error: function (error) {
                 isSubmit = false;
+                return false;
               },
             });
           },
@@ -838,21 +841,79 @@
         $("#loginForm1").submit();
       }
 
+      // 见证记录表校验
+      $("#loginForm2").validate({
+        rule: loginForm2Map.rule,
+        messages: loginForm2Map.messages,
+        submitHandler: function () {
+          if (isWnSubmit) {
+            return;
+          }
+          isWnSubmit = true;
+          var datas = $("#loginForm2").serializeArray();
+          var submitData = {};
+          $(datas).each(function (idx, item) {
+            var already = submitData[item.name] || "";
+            submitData[item.name] =
+              (already ? already + "," : "") + $.trim(item.value) || "";
+          });
+
+          var params = {
+            witness_data: submitData,
+            target_day: queryObj.target_day,
+            record_id: queryObj.id,
+          };
+
+          $.ajax({
+            url: "http://meterial.cxhy.cn/updateWitness/",
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(params),
+            success: function (res) {
+              if (res.code == 200) {
+                toastr && toastr.success("见证记录更新成功");
+                var params = {
+                  id: queryObj.id,
+                  classifyId: "",
+                  form_id: "",
+                  type: "view",
+                };
+                setTimeout(function () {
+                  updateUrlParams(params);
+                }, 1500);
+              }
+              isWnSubmit = false;
+            },
+            error: function (error) {
+              isWnSubmit = false;
+              return false;
+            },
+          });
+        },
+        errorPlacement: function (error, element) {
+          $(error).addClass("error-fixed");
+          $(element).parent().append(error);
+        },
+        errorElement: "span",
+      });
+      // 见证记录保存
+      var isWnSubmit = false;
+      witnessSave.click(function () {
+        $("#loginForm2").submit();
+      });
       // 触发编辑
       contractEdit.on("click", function () {
         updateUrlParams({
           type: "contractEdit",
         });
       });
-      // 委托单编辑
-      // $(".witnessEdit").on("click", function () {
-      //   if (window.history) {
-      //     var urlParams = query2obj(window.location.href);
-      //     urlParams.type = "witnessEdit";
-      //     var query = "?" + obj2query(urlParams);
-      //     history.replaceState(null, "", query);
-      //   }
-      // });
+      witnessEidt.on("click", function () {
+        updateUrlParams({
+          type: "witnessEdit",
+        });
+      });
+
       //非编辑才添加事件 点击生成见证记录
       $(".record").click(function () {
         var params = {
@@ -881,7 +942,6 @@
               [".record", ".resetBtn", ".save"].forEach(function (ele) {
                 $(ele).addClass("hidden");
               });
-              $(".cancleWitness").removeClass("hidden");
               // }
               data.tableData.forEach(function (item) {
                 if (nullTable != JSON.stringify(item)) {
@@ -920,35 +980,6 @@
         $("#" + fromId).prepend(htmlStr);
       });
 
-      $(".cancleWitness").on("click", function () {
-        $.ajax({
-          url: "http://meterial.cxhy.cn/cancelWitness/",
-          type: "POST",
-          dataType: "json",
-          contentType: "application/json",
-          data: JSON.stringify({
-            id: queryObj.id,
-            target_day: queryObj.target_day,
-          }),
-          success: function (res) {
-            if (res.code == 200) {
-              toastr && toastr.success("取消见证记录成功！");
-              contractTable.removeClass("col-lg-7").addClass("col-lg-12");
-              witnessTable
-                .removeClass("col-lg-5 ")
-                .addClass("col-lg-12")
-                .addClass("hidden");
-              $("#loginForm2 .form-apend-block").remove();
-              $(".cancleWitness").addClass("hidden");
-              $(".record").removeClass("hidden");
-              $(".save").removeClass("hidden");
-              //   恢复委托表独占
-              // witnessTableEle.className = exclusiveClass + " hidden";
-            }
-          },
-          error: function (error) {},
-        });
-      });
       // 第几步fn
       function setpFn(fromId, isPrint) {
         // 第xxx步替换
@@ -987,12 +1018,12 @@
           if (!$(inputEle).hasClass("ipt-self")) {
             var val = $(inputEle).val() || "";
             $(inputEle).parent().append("<span></span>");
-             $(inputEle).siblings().text(val);
+            $(inputEle).siblings().text(val);
             $(inputEle).remove();
             // $(inputEle).parent().html(val);
             // $(inputEle).siblings(".placeholder").text(val);
           } else {
-            console.log('走这里没有')
+            console.log("走这里没有");
             var val = $(inputEle).val() || "";
             $(inputEle).parent().attr("style", "text-align:center");
             $(inputEle).parent().append("<span></span>");
