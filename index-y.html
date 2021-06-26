@@ -97,7 +97,7 @@
             </li>
           </ol>
         </div>
-       
+
         <!-- 常屏 顶部导航 -->
         <div class="navbar-right">
           <ul class="nav navbar-nav no-borders">
@@ -114,21 +114,100 @@
         </div>
       </nav>
     </div>
-     <!-- 工程信息摸态框 -->
-     <div class="modal fade hmodal-success" id="myModal7" tabindex="-1" role="dialog"  aria-hidden="true">
+    <!-- 工程信息摸态框 -->
+    <div
+      class="modal fade hmodal-success"
+      id="myModal7"
+      tabindex="-1"
+      role="dialog"
+      aria-hidden="true"
+    >
       <div class="modal-dialog">
-          <div class="modal-content">
-              <div class="color-line"></div>
-              <div class="modal-header" style="padding: 15px;">
-                  <h4 class="modal-title">我的工程信息</h4>
-              </div>
-              <div class="modal-body">
-                <div class="hpanel">
-                  <div class="panel-body">
-                    <form
-                      action="#"
-                      id="model-word-info"
-                      class="form-horizontal label-right"
+        <div class="modal-content">
+          <div class="color-line"></div>
+          <div class="modal-header" style="padding: 15px">
+            <h4 class="modal-title">我的工程信息</h4>
+          </div>
+          <div class="modal-body">
+            <div class="hpanel">
+              <div class="panel-body">
+                <form
+                  action="#"
+                  id="model-word-info"
+                  class="form-horizontal label-right"
+                >
+                  <div class="form-group">
+                    <label class="col-xs-3 control-label" for="project_cid"
+                      >工程编号</label
+                    >
+                    <div
+                      id="projectCid"
+                      class="col-xs-8 form-control-static"
+                    ></div>
+                  </div>
+                  <div class="form-group">
+                    <label
+                      class="col-xs-3 control-label"
+                      for="construction_group"
+                      >施工单位</label
+                    >
+                    <div class="col-xs-8">
+                      <input
+                        type="text"
+                        value=""
+                        class="form-control"
+                        name="construction_group"
+                      />
+                      <div
+                        class="error-block-construction_group text-danger"
+                      ></div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-xs-3 control-label" for="entrust_group"
+                      >委托单位</label
+                    >
+                    <div class="col-xs-8">
+                      <input
+                        type="text"
+                        value=""
+                        class="form-control"
+                        name="entrust_group"
+                      />
+                      <div class="error-block-entrust_group text-danger"></div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-xs-3 control-label" for="witness_group"
+                      >见证单位</label
+                    >
+                    <div class="col-xs-8">
+                      <input
+                        type="text"
+                        value=""
+                        class="form-control"
+                        name="witness_group"
+                      />
+                      <div class="error-block-witness_group text-danger"></div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-xs-3 control-label" for="witness_group"
+                      >检测单位</label
+                    >
+                    <div class="col-xs-8">
+                      <input
+                        type="text"
+                        value=""
+                        class="form-control"
+                        name="test_group"
+                      />
+                      <div class="error-block-test_group text-danger"></div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-xs-3 control-label" for="project_name"
+                      >工程名称</label
                     >
                       <div class="form-group">
                         <label class="col-xs-3 control-label" for="project_cid"
@@ -216,17 +295,19 @@
                         </button>
                         <button class="btn btn-default" id="cancle-btn">返回</button>
                       </div> -->
-                    </form>
-                  </div>
-                </div>
+                </form>
               </div>
-              <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                  <button type="button" class="btn btn-primary">保存</button>
-              </div>
+            </div>
           </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">
+              关闭
+            </button>
+            <button type="button" class="btn btn-primary">保存</button>
+          </div>
+        </div>
       </div>
-  </div>
+    </div>
     <!-- Navigation -->
     <aside id="menu" class="home-menu">
       <div id="navigation">
@@ -298,7 +379,10 @@
         <!-- 见证记录 -->
         <div class="hpanel print-wp">
           <div class="panel-body">
-            <div class="p-m" style="position: absolute;top: 0px;right: 0px;z-index: 99;">
+            <div
+              class="p-m"
+              style="position: absolute; top: 0px; right: 0px; z-index: 99"
+            >
               <button
                 id="createContract"
                 type="button"
@@ -587,21 +671,13 @@
             target_day +
             "&type=witness'> " +
             "见证详情</a>";
-          var cancleDetail =
-            '<button type="button" class="btn btn-info cancleWitness" data-id="' +
-            item.id +
-            '" data-target_day="' +
-            target_day +
-            '">取消见证</button>';
 
           var edit =
             " <a style='color:#3498db' href='tables_design-z.html?id=" +
             item.id +
             "&target_day=" +
             target_day +
-            "&type=" +
-            (isWitness ? "view" : "edit") +
-            "'> " +
+            "&type=view' >" +
             (isWitness ? "查看" : "编辑") +
             "</a>";
           trs.push(
@@ -617,7 +693,6 @@
                 "<td>" + edit + "</td>",
                 "<td class='td-set'>" +
                   (isWitness ? witnessDetail : "") +
-                  (item.witness_record_id == 1 ? cancleDetail : "") +
                   "</td>",
               ].join("") +
               "</tr> "

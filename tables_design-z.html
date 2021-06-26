@@ -126,7 +126,7 @@
             <!-- class="col-xs-12 col-md-12 col-lg-12" -->
             <div
               id="contractTable"
-              class="p-r-lg col-xs-12 col-md-12 col-lg-12"
+              class="p-r-sm col-xs-12 col-md-12 col-lg-12"
             >
               <div class="panel-body">
                 <form
@@ -142,23 +142,36 @@
                         style="font-size: 12px; text-align: left"
                       ></div>
                     </div>
+                    <!-- title -->
+                    <div
+                      style="overflow: hidden; width: 100%; text-align: justify"
+                    >
+                      <span
+                        class="table-title txt-center"
+                        style="
+                          display: inline-block;
+                          width: 84%;
+                          text-align: center;
+                          height: 30px;
+                          line-height: 30px;
+                          font-size: 20px;
+                        "
+                      ></span>
+                      <span
+                        class="qr-code code-pos"
+                        style="width: 15%; display: inline-block"
+                      >
+                        &nbsp;
+                        <img
+                          src=""
+                          alt=""
+                          class="contract-code"
+                          width="100pt"
+                          height="100pt"
+                        />
+                      </span>
+                    </div>
                     <div flex>
-                      <!-- title -->
-                      <div flex-box="1">
-                        <div class="qr-code code-pos" style="text-align: right;">
-                          <img src="" alt="" class="contract-code" width="150pt" height="150pt">
-                        </div>
-                        <h3
-                          class="table-title txt-center"
-                          style="
-                            text-align: center;
-                            height: 30px;
-                            line-height: 30px;
-                            font-size: 20px;
-                          "
-                        ></h3>
-                       
-                      </div>
                       <!-- <div flex-box="0">
                         <img
                           src="http://meterial.cxhy.cn/static/images/a4.jpg"
@@ -201,17 +214,31 @@
                     <button
                       type="button"
                       data-id="loginForm1"
+                      class="
+                        btn
+                        w-xs
+                        btn-primary2
+                        contractEdit
+                        m-l-lg m-b
+                        hidden
+                      "
+                    >
+                      编辑
+                    </button>
+                    <button
+                      type="button"
+                      data-id="loginForm1"
                       class="btn w-xs btn-success record hidden m-l-lg m-b"
                     >
                       保存见证记录
                     </button>
                     <button
-                    type="button"
-                    data-id="loginForm2"
-                    class="btn w-xs btn-default print-code m-l-lg m-b"
-                  >
-                    打印二维码
-                  </button>
+                      type="button"
+                      data-id="loginForm2"
+                      class="btn w-xs btn-default print-code m-l-lg m-b"
+                    >
+                      打印二维码
+                    </button>
                   </div>
                 </form>
               </div>
@@ -227,13 +254,18 @@
                   <div class="table-donwload-section">
                     <!-- 工程编号 -->
                     <div class="row">
-                      <div
-                        class="col-lg-12 table-order"
-                        style="font-size: 12px; text-align: left"
-                      ></div>
-                      <div class="qr-code" style="text-align: right;">
-                        <img src="" alt="" class="witness-code" width="150pt" height="150pt" style="width: 150px;height: 150px;background-size:150px 150px;">
-                      </div>
+                      <span
+                        class="qr-code"
+                        style="display: block; text-align: right"
+                      >
+                        <img
+                          src=""
+                          alt=""
+                          class="witness-code"
+                          width="100pt"
+                          height="100pt"
+                        />
+                      </span>
                     </div>
                   </div>
                   <div class="row txt-center">
@@ -260,12 +292,12 @@
                       修改
                     </button>
                     <button
-                    type="button"
-                    data-id="loginForm2"
-                    class="btn w-xs btn-primary2 print-code m-l-lg"
-                  >
-                    打印二维码
-                  </button>
+                      type="button"
+                      data-id="loginForm2"
+                      class="btn w-xs btn-primary2 print-code m-l-lg"
+                    >
+                      打印二维码
+                    </button>
                   </div>
                 </form>
                 <div>打印和下载提醒</div>
@@ -283,12 +315,14 @@
                 /* width: 12.5%; */
                 font-size: 13.2px;
                 /* padding: 0px; */
+
               }
               .font-weight {
                   /* font-weight: 600; */
               }
               .label-text {
                 font-family:'Microsoft Yahei', SimHei;
+
               }
               .no-border {
                   border: 0;
@@ -308,6 +342,7 @@
                   font-size: 13.2px;
                   height:42px;
                   font-family:NSimSun,SimSun;
+                  min-width: 70px;
               }
               .table-body tr{
                 height: 42px;
@@ -505,9 +540,11 @@
       var exclusiveClass = "col-xs-12 col-md-12 col-lg-12";
       var averageClass = "col-xs-12 col-md-12 col-lg-6";
       var isId = !!queryObj.id; // url上带id字段都可编辑
-      var iscontract = queryObj.type === "contract"; // 从首页点击"合同详情"跳转过来
-      var isWitness = queryObj.type === "witness"; // 从首页点击"见证详情" 跳转过来
-      var isEdit = queryObj.type === "edit"; // 从首页点击"编辑" 跳转过来
+      // var iscontract = queryObj.type === "contract"; // 从首页点击"合同详情"跳转过来
+      // var isWitness = queryObj.type === "witness"; // 从首页点击"见证详情" 跳转过来
+      var ctEdit = queryObj.type === "contractEdit"; // 从首页点击"编辑" 跳转过来
+      var wnEdit = queryObj.type === "witnessEdit"; // 从首页点击"编辑" 跳转过来
+      var isView = queryObj.type === "view"; // 查看状态
       var isCreate = queryObj.type === "create"; // 创建表单
       var isSubmit = false;
       // var mainWrapper = document.getElementById("mainWrapper");
@@ -515,6 +552,7 @@
       // var mainWrapper = document.getElementById("mainWrapper");
       var contractTable = $("#contractTable");
       var witnessTable = $("#witnessTable");
+      var contractEdit = $(".contractEdit"); // 合同编辑按钮
 
       var createWitnessId = "";
       var nullTable = JSON.stringify({
@@ -523,15 +561,19 @@
         desc: null,
       }); // 空表对比模板
 
+      // 查看隐藏保存
+      isView && $(".save").addClass("hidden");
+
       //   record
       //   编辑状态，置灰重置按钮
       //   type暂设置。1：有操作权限 ，2有查看权限， 3
+
       if (isId) {
-        $(".save").html("编辑");
-        // if (userInfo.type == 2) {
+        // 隐藏
+
+        // 显示
+        $(".contractEdit").removeClass("hidden");
         $(".record").removeClass("hidden");
-        $(".cancleWitness").removeClass("hidden");
-        // }
       }
 
       /**
@@ -551,16 +593,6 @@
       };
       var tableName = "";
       var tableNum = "";
-      console.log("userInfo", userInfo);
-      // classify_name: "螺纹钢"
-      // create_at: "2021-05-24T18:31:23"
-      // form_id: 1
-      // id: 10
-      // items: []
-      // level: 2
-      // order_id: 1
-      // parent_id: 2
-      // update_at: "2021-05-24T18:31:25"
       var form_style_query = JSON.parse(
         localStorage.getItem("form_style_query")
       );
@@ -569,6 +601,60 @@
         form_id: queryObj.form_id || 8, // 	Y	表格样式id
         classifyId: queryObj.classifyId, // 	Y	分类id
       };
+      // key, v
+      function updateUrlParams(payload) {
+        var payload = payload || {};
+        if (window.history) {
+          var urlParams = query2obj(window.location.href);
+          for (var key in payload) {
+            if (!payload[key]) {
+              delete urlParams[key];
+            } else {
+              urlParams[key] = payload[key];
+            }
+          }
+          var query = "?" + obj2query(urlParams);
+          history.replaceState(null, "", query);
+        }
+        window.location.reload();
+      }
+
+      // 初始合同表格信息
+      function updateCtInit(data, isEdit, isWitness) {
+        // 工程编号
+        tableNum = data.numbers;
+        tableName = data.title;
+        document.title = tableName;
+        // 设置面包线
+        $("#hbreadcrumb .active").find("span").html(tableName);
+        $("#loginForm1 .table-donwload-section .table-order").html(
+          data.numbers
+        );
+        // title 信息
+        $("#loginForm1 .table-donwload-section .table-title").html(tableName);
+        // 表头信息
+        if (data.tableData) {
+          data.tableData.forEach(function (item) {
+            if (nullTable != JSON.stringify(item)) {
+              if (!isEdit) {
+                dataToTable(item, "#loginForm1", loginForm1Map, data);
+              } else {
+                dataToTable(
+                  item,
+                  "#loginForm1",
+                  loginForm1Map,
+                  data,
+                  false,
+                  isWitness
+                );
+                !isWitness && $(".resetBtn").addClass("hidden");
+              }
+              // saveFn();
+            }
+          });
+        }
+      }
+
       var formData = Object.assign(formStyle, form_style_query);
       if (!isId) {
         $.ajax({
@@ -580,27 +666,8 @@
           success: function (res) {
             if (res.code == 200) {
               var data = res.data;
-              // 工程编号
-              tableNum = data.numbers;
-              tableName = data.title;
-              document.title = tableName;
-              $("#hbreadcrumb .active").find("span").html(tableName);
-              $("#loginForm1 .table-donwload-section .table-order").html(
-                data.numbers
-              );
-              // title 信息
-              $("#loginForm1 .table-donwload-section .table-title").html(
-                tableName
-              );
-              // 表头信息
-              if (data.tableData) {
-                data.tableData.forEach(function (item) {
-                  if (nullTable != JSON.stringify(item)) {
-                    dataToTable(item, "#loginForm1", loginForm1Map, data);
-                    // saveFn();
-                  }
-                });
-              }
+              // 初始化表格
+              updateCtInit(data);
               //最后的错误信息
               res.msg && res.msg != "ok" && toastr && toastr.warning(res.msg);
             }
@@ -616,61 +683,37 @@
             id: queryObj.id,
             target_day: queryObj.target_day,
             qr_code_obj: {
-              contract: './qr-code-z.html?' + obj2query(queryObj) + "&witness=0",
-              witness: './qr-code-z.html?' + obj2query(queryObj) + "&witness=1",
+              contract:
+                "./qr-code-z.html?" + obj2query(queryObj) + "&witness=0",
+              witness: "./qr-code-z.html?" + obj2query(queryObj) + "&witness=1",
             },
           },
           success: function (res) {
             if (res.code == 200) {
               var data = res.data;
-              // var isWitness = data.witnessData && data.witnessData.tableData;
               var isWitness = data.status == 1;
               //  有见证表，调整布局
               if (isWitness) {
-                contractTable.removeClass("col-lg-12").addClass("col-lg-6");
+                contractTable.removeClass("col-lg-12").addClass("col-lg-7");
                 witnessTable
                   .removeClass("col-lg-12 ")
-                  .addClass("col-lg-6")
+                  .addClass("col-lg-5")
                   .removeClass("hidden");
                 [".record", ".resetBtn", ".save"].forEach(function (ele) {
                   $(ele).addClass("hidden");
                 });
               }
 
-              // 工程编号
-              tableNum = data.numbers;
-              tableName = data.title;
-              document.title = tableName;
-              $("#hbreadcrumb .active span").html(tableName);
-              $("#loginForm1 .table-donwload-section .table-order").html(
-                data.numbers
-              );
-              // title 信息
-              $("#loginForm1 .table-donwload-section .table-title").html(
-                data.title
-              );
               // 二维码
-              data.qrCode && data.qrCode.contract && $('.contract-code').attr('src', data.qrCode.contract);
-              data.qrCode && data.qrCode.witness && $('.witness-code').attr('src', data.qrCode.witness);
-              
-              // 表头信息
-              if (data.tableData) {
-                data.tableData.forEach(function (item) {
-                  // 如果是空表不在渲染
-                  if (nullTable != JSON.stringify(item)) {
-                    dataToTable(
-                      item,
-                      "#loginForm1",
-                      loginForm1Map,
-                      data,
-                      false,
-                      isWitness
-                    );
-                  }
-                });
-                !isWitness && $(".resetBtn").addClass("hidden");
-                // saveFn(true);
-              }
+              data.qrCode &&
+                data.qrCode.contract &&
+                $(".contract-code").attr("src", data.qrCode.contract);
+              data.qrCode &&
+                data.qrCode.witness &&
+                $(".witness-code").attr("src", data.qrCode.witness);
+
+              updateCtInit(data, true, isWitness);
+
               if (isWitness) {
                 createWitnessId = data.witnessData.id;
                 data.witnessData.tableData.forEach(function (item) {
@@ -684,7 +727,6 @@
                       isWitness
                     );
                   }
-                  // saveFn();
                 });
               }
 
@@ -699,7 +741,9 @@
       $(".download").click(function () {
         var parentId = $(this).attr("data-id");
         var htmlStr = $("#" + parentId).clone(true);
-        $("#" + parentId).find('tr, th').attr('style', 'height:30px')
+        $("#" + parentId)
+          .find("tr, th")
+          .attr("style", "height:30px");
         replaceEl(parentId, "download");
         $("#" + parentId)
           .find(".table-donwload-section")
@@ -722,8 +766,8 @@
       });
 
       function saveFn(isInit) {
-        setpFn('loginForm1', 'download');
-        console.log(88888, $("#loginForm1 .div-step-wp").attr('data-sid'))
+        setpFn("loginForm1", "download");
+        console.log(88888, $("#loginForm1 .div-step-wp").attr("data-sid"));
         $("#loginForm1").validate({
           rule: loginForm1Map.rule,
           messages: loginForm1Map.messages,
@@ -744,7 +788,9 @@
               submitData[item.name] =
                 (already ? already + "," : "") + $.trim(item.value) || "";
             });
-            datas[$("#loginForm1 .step-wp").attr('data-sid')] = $("#loginForm1 .step-wp").html(); // 替换第几部的值
+            datas[$("#loginForm1 .step-wp").attr("data-sid")] = $(
+              "#loginForm1 .step-wp"
+            ).html(); // 替换第几部的值
             var params = {
               classifyId: queryObj.classifyId || 1,
               form_id: queryObj.form_id || 1,
@@ -764,9 +810,11 @@
                 if (res.code == 200) {
                   toastr &&
                     toastr.success(isId ? "合同编辑成功" : "合同保存成功");
-                  setTimeout(function () {
-                    window.location.href = "./index-y.html";
-                  }, 1000);
+                  updateUrlParams({
+                    id: res.data.record_id,
+                    classifyId: "",
+                    form_id: "",
+                  });
                 }
                 isSubmit = false;
               },
@@ -785,6 +833,21 @@
         $("#loginForm1").submit();
       }
 
+      // 触发编辑
+      contractEdit.on("click", function () {
+        updateUrlParams({
+          type: "contractEdit",
+        });
+      });
+      // 委托单编辑
+      // $(".witnessEdit").on("click", function () {
+      //   if (window.history) {
+      //     var urlParams = query2obj(window.location.href);
+      //     urlParams.type = "witnessEdit";
+      //     var query = "?" + obj2query(urlParams);
+      //     history.replaceState(null, "", query);
+      //   }
+      // });
       //非编辑才添加事件 点击生成见证记录
       $(".record").click(function () {
         var params = {
@@ -803,10 +866,10 @@
               createWitnessId = res.data.id || "";
               //  有见证表，调整布局
               // if (data.witnessData && data.witnessData.tableData) {
-              contractTable.removeClass("col-lg-12").addClass("col-lg-6");
+              contractTable.removeClass("col-lg-12").addClass("col-lg-7");
               witnessTable
                 .removeClass("col-lg-12 ")
-                .addClass("col-lg-6")
+                .addClass("col-lg-5")
                 .removeClass("hidden");
 
               // mainWrapper.setAttribute("flex", "box:mean");
@@ -832,9 +895,11 @@
         var htmlStr = $("#" + fromId)
           .find(".table-donwload-section")
           .clone(true);
-          $("#" + fromId).find('tr, th').attr('style', 'height:42px')
+        $("#" + fromId)
+          .find("tr, th")
+          .attr("style", "height:42px");
         replaceEl(fromId, "print");
-        
+
         $("#" + fromId)
           .find(".table-donwload-section")
           .jqprint();
@@ -863,9 +928,9 @@
           success: function (res) {
             if (res.code == 200) {
               toastr && toastr.success("取消见证记录成功！");
-              contractTable.removeClass("col-lg-6").addClass("col-lg-12");
+              contractTable.removeClass("col-lg-7").addClass("col-lg-12");
               witnessTable
-                .removeClass("col-lg-6 ")
+                .removeClass("col-lg-5 ")
                 .addClass("col-lg-12")
                 .addClass("hidden");
               $("#loginForm2 .form-apend-block").remove();
@@ -882,18 +947,21 @@
       // 第几步fn
       function setpFn(fromId, isPrint) {
         // 第xxx步替换
-        var stepWp = $("#" + fromId).find("label").hasClass("step-wp");
+        var stepWp = $("#" + fromId)
+          .find("label")
+          .hasClass("step-wp");
         if (stepWp) {
-          $("#loginForm1 label>.main input").each(function(){
-              var tempVal = $(this).val() ? $(this).val() : '&nbsp;';
-              $(this).replaceWith('<span style="text-decoration:underline;">' +tempVal+ '</span>');
+          $("#loginForm1 label>.main input").each(function () {
+            var tempVal = $(this).val() ? $(this).val() : "&nbsp;";
+            $(this).replaceWith(
+              '<span style="text-decoration:underline;">' + tempVal + "</span>"
+            );
           });
         }
-
       }
       // 替换标签
       function replaceEl(fromId, isPrint) {
-        setpFn(fromId, isPrint)
+        setpFn(fromId, isPrint);
         changeImgToDataurl();
         // 替换表头上的功能
         var ths = $("#" + fromId).find(".table-header th");
@@ -948,9 +1016,12 @@
 
       // 点击“其他" 添加输入框
       setTimeout(() => {
-        
-        $("#loginForm1 .main span").each(function(){
-            $(this).replaceWith('<input value="'+$(this).html()+'" maxLength="2" class="class-step">');
+        $("#loginForm1 .main span").each(function () {
+          $(this).replaceWith(
+            '<input value="' +
+              $(this).html() +
+              '" maxLength="2" class="class-step">'
+          );
         });
         var selects = $("#loginForm1").find(".class-other");
         selects.each(function (idx, inputEle) {
@@ -974,16 +1045,39 @@
       }, 1000);
 
       // 打印二维码
-      $('.print-code').click(function() {
+      $(".print-code").click(function () {
         var fromId = $(this).attr("data-id");
-        $("#" + fromId).find(".qr-code").attr('style','position:absolute;top:50%;left:50%;margin-left:-150px;margin-top:-150px;');
-        $("#" + fromId).find(".qr-code img").attr('style','width:300pt;height:300pt;background-size:300pt 300pt;');
-        $("#" + fromId).find(".qr-code img").attr('width','300pt');
-        $("#" + fromId).find(".qr-code img").attr('height','300pt');
-        $("#" + fromId).find(".qr-code").jqprint();
-        $("#" + fromId).find(".qr-code").attr('style','text-align:right');
-        $("#" + fromId).find(".qr-code img").attr('style','width:150px;height:150px;background-size:150px 150px;');
-      })
+        $("#" + fromId)
+          .find(".qr-code")
+          .attr(
+            "style",
+            "position:absolute;top:50%;left:50%;margin-left:-50px;margin-top:-50px;"
+          );
+        $("#" + fromId)
+          .find(".qr-code img")
+          .attr(
+            "style",
+            "width:200pt;height:200pt;background-size:200pt 200pt;"
+          );
+        $("#" + fromId)
+          .find(".qr-code img")
+          .attr("width", "200pt");
+        $("#" + fromId)
+          .find(".qr-code img")
+          .attr("height", "200pt");
+        $("#" + fromId)
+          .find(".qr-code")
+          .jqprint();
+        $("#" + fromId)
+          .find(".qr-code")
+          .attr("style", "text-align:right");
+        $("#" + fromId)
+          .find(".qr-code img")
+          .attr(
+            "style",
+            "width:200pt;height:200pt;background-size:100px 100px;"
+          );
+      });
     </script>
   </body>
 </html>

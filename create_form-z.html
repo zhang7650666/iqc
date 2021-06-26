@@ -138,7 +138,10 @@
         <div class="hpanel print-wp">
           <div class="panel-heading"></div>
           <div class="panel-body">
-            <div class="p-m" style="position: absolute;top: 0px;right: 0px;z-index: 99;">
+            <div
+              class="p-m"
+              style="position: absolute; top: 0px; right: 0px; z-index: 99"
+            >
               <button
                 type="button"
                 class="btn btn-primary print-hide pull-right query-other-form"
@@ -245,6 +248,7 @@
           label: "代表数量",
           key: "quantity",
           value: "",
+          rules: ["isNumber"],
         },
         {
           label: "材料进厂时间",
@@ -305,12 +309,12 @@
         // var isRequired = item.isRequired ? " required=" : "";
         var name = " name=" + item.key;
         var placeholder = " placeholder=请输入" + item.label;
-        if(item.key == 'usedPart' || item.key == 'specimenType') {
-          var placeholder = " placeholder=输入" + item.label + '，无用/代替';
+        if (item.key == "usedPart" || item.key == "specimenType") {
+          var placeholder = " placeholder=输入" + item.label + "，无用/代替";
         }
-        
+
         formStr += [
-          "<div class='col-md-6 col-lg-4 is-reqiured "+item.key+"'>",
+          "<div class='p-n col-md-6 col-lg-4 is-reqiured " + item.key + "'>",
           "<label class='col-xs-4 control-label label-p7'>" +
             item.label +
             "</label>",
@@ -334,6 +338,11 @@
         rules[item.key] = { required: true };
         var errTips = item.label + "不能为空";
         messages[item.key] = { required: errTips };
+        if (item.rules) {
+          $.each(item.rules, function (i, keyname) {
+            rules[item.key][keyname] = true;
+          });
+        }
       });
 
       var radioStr =
@@ -355,7 +364,6 @@
       }
       isShowOTN();
       $("input[type='radio'][name='testStatus']").change(function () {
-        
         isShowOTN();
       });
       $("input[name='entryTime']").attr("readonly", "readonly");
@@ -383,7 +391,7 @@
           localStorage.setItem("form_style_query", JSON.stringify(formData));
           var queryObj = query2obj(window.location.href);
           queryObj.target_day = ymd();
-          queryObj.type = 'create';
+          queryObj.type = "create";
 
           window.location.href =
             "./tables_design-z.html?" + obj2query(queryObj);
@@ -401,9 +409,9 @@
       });
       // 返回首页
       $(".query-other-form").click(function () {
-        window.location.href="./index-y.html"
+        window.location.href = "./index-y.html";
       });
-      
+
       // $('.reset-form').click(function() {
       //   $('#formData')[0].reset();
       // })
