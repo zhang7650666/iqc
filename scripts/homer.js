@@ -594,12 +594,19 @@ function getUnitDetail() {
 
 // 点击导航修改工程编号摸态框信息
 var workInfo = $('#model-word-info label');
-console.log(666, workInfo)
 for(var i = 0; i < workInfo.length; i ++) {
-
-  console.log('item',  workInfo[i])
+  var labelFor = $(workInfo[i]).attr('for');
+  if(labelFor == 'project_cid') {
+    $('#projectCid').html(userInfo[labelFor])
+  } else {
+    $('input[name="'+labelFor+'"]').val(userInfo.projectInfo[labelFor])
+    if(labelFor =='project_name') {
+      $("input[name='project_name']").val(userInfo.projectInfo.name)
+    }
+  }
+ 
 }
 // workInfo.forEach(function(item) {
 //   console.log('item', item)
 // })
-// var workInfo = ['project_cid', 'construction_group', 'entrust_group','witness_group','project_name']
+// var workInfo = ['project_cid', 'construction_group', 'entrust_group','witness_group', 'test_group', 'project_name']
