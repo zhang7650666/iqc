@@ -992,10 +992,9 @@
             // $(inputEle).parent().html(val);
             // $(inputEle).siblings(".placeholder").text(val);
           } else {
-            console.log('走这里没有')
             var val = $(inputEle).val() || "";
             $(inputEle).parent().attr("style", "text-align:center");
-            $(inputEle).parent().append("<span></span>");
+            $(inputEle).parent().append('<span>'+val+'</span>');
             $(inputEle).remove();
           }
         });
@@ -1036,12 +1035,15 @@
         selects.each(function (idx, inputEle) {
           $(inputEle).change(function () {
             var checked = $(inputEle).is(":checked");
-            var val = $(inputEle).val();
+            var val = $(inputEle).attr('subVal') == 'null' ?  '' :  $(inputEle).attr('subVal');
+            console.log(1121212,  $(inputEle).attr('subVal'))
+            var sid = $(inputEle).attr('subSid') ;
+            console.log('html',  $(inputEle))
             if (checked) {
               $(inputEle)
                 .parent()
                 .append(
-                  '<input type="text" value="' + val + '" class="ipt-self"/>'
+                  '<input type="text" value="' + val + '"  name="' + sid + '" class="ipt-self"/>'
                 );
               // $(inputEle).parent()
             } else {

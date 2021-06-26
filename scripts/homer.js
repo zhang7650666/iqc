@@ -620,6 +620,7 @@ function ymd_format (dataStr) {
   var args = dataStr ? dataStr : ymd();
   var tempList = args.split('-');
   var dataYMD = ''
+  
   tempList.forEach(function(item, index) {
     switch(index) {
       case 0:
@@ -637,5 +638,8 @@ function ymd_format (dataStr) {
 }
 
 function addZero(val) {
+  if(val.length > 1) {
+    return val;
+  }
   return parseInt(val) > 9 ? val : '0' + val;
 }

@@ -220,7 +220,7 @@ function dataToTable(tableData, parentId, map, sourceData, isProhibitEdit) {
             '" name=sid_' +
             item.submitId +
             ' value="' +
-            (item.value ? ymd_format(item.value) : value) +
+            (item.value ? ymd_format(item.value) : ymd_format(value)) +
             '" ' +
             disab +
             "/>";
@@ -264,9 +264,13 @@ function dataToTable(tableData, parentId, map, sourceData, isProhibitEdit) {
             checkStr +=
               '<label class="form-check-label" style="padding-right:10px;">' +
               '<span class="hidden placeholder">□</span><input type="checkbox" value=' +
-              checkItem.id +
+              checkItem.value +
               " name=sid_" +
               item.submitId +
+              " subVal=" +
+              checkItem.value +
+              " subSid=sid_" +
+              checkItem.submitId +
               disab +
               checked +
               ' class="' +
