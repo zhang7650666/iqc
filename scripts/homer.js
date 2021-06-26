@@ -614,9 +614,28 @@ for(var i = 0; i < workInfo.length; i ++) {
       $("input[name='project_name']").val(userInfo.projectInfo.name)
     }
   }
- 
 }
-// workInfo.forEach(function(item) {
-//   console.log('item', item)
-// })
-// var workInfo = ['project_cid', 'construction_group', 'entrust_group','witness_group', 'test_group', 'project_name']
+
+function ymd_format (dataStr) {
+  var args = dataStr ? dataStr : ymd();
+  var tempList = args.split('-');
+  var dataYMD = ''
+  tempList.forEach(function(item, index) {
+    switch(index) {
+      case 0:
+        dataYMD += item + '年';
+        break;
+      case 1:
+        dataYMD += addZero(item) + '月';
+        break;
+      case 2:
+        dataYMD += addZero(item) + '日';
+        break;
+    }
+  });
+  return dataYMD;
+}
+
+function addZero(val) {
+  return parseInt(val) > 9 ? val : '0' + val;
+}

@@ -146,30 +146,27 @@
                     <div
                       style="overflow: hidden; width: 100%; text-align: justify"
                     >
-                      <span
-                        class="table-title txt-center"
-                        style="
-                          display: inline-block;
-                          width: 84%;
-                          text-align: center;
-                          height: 30px;
-                          line-height: 30px;
-                          font-size: 20px;
-                        "
-                      ></span>
-                      <span
+                    <div
                         class="qr-code code-pos"
-                        style="width: 15%; display: inline-block"
+                        style="text-align: right;"
                       >
-                        &nbsp;
                         <img
                           src=""
                           alt=""
                           class="contract-code"
-                          width="100pt"
-                          height="100pt"
+                          width="150px"
+                          height="150px"
                         />
-                      </span>
+                      </div>
+                      <h3
+                        class="table-title txt-center"
+                        style="
+                         
+                          text-align: center;
+                         
+                        "
+                      ></h3>
+                      
                     </div>
                     <div flex>
                       <!-- <div flex-box="0">
@@ -254,18 +251,18 @@
                   <div class="table-donwload-section">
                     <!-- 工程编号 -->
                     <div class="row">
-                      <span
+                      <div
                         class="qr-code"
-                        style="display: block; text-align: right"
+                        style="text-align: right"
                       >
                         <img
                           src=""
                           alt=""
                           class="witness-code"
-                          width="100pt"
-                          height="100pt"
+                          width="150px"
+                          height="150px"
                         />
-                      </span>
+                      </div>
                     </div>
                   </div>
                   <div class="row txt-center">
@@ -1051,20 +1048,20 @@
           .find(".qr-code")
           .attr(
             "style",
-            "position:absolute;top:50%;left:50%;margin-left:-50px;margin-top:-50px;"
+            "position:absolute;top:50%;left:50%;margin-left:-150px;margin-top:-150px;"
           );
         $("#" + fromId)
           .find(".qr-code img")
           .attr(
             "style",
-            "width:200pt;height:200pt;background-size:200pt 200pt;"
+            "width:300px;height:300px;background-size:300px 300px;"
           );
         $("#" + fromId)
           .find(".qr-code img")
-          .attr("width", "200pt");
+          .attr("width", "150pt");
         $("#" + fromId)
           .find(".qr-code img")
-          .attr("height", "200pt");
+          .attr("height", "150pt");
         $("#" + fromId)
           .find(".qr-code")
           .jqprint();
@@ -1075,7 +1072,7 @@
           .find(".qr-code img")
           .attr(
             "style",
-            "width:200pt;height:200pt;background-size:100px 100px;"
+            "width:150px;height:150px;background-size:150px 150px;"
           );
       });
     </script>

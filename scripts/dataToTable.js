@@ -204,20 +204,14 @@ function dataToTable(tableData, parentId, map, sourceData, isProhibitEdit) {
           break;
         case "date":
           dateInits.push(item.submitId);
-          var data = new Date();
           var value =
             item.value && /^[1-9]\d{3}\-\d{2}\-\d{2}$/.test(item.value)
               ? item.value
-              : data.getFullYear() +
-                "-" +
-                (data.getMonth() + 1) +
-                "-" +
-                data.getDate();
+              : ymd();
 
           var required = map.rules["sid_" + item.submitId]
             ? 'required="true"'
             : "";
-
           tdHtml =
             '<input type="text" ' +
             required +
@@ -226,7 +220,7 @@ function dataToTable(tableData, parentId, map, sourceData, isProhibitEdit) {
             '" name=sid_' +
             item.submitId +
             ' value="' +
-            (item.value ? item.value : value) +
+            (item.value ? ymd_format(item.value) : value) +
             '" ' +
             disab +
             "/>";
