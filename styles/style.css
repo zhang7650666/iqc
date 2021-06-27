@@ -668,7 +668,7 @@ body.blank {
   background-color: #f1f3f6;
 }
 .login-container {
-  max-width: 420px;
+  width: 400px;
   margin: auto;
   position: relative;
   z-index: 5;
