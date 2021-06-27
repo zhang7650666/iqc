@@ -242,17 +242,7 @@
                 >
                   <div class="table-donwload-section">
                     <!-- 工程编号 -->
-                    <div class="row">
-                      <div class="qr-code" style="text-align: right">
-                        <img
-                          src=""
-                          alt=""
-                          class="witness-code"
-                          width="150px"
-                          height="150px"
-                        />
-                      </div>
-                    </div>
+                   
                   </div>
                   <div class="row txt-center">
                     <button
@@ -523,6 +513,7 @@
     <script src="scripts/jquery.jqprint-0.3.js"></script>
     <script src="scripts/homer.js"></script>
     <script src="scripts/dataToTable.js"></script>
+    <script src="scripts/zh.js"></script>
     <script>
       // 解决打印报错
       jQuery.browser = {};
@@ -708,13 +699,7 @@
                 });
               }
 
-              // 二维码
-              data.qrCode &&
-                data.qrCode.contract &&
-                $(".contract-code").attr("src", data.qrCode.contract);
-              data.qrCode &&
-                data.qrCode.witness &&
-                $(".witness-code").attr("src", data.qrCode.witness);
+              
 
               updateCtInit(data, true, isWitness);
 
@@ -722,15 +707,18 @@
                 createWitnessId = data.witnessData.id;
                 data.witnessData.tableData.forEach(function (item) {
                   if (nullTable != JSON.stringify(item)) {
-                    dataToTable(
-                      item,
-                      "#loginForm2",
-                      loginForm2Map,
-                      data,
-                      false,
-                      isWitness
-                    );
-                  }
+                      dataToTable(
+                        item,
+                        "#loginForm2",
+                        loginForm2Map,
+                        data,
+                        false,
+                        isWitness
+                      );
+                      // 二维码
+                    data.qrCode && data.qrCode.contract && $(".contract-code").attr("src", data.qrCode.contract);
+                    data.qrCode && data.qrCode.witness && $(".witness-code").attr("src", data.qrCode.witness);
+                    }
                 });
               }
 
@@ -969,7 +957,12 @@
 
         $("#" + fromId)
           .find(".table-donwload-section")
-          .jqprint();
+          .jqprint({
+          debug: false,//如果是true则可以显示iframe查看效果，默认是false
+          importCSS: true,//true表示引进原来的页面的css，默认是true。
+          printContainer: true,//表示如果原来选择的对象必须被纳入打印，默认是true。
+          operaSupport: true///表示如果插件也必须支持歌opera浏览器，默认是true。
+      });
 
         var stepWp = $("#loginForm1 label").hasClass("step-wp");
         if (stepWp) {
@@ -1120,6 +1113,8 @@
             "width:150px;height:150px;background-size:150px 150px;"
           );
       });
+
+     
     </script>
   </body>
 </html>

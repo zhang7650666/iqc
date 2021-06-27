@@ -212,15 +212,18 @@ function dataToTable(tableData, parentId, map, sourceData, isProhibitEdit) {
           var required = map.rules["sid_" + item.submitId]
             ? 'required="true"'
             : "";
+            // value="' +
+            // (item.value ? ymd_format(item.value) : ymd_format(value)) +
+            
           tdHtml =
-            '<input type="text" ' +
+            '<input data-date-format="yyyy年mm月dd日" iptdate="ipt-date" type="text" ' +
             required +
             ' id="datapicker' +
             item.submitId +
             '" name=sid_' +
             item.submitId +
             ' value="' +
-            (item.value ? ymd_format(item.value) : ymd_format(value)) +
+            (item.value ? moment(item.value).format('YYYY年MM月DD日'):  moment(value).format('YYYY年MM月DD日')) +
             '" ' +
             disab +
             "/>";
@@ -302,6 +305,17 @@ function dataToTable(tableData, parentId, map, sourceData, isProhibitEdit) {
             '">' +
             tempHtmls +
             "</label>";
+          break;
+        case "qrcode":
+          var required = map.rules["sid_" + item.submitId]
+            ? 'required="true"'
+            : "";
+          // var testStr = "<div class='main'>第<span style='text-decoration:underline'>&nbsp;&nbsp;</span>步～<span style='text-decoration:underline'>&nbsp;&nbsp;</span>步<br/>第<span style='text-decoration:underline'>&nbsp;&nbsp;</span>点~<span style='text-decoration:underline'>&nbsp;&nbsp;</span>点<br/>共<span style='text-decoration:underline'>&nbsp;&nbsp;</span>步，<span style='text-decoration:underline'>&nbsp;&nbsp;</span>点</div>"
+          var tempHtmls = item.value ? item.value : item.valueExt;
+          tdHtml += '<div class="qr-code code-pos" style="width: 155px;height: 155px; overflow:hidden;text-align: right">\
+            <img src="" alt="" class="witness-code"  width="150px" height="150px"/>\
+          </div>';
+          break;
         // case "textarea":
         //   var place = item.valueExtPos == "bottom" ? "<br/>" : "";
         //   var isRight = item.valueExtPos == "right";
@@ -411,15 +425,18 @@ function dataToTable(tableData, parentId, map, sourceData, isProhibitEdit) {
   }
   dateInits.forEach(function (idx) {
     // setDate: moment().format("YYYY年MM月DD日")
+    $("#datapicker" + idx).attr("readonly", "readonly");
     $("#datapicker" + idx).datepicker({
       language: "zh-CN",
       autoclose: true, //选中之后自动隐藏日期选择框
       // clearBtn: true, //清除按钮
       todayBtn: true, //今日按钮
       todayHighlight: true,
-      format: "yyyy-mm-dd",
-      viewDate: new Date(),
-    });
+      format: "yyyy年mm月dd日",
+      // viewDate: new Date(),
+    }).on("changeDate", function(ev) {
+      $(ev.currentTarget).datepicker("setStartDate",moment(ev.date).format("YYYY年MM月DD日"));
+  });;
   });
 }
 
