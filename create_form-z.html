@@ -254,7 +254,7 @@
           label: "材料进厂时间",
           key: "entryTime",
           type: "date",
-          value: moment().format("YYYY-MM-DD"),
+          value: moment().format('YYYY年MM月DD日'),
         },
         {
           label: "出厂编号",
@@ -304,7 +304,7 @@
       var messages = {};
       formData.forEach(function (item) {
         var dateType =
-          item.type == "date" ? " data-date-format='yyyy-mm-dd'" : "";
+          item.type == "date" ? " data-date-format='yyyy年mm月dd日'" : "";
         var value = item.value ? " value=" + item.value : "";
         // var isRequired = item.isRequired ? " required=" : "";
         var name = " name=" + item.key;
@@ -372,7 +372,7 @@
         language: "zh-CN", //语言
         autoclose: true, //选择后自动关闭
         todayHighlight: true, //今天日期高亮
-        setDate: moment().format("YYYY-MM-DD"),
+        setDate: moment().format("YYYY年MM月DD日"),
       });
 
       // $("input[name='entryTime']").val(moment().format("YYYY-MM-DD"));

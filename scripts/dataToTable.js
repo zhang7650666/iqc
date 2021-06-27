@@ -261,14 +261,14 @@ function dataToTable(tableData, parentId, map, sourceData, isProhibitEdit) {
               checkItem.name == "其他："
                 ? "form-check-input class-other"
                 : "form-check-input ";
-            checkStr +=
-              '<label class="form-check-label" style="padding-right:10px;">' +
-              '<span class="hidden placeholder">□</span><input type="checkbox" value=' +
-              checkItem.value +
+            var checkVal = checkItem.value ? checkItem.value : '""';
+            checkStr += '<label class="form-check-label" style="padding-right:10px;">' +
+              '<span class="hidden placeholder">□</span><input type="checkbox" value= '+
+              checkVal + 
               " name=sid_" +
               item.submitId +
               " subVal=" +
-              checkItem.value +
+              checkVal +
               " subSid=sid_" +
               checkItem.submitId +
               disab +
@@ -410,6 +410,7 @@ function dataToTable(tableData, parentId, map, sourceData, isProhibitEdit) {
     $(parentId).find("table").attr("style", "border: 2px solid #000;");
   }
   dateInits.forEach(function (idx) {
+    // setDate: moment().format("YYYY年MM月DD日")
     $("#datapicker" + idx).datepicker({
       language: "zh-CN",
       autoclose: true, //选中之后自动隐藏日期选择框

@@ -778,6 +778,7 @@
           submitHandler: function () {
             isSubmit = true;
             var datas = $("#loginForm1").serializeArray();
+
             var radios = $("#loginForm1").find('input[type="radio"]');
             radios.each(function (idx, inputEle) {
               var checked = inputEle.checked;
@@ -795,6 +796,7 @@
             datas[$("#loginForm1 .step-wp").attr("data-sid")] = $(
               "#loginForm1 .step-wp"
             ).html(); // 替换第几部的值
+
             var params = {
               classifyId: queryObj.classifyId || 1,
               form_id: queryObj.form_id || 1,
@@ -1067,9 +1069,7 @@
           $(inputEle).change(function () {
             var checked = $(inputEle).is(":checked");
             var val = $(inputEle).attr('subVal') == 'null' ?  '' :  $(inputEle).attr('subVal');
-            console.log(1121212,  $(inputEle).attr('subVal'))
             var sid = $(inputEle).attr('subSid') ;
-            console.log('html',  $(inputEle))
             if (checked) {
               $(inputEle)
                 .parent()
