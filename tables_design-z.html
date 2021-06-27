@@ -179,13 +179,24 @@
                     >
                       下载
                     </button>
-                    <button
+                    <a
+                      tabindex="0"
+                      class="btn w-xs btn-info m-l-lg m-b print"
+                      data-id="loginForm1"
+                      role="button"
+                      >打印</a
+                    >
+                    <!-- data-placement="top"
+                      data-toggle="popover"
+                      data-trigger="hover"
+                      data-content="打印需要手动适配打印边距; 打印 -> 更多设置 -> 边距 -> 自定义" -->
+                    <!-- <button
                       type="button"
                       data-id="loginForm1"
                       class="btn w-xs btn-info print m-l-lg m-b"
                     >
                       打印
-                    </button>
+                    </button> -->
                     <button
                       type="reset"
                       data-id="loginForm1"
@@ -534,6 +545,22 @@
           jQuery.browser.version = RegExp.$1;
         }
       })();
+      var popoverTemplate =
+        "<div>\
+          打印需要手动再【更多设置】中适配边距和行高，适应A4纸张大小！\
+          <div>1、边距：【行距】=> 【自定义】拖拽文稿预览区域的边距线调整打印边距</div>\
+          <div>2、打印一页：【缩放】=>【自定义】调整打印区域</div>\
+          </div>";
+
+      $(".print").popover({
+        // selector: ".print",
+        trigger: "hover",
+        content: popoverTemplate,
+        // template: popoverTemplate,
+        placement: "top",
+        title: "打印设置",
+        html: true,
+      });
     </script>
     <script>
       var userInfo = getUserInfo() || {};
@@ -805,7 +832,7 @@
               target_day: queryObj.target_day, // 获取当前年月日
             };
             isId && (params.record_id = queryObj.id);
-
+            debugger;
             $.ajax({
               url: "http://meterial.cxhy.cn/saveFormRecord/",
               type: "POST",
@@ -1027,7 +1054,9 @@
           } else {
             var val = $(inputEle).val() || "";
             $(inputEle).parent().attr("style", "text-align:center");
-            $(inputEle).parent().append('<span>'+val+'</span>');
+            $(inputEle)
+              .parent()
+              .append("<span>" + val + "</span>");
             $(inputEle).remove();
           }
         });
@@ -1068,13 +1097,20 @@
         selects.each(function (idx, inputEle) {
           $(inputEle).change(function () {
             var checked = $(inputEle).is(":checked");
-            var val = $(inputEle).attr('subVal') == 'null' ?  '' :  $(inputEle).attr('subVal');
-            var sid = $(inputEle).attr('subSid') ;
+            var val =
+              $(inputEle).attr("subVal") == "null"
+                ? ""
+                : $(inputEle).attr("subVal");
+            var sid = $(inputEle).attr("subSid");
             if (checked) {
               $(inputEle)
                 .parent()
                 .append(
-                  '<input type="text" value="' + val + '"  name="' + sid + '" class="ipt-self"/>'
+                  '<input type="text" value="' +
+                    val +
+                    '"  name="' +
+                    sid +
+                    '" class="ipt-self"/>'
                 );
               // $(inputEle).parent()
             } else {

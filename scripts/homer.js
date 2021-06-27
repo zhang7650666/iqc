@@ -422,6 +422,13 @@ function getMemu(data, num) {
   num++;
   var htmls =
     (num > 1 ? "<ul class='nav nav-second-level'>" : "") +
+    '<li>\
+      <a href="index-y.html" class="hight">\
+        <span class="nav-label">\
+          <i class="pe-7s-home nav-icon"></i> 首页\
+          </span>\
+      </a>\
+    </li>' +
     menuUnit(data, num) +
     (num > 1 ? "</ul>" : "");
 
@@ -603,34 +610,34 @@ function getUnitDetail() {
 }
 
 // 点击导航修改工程编号摸态框信息
-var workInfo = $('#model-word-info label');
-for(var i = 0; i < workInfo.length; i ++) {
-  var labelFor = $(workInfo[i]).attr('for');
-  if(labelFor == 'project_cid') {
-    $('#projectCid').html(userInfo[labelFor])
+var workInfo = $("#model-word-info label");
+for (var i = 0; i < workInfo.length; i++) {
+  var labelFor = $(workInfo[i]).attr("for");
+  if (labelFor == "project_cid") {
+    $("#projectCid").html(userInfo[labelFor]);
   } else {
-    $('input[name="'+labelFor+'"]').val(userInfo.projectInfo[labelFor])
-    if(labelFor =='project_name') {
-      $("input[name='project_name']").val(userInfo.projectInfo.name)
+    $('input[name="' + labelFor + '"]').val(userInfo.projectInfo[labelFor]);
+    if (labelFor == "project_name") {
+      $("input[name='project_name']").val(userInfo.projectInfo.name);
     }
   }
 }
 
-function ymd_format (dataStr) {
+function ymd_format(dataStr) {
   var args = dataStr ? dataStr : ymd();
-  var tempList = args.split('-');
-  var dataYMD = ''
-  
-  tempList.forEach(function(item, index) {
-    switch(index) {
+  var tempList = args.split("-");
+  var dataYMD = "";
+
+  tempList.forEach(function (item, index) {
+    switch (index) {
       case 0:
-        dataYMD += item + '年';
+        dataYMD += item + "年";
         break;
       case 1:
-        dataYMD += addZero(item) + '月';
+        dataYMD += addZero(item) + "月";
         break;
       case 2:
-        dataYMD += addZero(item) + '日';
+        dataYMD += addZero(item) + "日";
         break;
     }
   });
@@ -638,8 +645,8 @@ function ymd_format (dataStr) {
 }
 
 function addZero(val) {
-  if(val.length > 1) {
+  if (val.length > 1) {
     return val;
   }
-  return parseInt(val) > 9 ? val : '0' + val;
+  return parseInt(val) > 9 ? val : "0" + val;
 }

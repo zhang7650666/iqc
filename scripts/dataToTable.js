@@ -262,9 +262,10 @@ function dataToTable(tableData, parentId, map, sourceData, isProhibitEdit) {
                 ? "form-check-input class-other"
                 : "form-check-input ";
             var checkVal = checkItem.value ? checkItem.value : '""';
-            checkStr += '<label class="form-check-label" style="padding-right:10px;">' +
-              '<span class="hidden placeholder">□</span><input type="checkbox" value= '+
-              checkVal + 
+            checkStr +=
+              '<label class="form-check-label" style="padding-right:10px;">' +
+              '<span class="hidden placeholder">□</span><input type="checkbox" value= ' +
+              checkItem.id +
               " name=sid_" +
               item.submitId +
               " subVal=" +
