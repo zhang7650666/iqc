@@ -373,7 +373,9 @@
         autoclose: true, //选择后自动关闭
         todayHighlight: true, //今天日期高亮
         setDate: moment().format("YYYY年MM月DD日"),
-      });
+      }).on("changeDate", function(ev) {
+        $("input[name='entryTime']").datepicker("setStartDate",moment(ev.date).format("YYYY年MM月DD日"));
+     });
 
       // $("input[name='entryTime']").val(moment().format("YYYY-MM-DD"));
       // 提交校验
