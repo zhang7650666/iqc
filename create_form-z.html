@@ -248,13 +248,12 @@
           label: "代表数量",
           key: "quantity",
           value: "",
-          rules: ["isNumber"],
         },
         {
           label: "材料进厂时间",
           key: "entryTime",
           type: "date",
-          value: moment().format('YYYY年MM月DD日'),
+          value: moment().format("YYYY年MM月DD日"),
         },
         {
           label: "出厂编号",
@@ -368,14 +367,19 @@
       });
       $("input[name='entryTime']").attr("readonly", "readonly");
       $("input[name='entryTime']").attr("placeholder", "请选择");
-      $("input[name='entryTime']").datepicker({
-        language: "zh-CN", //语言
-        autoclose: true, //选择后自动关闭
-        todayHighlight: true, //今天日期高亮
-        setDate: moment().format("YYYY年MM月DD日"),
-      }).on("changeDate", function(ev) {
-        $("input[name='entryTime']").datepicker("setStartDate",moment(ev.date).format("YYYY年MM月DD日"));
-     });
+      $("input[name='entryTime']")
+        .datepicker({
+          language: "zh-CN", //语言
+          autoclose: true, //选择后自动关闭
+          todayHighlight: true, //今天日期高亮
+          setDate: moment().format("YYYY年MM月DD日"),
+        })
+        .on("changeDate", function (ev) {
+          $("input[name='entryTime']").datepicker(
+            "setStartDate",
+            moment(ev.date).format("YYYY年MM月DD日")
+          );
+        });
 
       // $("input[name='entryTime']").val(moment().format("YYYY-MM-DD"));
       // 提交校验

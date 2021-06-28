@@ -417,18 +417,21 @@ $(".logoutBtn").on("click", function (e) {
 });
 
 //递归生成菜单
-function getMemu(data, num) {
-  num = num || 0;
-  num++;
-  var htmls =
-    (num > 1 ? "<ul class='nav nav-second-level'>" : "") +
-    '<li>\
+function getMemu(data, num, isFirst) {
+  var homeMenu = !isFirst
+    ? '<li>\
       <a href="index-y.html" class="hight">\
         <span class="nav-label">\
           <i class="pe-7s-home nav-icon"></i> 首页\
           </span>\
       </a>\
-    </li>' +
+    </li>'
+    : "";
+  num = num || 0;
+  num++;
+  var htmls =
+    (num > 1 ? "<ul class='nav nav-second-level'>" : "") +
+    homeMenu +
     menuUnit(data, num) +
     (num > 1 ? "</ul>" : "");
 
@@ -441,7 +444,7 @@ function menuUnit(data, num) {
   var queryObj = query2obj(window.location.href);
   $.each(data, function (idx, opt) {
     var isChild = opt.items && opt.items.length ? true : false;
-    var child = isChild ? getMemu(opt.items, num) : "";
+    var child = isChild ? getMemu(opt.items, num, true) : "";
     // "<a href='#' class='targetPoint' data-id=" + opt.id + "'>"
     var isActive = queryObj.classifyId == opt.id ? "active" : "";
     str +=
