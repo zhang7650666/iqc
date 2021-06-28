@@ -79,10 +79,10 @@ function formatTableHeadItem(datas, rules, messages) {
  * @param {*} isProhibitEdit 是否禁止编辑 to:用于见证记录内容不可编辑
  */
 function dataToTable(tableData, parentId, map, sourceData, isProhibitEdit) {
-  // var theadHtml = "";
+  var theadHtml = "";
   var dateInits = [];
   var headData = $.extend([], tableData.tableHead);
-  var theadHtml = formatTableHeadItem(headData, map.rules, map.messages);
+  theadHtml = formatTableHeadItem(headData, map.rules, map.messages);
   // 表体信息
   var trHtml = "";
   tableData.tableBody.forEach(function (tb) {
