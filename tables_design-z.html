@@ -155,10 +155,10 @@
                           height="150px"
                         />
                       </div>
-                      <h3
-                        class="table-title txt-center"
+                      <p
+                        class="table-desc-info txt-center"
                         style="text-align: center"
-                      ></h3>
+                      ></p>
                     </div>
                     <div flex>
                       <!-- <div flex-box="0">
@@ -653,7 +653,7 @@
           data.numbers
         );
         // title 信息
-        $("#loginForm1 .table-donwload-section .table-title").html(tableName);
+        $("#loginForm1 .table-donwload-section .table-desc-info").html(tableName);
         // 表头信息
         if (data.tableData) {
           data.tableData.forEach(function (item) {
@@ -982,9 +982,6 @@
           .find("tr, th")
           .attr("style", "height:42px");
         replaceEl(fromId, "print");
-        // $("#loginForm1").find(".table-title").hide();
-        console.log(8888, fromId)
-          
         $("#" + fromId)
           .find(".table-donwload-section")
           .jqprint({
@@ -1143,7 +1140,7 @@
           .jqprint();
         $("#" + fromId)
           .find(".qr-code")
-          .attr("style", "text-align:right");
+          .attr("style", "width: 155px;height: 155px; overflow:hidden;text-align: right");
         $("#" + fromId)
           .find(".qr-code img")
           .attr(
