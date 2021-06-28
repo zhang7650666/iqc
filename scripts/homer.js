@@ -317,6 +317,7 @@ $.ajaxSetup({
     //通过XMLHttpRequest取得响应结果
     var res = XMLHttpRequest.responseText;
     var jsonData = JSON.parse(res);
+    // logout/
     if (jsonData.code == 0) {
       window.location.href = "./login-y.html";
     }

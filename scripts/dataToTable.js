@@ -212,11 +212,14 @@ function dataToTable(tableData, parentId, map, sourceData, isProhibitEdit) {
           var required = map.rules["sid_" + item.submitId]
             ? 'required="true"'
             : "";
-            // value="' +
-            // (item.value ? ymd_format(item.value) : ymd_format(value)) +
-            // (item.value ? moment(item.value).format('YYYY年MM月DD日'):  moment(value).format('YYYY年MM月DD日')) +
-            var isDate = item.value.indexOf('年');
-            var dateVal = isDate > -1 ? item.value :  moment(item.value).format('YYYY年MM月DD日');
+          // value="' +
+          // (item.value ? ymd_format(item.value) : ymd_format(value)) +
+          // (item.value ? moment(item.value).format('YYYY年MM月DD日'):  moment(value).format('YYYY年MM月DD日')) +
+          var isDate = item.value.indexOf("年");
+          var dateVal =
+            isDate > -1
+              ? item.value
+              : moment(item.value).format("YYYY年MM月DD日");
           tdHtml =
             '<input data-date-format="yyyy年mm月dd日" iptdate="ipt-date" type="text" ' +
             required +
@@ -270,7 +273,7 @@ function dataToTable(tableData, parentId, map, sourceData, isProhibitEdit) {
             checkStr +=
               '<label class="form-check-label" style="padding-right:10px;">' +
               '<span class="hidden placeholder">□</span><input type="checkbox" value= ' +
-              checkItem.id +
+              checkVal +
               " name=sid_" +
               item.submitId +
               " subVal=" +
@@ -315,27 +318,11 @@ function dataToTable(tableData, parentId, map, sourceData, isProhibitEdit) {
             : "";
           // var testStr = "<div class='main'>第<span style='text-decoration:underline'>&nbsp;&nbsp;</span>步～<span style='text-decoration:underline'>&nbsp;&nbsp;</span>步<br/>第<span style='text-decoration:underline'>&nbsp;&nbsp;</span>点~<span style='text-decoration:underline'>&nbsp;&nbsp;</span>点<br/>共<span style='text-decoration:underline'>&nbsp;&nbsp;</span>步，<span style='text-decoration:underline'>&nbsp;&nbsp;</span>点</div>"
           var tempHtmls = item.value ? item.value : item.valueExt;
-          tdHtml += '<div class="qr-code code-pos" style="width: 155px;height: 155px; overflow:hidden;text-align: right">\
-            <img src="" alt="" class="witness-code"  width="150px" height="150px"/>\
+          tdHtml +=
+            '<div class="qr-code code-pos" style="width: 80px;height: 80px; overflow:hidden;text-align: right">\
+            <img src="" alt="" class="witness-code"  width="80px" height="80px"/>\
           </div>';
           break;
-        // case "textarea":
-        //   var place = item.valueExtPos == "bottom" ? "<br/>" : "";
-        //   var isRight = item.valueExtPos == "right";
-        //   var required = map.rules["sid_" + item.submitId]
-        //     ? 'required="true"'
-        //     : "";
-        //   tdHtml =
-        //     '<textarea type="text" ' +
-        //     required +
-        //     " name=sid_" +
-        //     item.submitId +
-        //     (isRight ? ' style="width:70%"' : "") +
-        //     ' value="' +
-        //     (item.value || "") +
-        //     '"></textarea></br></span> ' +
-        //     place +
-        //     (item.valueExt || "");
       }
       var columnCount = item.tagColumCount || item.columnCount || 1;
       var classNams = item.direction == 1 ? "txt-left" : ""; //table-center
@@ -344,7 +331,7 @@ function dataToTable(tableData, parentId, map, sourceData, isProhibitEdit) {
         var jzStr2 = item.name.split("<br/>")[1];
         var testHtml = "";
         testHtml += '<div class="jz-str1">' + jzStr1 + "</div>";
-        testHtml += '<div class="jz-str2">' + jzStr2 + "</div>";
+        testHtml += '<div class="jz-str2"><br/>' + jzStr2 + "<br/></div>";
         tdStr +=
           "<td \
           colspan='" +
@@ -429,17 +416,22 @@ function dataToTable(tableData, parentId, map, sourceData, isProhibitEdit) {
   dateInits.forEach(function (idx) {
     // setDate: moment().format("YYYY年MM月DD日")
     $("#datapicker" + idx).attr("readonly", "readonly");
-    $("#datapicker" + idx).datepicker({
-      language: "zh-CN",
-      autoclose: true, //选中之后自动隐藏日期选择框
-      // clearBtn: true, //清除按钮
-      todayBtn: true, //今日按钮
-      todayHighlight: true,
-      format: "yyyy年mm月dd日",
-      // viewDate: new Date(),
-    }).on("changeDate", function(ev) {
-      $(ev.currentTarget).datepicker("setStartDate",moment(ev.date).format("YYYY年MM月DD日"));
-  });;
+    $("#datapicker" + idx)
+      .datepicker({
+        language: "zh-CN",
+        autoclose: true, //选中之后自动隐藏日期选择框
+        // clearBtn: true, //清除按钮
+        todayBtn: true, //今日按钮
+        todayHighlight: true,
+        format: "yyyy年mm月dd日",
+        // viewDate: new Date(),
+      })
+      .on("changeDate", function (ev) {
+        $(ev.currentTarget).datepicker(
+          "setStartDate",
+          moment(ev.date).format("YYYY年MM月DD日")
+        );
+      });
   });
 }
 
