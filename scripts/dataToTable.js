@@ -214,7 +214,9 @@ function dataToTable(tableData, parentId, map, sourceData, isProhibitEdit) {
             : "";
             // value="' +
             // (item.value ? ymd_format(item.value) : ymd_format(value)) +
-            
+            // (item.value ? moment(item.value).format('YYYY年MM月DD日'):  moment(value).format('YYYY年MM月DD日')) +
+            var isDate = item.value.indexOf('年');
+            var dateVal = isDate > -1 ? item.value :  moment(item.value).format('YYYY年MM月DD日');
           tdHtml =
             '<input data-date-format="yyyy年mm月dd日" iptdate="ipt-date" type="text" ' +
             required +
@@ -223,7 +225,7 @@ function dataToTable(tableData, parentId, map, sourceData, isProhibitEdit) {
             '" name=sid_' +
             item.submitId +
             ' value="' +
-            (item.value ? moment(item.value).format('YYYY年MM月DD日'):  moment(value).format('YYYY年MM月DD日')) +
+            dateVal +
             '" ' +
             disab +
             "/>";
