@@ -581,10 +581,10 @@
               [
                 "<td> " + item.create_at + "</td> ",
                 "<td> " + item.project_id + "</td>",
-                "<td> " + item.classifyName + "</td>",
-                "<td> " + item.entrustName + "</td>",
-                "<td> " + item.witnessName + "</td>",
-                "<td> " + item.test_group + "</td>",
+                "<td> " + (item.classifyName || "-") + "</td>",
+                "<td> " + (item.entrustName || "-") + "</td>",
+                "<td> " + (item.witnessName || "-") + "</td>",
+                "<td> " + (item.test_group || "-") + "</td>",
                 "<td> " + (isWitness ? "已见证" : "非见证") + "</td>",
                 "<td>" + edit + "</td>",
                 "<td class='td-set'>" +

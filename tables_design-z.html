@@ -151,8 +151,8 @@
                           src=""
                           alt=""
                           class="contract-code"
-                          width="150px"
-                          height="150px"
+                          width="80px"
+                          height="80px"
                         />
                       </div>
                       <p
@@ -160,16 +160,7 @@
                         style="text-align: center"
                       ></p>
                     </div>
-                    <div flex>
-                      <!-- <div flex-box="0">
-                        <img
-                          src="http://meterial.cxhy.cn/static/images/a4.jpg"
-                          width="100"
-                          height="100"
-                          style="display: inline-block"
-                        />
-                      </div> -->
-                    </div>
+                    <div flex></div>
                   </div>
                   <div class="row txt-center">
                     <button
@@ -186,17 +177,6 @@
                       role="button"
                       >打印</a
                     >
-                    <!-- data-placement="top"
-                      data-toggle="popover"
-                      data-trigger="hover"
-                      data-content="打印需要手动适配打印边距; 打印 -> 更多设置 -> 边距 -> 自定义" -->
-                    <!-- <button
-                      type="button"
-                      data-id="loginForm1"
-                      class="btn w-xs btn-info print m-l-lg m-b"
-                    >
-                      打印
-                    </button> -->
                     <button
                       type="reset"
                       data-id="loginForm1"
@@ -251,9 +231,7 @@
                   id="loginForm2"
                   class="form-horizontal label-right"
                 >
-                  <div class="table-donwload-section">
-                   
-                  </div>
+                  <div class="table-donwload-section"></div>
                   <div class="row txt-center">
                     <button
                       type="button"
@@ -413,15 +391,14 @@
                   text-align:center;
               }
               .table-win tr td .jz-str1{
-                  /* border-bottom:1px solid #000; */
                   font-size: 22.5px;
                   font-family:"SimHei";
-                  /* font-weight: 500; */
+                  /* line-height: 2; */
               }
               .table-win tr td .jz-str2{
                   font-size: 16px;
                   font-family:"SimHei";
-                  /* font-weight: 500; */
+                  /* line-height: 2; */
               }
               .table-win tr td .b-border{
                   display:inline-block;
@@ -653,7 +630,9 @@
           data.numbers
         );
         // title 信息
-        $("#loginForm1 .table-donwload-section .table-desc-info").html(tableName);
+        $("#loginForm1 .table-donwload-section .table-desc-info").html(
+          tableName
+        );
         // 表头信息
         if (data.tableData) {
           data.tableData.forEach(function (item) {
@@ -812,7 +791,7 @@
             datas[$("#loginForm1 .step-wp").attr("data-sid")] = $(
               "#loginForm1 .step-wp"
             ).html(); // 替换第几部的值
-
+            // debugger;
             var params = {
               classifyId: queryObj.classifyId || 1,
               form_id: queryObj.form_id || 1,
@@ -821,7 +800,6 @@
               target_day: queryObj.target_day, // 获取当前年月日
             };
             isId && (params.record_id = queryObj.id);
-            // debugger;
             $.ajax({
               url: "http://meterial.cxhy.cn/saveFormRecord/",
               type: "POST",
@@ -980,15 +958,15 @@
           .clone(true);
         $("#" + fromId)
           .find("tr, th")
-          .attr("style", "height:42px");
+          .attr("style", "height:48px");
         replaceEl(fromId, "print");
         $("#" + fromId)
           .find(".table-donwload-section")
           .jqprint({
-              debug: false,//如果是true则可以显示iframe查看效果，默认是false
-              importCSS: true,//true表示引进原来的页面的css，默认是true。
-              printContainer: true,//表示如果原来选择的对象必须被纳入打印，默认是true。
-              operaSupport: true///表示如果插件也必须支持歌opera浏览器，默认是true。
+            debug: false, //如果是true则可以显示iframe查看效果，默认是false
+            importCSS: true, //true表示引进原来的页面的css，默认是true。
+            printContainer: true, //表示如果原来选择的对象必须被纳入打印，默认是true。
+            operaSupport: true, ///表示如果插件也必须支持歌opera浏览器，默认是true。
           });
         var stepWp = $("#loginForm1 label").hasClass("step-wp");
         if (stepWp) {
@@ -1140,7 +1118,10 @@
           .jqprint();
         $("#" + fromId)
           .find(".qr-code")
-          .attr("style", "width: 155px;height: 155px; overflow:hidden;text-align: right");
+          .attr(
+            "style",
+            "width: 155px;height: 155px; overflow:hidden;text-align: right"
+          );
         $("#" + fromId)
           .find(".qr-code img")
           .attr(
