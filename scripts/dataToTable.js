@@ -273,7 +273,7 @@ function dataToTable(tableData, parentId, map, sourceData, isProhibitEdit) {
             checkStr +=
               '<label class="form-check-label" style="padding-right:10px;">' +
               '<span class="hidden placeholder">□</span><input type="checkbox" value= ' +
-              checkVal +
+              checkItem.id +
               " name=sid_" +
               item.submitId +
               " subVal=" +
