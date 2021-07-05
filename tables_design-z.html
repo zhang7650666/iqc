@@ -137,10 +137,10 @@
                   <div class="table-donwload-section">
                     <!-- 工程编号 -->
                     <div class="row">
-                      <div
+                      <!-- <div
                         class="col-lg-12 table-order"
                         style="font-size: 12px; text-align: left"
-                      ></div>
+                      ></div> -->
                     </div>
                     <!-- title -->
                     <div
@@ -232,7 +232,7 @@
                   class="form-horizontal label-right"
                 >
                   <div class="table-donwload-section">
-                    <div class="qr-code code-pos" style="text-align: right">
+                    <!-- <div class="qr-code code-pos" style="text-align: right">
                       <img
                         src=""
                         alt=""
@@ -240,7 +240,7 @@
                         width="80px"
                         height="80px"
                       />
-                    </div>
+                    </div> -->
                   </div>
                   <div class="row txt-center">
                     <button
@@ -425,14 +425,14 @@
              .table-win tr td,
               .table-win tr th{
                 font-size: 13.2px !important;
-                height: 25px;
+                height: 30px;
                 width: 200px;
               }
               .table-win td div{
                 text-align:center !important;
               }
               .tr-line1{
-                height: 25px;
+                height: 30px;
               }
               .tr-line4{
                 height: 100px;
@@ -636,9 +636,9 @@
         document.title = tableName;
         // 设置面包线
         $("#hbreadcrumb .active").find("span").html(tableName);
-        $("#loginForm1 .table-donwload-section .table-order").html(
-          data.numbers
-        );
+        // $("#loginForm1 .table-donwload-section .table-order").html(
+        //   data.numbers
+        // );
         // title 信息
         $("#loginForm1 .table-donwload-section .table-desc-info").html(
           tableName
@@ -752,7 +752,7 @@
         var htmlStr = $("#" + parentId).clone(true);
         $("#" + parentId)
           .find("tr, th")
-          .attr("style", "height:30px");
+          .attr("style", "height:40px");
         replaceEl(parentId, "download");
         $("#" + parentId)
           .find(".table-donwload-section")

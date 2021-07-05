@@ -319,17 +319,17 @@ function dataToTable(tableData, parentId, map, sourceData, isProhibitEdit) {
             tempHtmls +
             "</label>";
           break;
-        // case "qrcode":
-        //   var required = map.rules["sid_" + item.submitId]
-        //     ? 'required="true"'
-        //     : "";
-        //   // var testStr = "<div class='main'>第<span style='text-decoration:underline'>&nbsp;&nbsp;</span>步～<span style='text-decoration:underline'>&nbsp;&nbsp;</span>步<br/>第<span style='text-decoration:underline'>&nbsp;&nbsp;</span>点~<span style='text-decoration:underline'>&nbsp;&nbsp;</span>点<br/>共<span style='text-decoration:underline'>&nbsp;&nbsp;</span>步，<span style='text-decoration:underline'>&nbsp;&nbsp;</span>点</div>"
-        //   var tempHtmls = item.value ? item.value : item.valueExt;
-        //   tdHtml +=
-        //     '<div class="qr-code code-pos" style="width: 80px;height: 80px; overflow:hidden;text-align: right">\
-        //     <img src="" alt="" class="witness-code"  width="80px" height="80px"/>\
-        //   </div>';
-        //   break;
+        case "qrcode":
+          var required = map.rules["sid_" + item.submitId]
+            ? 'required="true"'
+            : "";
+          // var testStr = "<div class='main'>第<span style='text-decoration:underline'>&nbsp;&nbsp;</span>步～<span style='text-decoration:underline'>&nbsp;&nbsp;</span>步<br/>第<span style='text-decoration:underline'>&nbsp;&nbsp;</span>点~<span style='text-decoration:underline'>&nbsp;&nbsp;</span>点<br/>共<span style='text-decoration:underline'>&nbsp;&nbsp;</span>步，<span style='text-decoration:underline'>&nbsp;&nbsp;</span>点</div>"
+          var tempHtmls = item.value ? item.value : item.valueExt;
+          tdHtml +=
+            '<div class="qr-code code-pos" style="width: 85px;height: 85px; overflow:hidden;text-align: right">\
+            <img src="" alt="" class="witness-code"  width="80px" height="80px"/>\
+          </div>';
+          break;
       }
       var columnCount = item.tagColumCount || item.columnCount || 1;
       var classNams = item.direction == 1 ? "txt-left" : ""; //table-center

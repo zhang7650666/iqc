@@ -4235,3 +4235,10 @@ td {
   background-color: rgba(0, 0, 0, 0.3);
   z-index: 1;
 }
+
+.cancel-mb{
+  margin-bottom: 0px;
+}
+#myModal7 .modal-dialog{
+  width: 900px !important;
+}

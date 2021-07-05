@@ -613,19 +613,7 @@ function getUnitDetail() {
   }
 }
 
-// 点击导航修改工程编号摸态框信息
-var workInfo = $("#model-word-info label");
-for (var i = 0; i < workInfo.length; i++) {
-  var labelFor = $(workInfo[i]).attr("for");
-  if (labelFor == "project_cid") {
-    $("#projectCid").html(userInfo[labelFor]);
-  } else {
-    $('input[name="' + labelFor + '"]').val(userInfo.projectInfo[labelFor]);
-    if (labelFor == "project_name") {
-      $("input[name='project_name']").val(userInfo.projectInfo.name);
-    }
-  }
-}
+
 
 function ymd_format(dataStr) {
   var args = dataStr ? dataStr : ymd();
@@ -653,4 +641,191 @@ function addZero(val) {
     return val;
   }
   return parseInt(val) > 9 ? val : "0" + val;
+}
+
+
+
+
+
+// 点击导航修改工程编号摸态框信息
+var editWrokInfo = [
+  {
+    label: '工程编号:',
+    for: 'project_cid',
+    value: userInfo.project_cid || '',
+  },
+  {
+    label: '施工单位:',
+    for: 'construction_group',
+    value: userInfo.projectInfo.construction_group || '',
+  },
+  {
+    label: '委托单位:',
+    for: 'entrust_group',
+    value: userInfo.projectInfo.entrust_group || '',
+  },
+  {
+    label: '见证单位:',
+    for: 'witness_group',
+    value: userInfo.projectInfo.witness_group || '',
+  },
+  {
+    label: '工程名称:',
+    for: 'project_name',
+    value: userInfo.projectInfo.name || '',
+  },
+  {
+    label: '检测单位:',
+    for: 'test_group',
+    value: userInfo.projectInfo.test_group || '',
+  },
+]
+
+var prejectEditForm ='<div class="modal-dialog">\
+    <div class="modal-content">\
+      <div class="color-line"></div>\
+      <div class="modal-header" style="padding: 15px">\
+        <h4 class="modal-title">我的工程信息</h4>\
+      </div>\
+      <div class="modal-body">\
+        <div class="hpanel">\
+          <div class="panel-body">\
+            <form action="#" id="p-e-form" class="form-horizontal label-right">\
+              <div class="p-e-r-item"></div>\
+              <div>\
+                <div class="form-group" >\
+                <button class="btn btn-primary pull-right add-item" type="button" style="margin-right: 15px">新增</button>\
+                </div>\
+                <div class="panel-body">\
+                  <div class="table-responsive">\
+                    <table cellpadding="1" cellspacing="1" class="table table-condensed table-striped table-modal">\
+                      <thead>\
+                        <tr>\
+                            <th style="width: 38%">委托检测单位</th>\
+                            <th style="width: 18%">联系电话</th>\
+                            <th style="width: 26%">地址邮箱</th>\
+                            <th style="text-align:center">操作</th>\
+                        </tr>\
+                      </thead>\
+                      <tbody class="tbody-modal">\
+                      </tbody>\
+                    </table>\
+                  </div>\
+                </div>\
+              </div>\
+            </form>\
+          </div>\
+        </div>\
+      </div>\
+      <div class="modal-footer">\
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>\
+        <button type="button" class="btn btn-primary modal-save">保存</button>\
+      </div>\
+    </div>\
+  </div>'
+
+$('#myModal7').html(prejectEditForm);
+var projectEditItemStr = '';
+editWrokInfo.forEach(function(item) {
+  projectEditItemStr += '<div class="form-group cancel-mb">\
+  <label class="col-xs-3 control-label" for="'+item.for+'">'+item.label+'</label>\
+  <div class="col-xs-8 form-control-static p-e-main">'+item.value+'</div>\
+</div>'
+});
+$('.p-e-r-item').html(projectEditItemStr);
+
+var thbodyList = [
+  {
+    name: '上海（美系）光电有限公司',
+    phone: '18637407584',
+    address: '1111111111@qq.com'
+  },
+  {
+    name: '上海（美系）光电有限公司1',
+    phone: '18637407584',
+    address: '1111111111@qq.com'
+  },
+  {
+    name: '上海（美系）光电有限公司2',
+    phone: '18637407584',
+    address: '1111111111@qq.com'
+  },
+]
+function renderTbodyFn() {
+  var tbodyStr = '';
+  thbodyList.forEach(function(item, index) {
+    tbodyStr += '<tr>\
+      <td>\
+        <input type="text" value="'+item.name+'" class="form-control"/>\
+        <div class="error-block-test_group text-danger"></div>\
+      </td>\
+      <td>\
+        <input type="text" value="'+item.phone+'" class="form-control"/>\
+        <div class="error-block-test_group text-danger"></div>\
+      </td>\
+      <td>\
+        <input type="text" value="'+item.address+'" class="form-control"/>\
+        <div class="error-block-test_group text-danger"></div>\
+      </td>\
+      <td style="text-align:center">\
+      <button class="btn btn-danger modal-del" type="button" data-idx="'+index+'"><i class="fa fa-trash-o"></i> <span class="bold"></span></button>\
+      </td>\
+    </tr>'
+  })
+
+  // <button class="btn btn-info " type="button"><i class="fa fa-paste" data-id="'+item.id+'"></i></button>&nbsp;&nbsp;\
+
+  $('.tbody-modal').html(tbodyStr)
+}
+renderTbodyFn()
+
+// 新增检测单位
+$('#p-e-form .add-item').click(function() {
+  if(thbodyList.length < 5) {
+    thbodyList.unshift({
+      company: '',
+      tel: '',
+      email: ''
+    })
+    renderTbodyFn()
+  }
+})
+// 删除
+$('#p-e-form').on('click', '.modal-del', function() {
+  if(thbodyList.length == 1) {
+    renderTbodyFn()
+  } else {
+    var idx = $(this).attr('data-idx');
+    thbodyList.splice(parseInt(idx), 1);
+    renderTbodyFn()
+  }
+});
+
+// 点击保存
+$('.modal-save').click(function() {
+  var modalParams = {
+    project_cid: userInfo.project_cid,
+    construction_group: userInfo.projectInfo.construction_group,
+    entrust_group: userInfo.projectInfo.entrust_group,
+    witness_group: userInfo.projectInfo.witness_group,
+    name: userInfo.projectInfo.name,
+    test_group: JSON.stringify(thbodyList),
+  }
+  projectSaveFn(modalParams)
+  $('#myModal7').modal('hide')
+})
+
+// 点击保存编辑工程编号信息
+function projectSaveFn(params) {
+  $.ajax({
+    url: "http://meterial.cxhy.cn/projectSave/",
+    type: "POST",
+    dataType: "json",
+    contentType: "application/json",
+    data:JSON.stringify(params),
+    success: function (res) {
+      toastr && toastr.success("数据更新成功");
+    },
+    error: function (error) {},
+  });
 }
