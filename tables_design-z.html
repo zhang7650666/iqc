@@ -146,7 +146,7 @@
                     <div
                       style="overflow: hidden; width: 100%; text-align: justify"
                     >
-                      <div class="qr-code code-pos" style="text-align: right">
+                      <div class="qr-code code-pos hidden" style="text-align: right">
                         <img
                           src=""
                           alt=""
@@ -214,8 +214,8 @@
                     </button>
                     <button
                       type="button"
-                      data-id="loginForm2"
-                      class="btn w-xs btn-default print-code m-l-lg m-b"
+                      data-id="loginForm1"
+                      class="btn w-xs btn-default print-code m-l-lg m-b hidden"
                     >
                       打印二维码
                     </button>
@@ -728,17 +728,21 @@
                       false,
                       isWitness
                     );
-                    // 二维码
-                    data.qrCode &&
-                      data.qrCode.contract &&
-                      $(".contract-code").attr("src", data.qrCode.contract);
-                    data.qrCode &&
-                      data.qrCode.witness &&
-                      $(".witness-code").attr("src", data.qrCode.witness);
+                    
                   }
                 });
               }
-
+              // 二维码
+              if(data.qrCode) {
+                  if(data.qrCode.contract) {
+                    $(".contract-code").parent().removeClass('hidden');
+                    $(".contract-code").attr("src", data.qrCode.contract);
+                    $('#loginForm1 .print-code').removeClass('hidden');
+                  }
+                  if(data.qrCode.witness) {
+                    $(".witness-code").attr("src", data.qrCode.witness);
+                  }
+                }
               //最后的错误信息
               res.msg && res.msg != "ok" && toastr && toastr.warning(res.msg);
             }
@@ -954,6 +958,17 @@
                   dataToTable(item, "#loginForm2", loginForm2Map, data, true);
                 }
               });
+              // 二维码
+              if(data.qrCode) {
+                  if(data.qrCode.contract) {
+                    $(".contract-code").parent().removeClass('hidden');
+                    $(".contract-code").attr("src", data.qrCode.contract);
+                    $('#loginForm1 .print-code').removeClass('hidden');
+                  }
+                  if(data.qrCode.witness) {
+                    $(".witness-code").attr("src", data.qrCode.witness);
+                  }
+                }
             }
           },
           error: function (error) {},

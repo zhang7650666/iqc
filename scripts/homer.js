@@ -677,7 +677,7 @@ var editWrokInfo = [
   {
     label: '检测单位:',
     for: 'test_group',
-    value: JSON.parse(userInfo.projectInfo.test_group)[0].name || '',
+    value: userInfo.projectInfo.test_group && JSON.parse(userInfo.projectInfo.test_group)[0].name || '',
   },
 ]
 
@@ -701,10 +701,10 @@ var prejectEditForm ='<div class="modal-dialog">\
                     <table cellpadding="1" cellspacing="1" class="table table-condensed table-striped table-modal">\
                       <thead>\
                         <tr>\
+                            <th >默认</th>\
                             <th style="width: 38%">委托检测单位</th>\
                             <th style="width: 18%">联系电话</th>\
                             <th style="width: 26%">地址邮箱</th>\
-                            <th style="text-align:center">操作</th>\
                         </tr>\
                       </thead>\
                       <tbody class="tbody-modal">\
@@ -741,6 +741,9 @@ function renderTbodyFn() {
   thbodyList.forEach(function(item, index) {
     tbodyStr += '<tr>\
       <td>\
+        <input type="radio" name="testGroup" value="'+index+'" style="margin-left: 10px;margin-top: 11px;"/>\
+      </td>\
+      <td>\
         <input type="text" value="'+item.name+'" class="form-control"/>\
         <div class="error-block-test_group text-danger"></div>\
       </td>\
@@ -752,13 +755,12 @@ function renderTbodyFn() {
         <input type="text" value="'+item.address+'" class="form-control"/>\
         <div class="error-block-test_group text-danger"></div>\
       </td>\
-      <td style="text-align:center">\
-      <button class="btn btn-danger modal-del" type="button" data-idx="'+index+'"><i class="fa fa-trash-o"></i> <span class="bold"></span></button>\
-      </td>\
     </tr>'
   })
-
-  // <button class="btn btn-info " type="button"><i class="fa fa-paste" data-id="'+item.id+'"></i></button>&nbsp;&nbsp;\
+ 
+  // <td style="text-align:center">\
+  //     <button class="btn btn-danger modal-del" type="button" data-idx="'+index+'"><i class="fa fa-trash-o"></i> <span class="bold"></span></button>\
+  //     </td>\
 
   $('.tbody-modal').html(tbodyStr)
 }
@@ -768,9 +770,9 @@ renderTbodyFn()
 $('#p-e-form .add-item').click(function() {
   if(thbodyList.length < 5) {
     thbodyList.unshift({
-      company: '',
-      tel: '',
-      email: ''
+      name: '',
+      phone: '',
+      address: ''
     })
     renderTbodyFn()
   }
@@ -788,6 +790,8 @@ $('#p-e-form').on('click', '.modal-del', function() {
 
 // 点击保存
 $('.modal-save').click(function() {
+  var radioChecked = $("input[name='testGroup']:checked").val();
+  console.log('radioChecked', radioChecked)
   var modalParams = {
     project_cid: userInfo.project_cid,
     construction_group: userInfo.projectInfo.construction_group,
