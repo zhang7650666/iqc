@@ -79,6 +79,8 @@ function formatTableHeadItem(datas, rules, messages) {
  * @param {*} isProhibitEdit 是否禁止编辑 to:用于见证记录内容不可编辑
  */
 function dataToTable(tableData, parentId, map, sourceData, isProhibitEdit) {
+  var queryObj = query2obj(window.location.href);
+  var isView = queryObj.type === "view"; // 查看状态
   var theadHtml = "";
   var dateInits = [];
   var headData = $.extend([], tableData.tableHead);
@@ -411,7 +413,8 @@ function dataToTable(tableData, parentId, map, sourceData, isProhibitEdit) {
 
   temp = temp.replace("__TABLE_HEADER__", theadHtml);
   temp = temp.replace("__TABLE_BODY", trHtml);
-  temp = temp.replace("__TABLE_DESC", tableData.desc || "");
+  // temp = temp.replace("__TABLE_DESC", tableData.desc || "");
+  temp = temp.replace("__TABLE_DESC", "");
   $(parentId).find(".table-donwload-section").append(temp);
   if (headData.length == 0) {
     $(parentId).find(".table-header").remove();

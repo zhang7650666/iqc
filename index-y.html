@@ -377,7 +377,8 @@
       getUnitDetail();
       // var userInfo = getUserInfo();
       // 设置默认时间
-      var sevenAgo = moment().subtract(7, "days").format("YYYY-MM");
+      var sevenAgo = moment().format("YYYY-MM");
+      console.log(999999,sevenAgo)
 
       //初始化日期
       $("#WHC_PayDate").datepicker({
