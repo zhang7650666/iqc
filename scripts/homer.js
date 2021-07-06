@@ -319,7 +319,7 @@ $.ajaxSetup({
     var jsonData = JSON.parse(res);
     // logout/
     if (jsonData.code == 0) {
-      window.location.href = "./login-y.html";
+      // window.location.href = "./login-y.html";
     }
     if (errorCodeMap[jsonData.code]) {
       toastr && toastr.warning(errorCodeMap[jsonData.code]);
@@ -677,7 +677,7 @@ var editWrokInfo = [
   {
     label: '检测单位:',
     for: 'test_group',
-    value: userInfo.projectInfo.test_group || '',
+    value: JSON.parse(userInfo.projectInfo.test_group)[0].name || '',
   },
 ]
 
@@ -734,23 +734,8 @@ editWrokInfo.forEach(function(item) {
 });
 $('.p-e-r-item').html(projectEditItemStr);
 
-var thbodyList = [
-  {
-    name: '上海（美系）光电有限公司',
-    phone: '18637407584',
-    address: '1111111111@qq.com'
-  },
-  {
-    name: '上海（美系）光电有限公司1',
-    phone: '18637407584',
-    address: '1111111111@qq.com'
-  },
-  {
-    name: '上海（美系）光电有限公司2',
-    phone: '18637407584',
-    address: '1111111111@qq.com'
-  },
-]
+
+var thbodyList = JSON.parse(userInfo.projectInfo.test_group)
 function renderTbodyFn() {
   var tbodyStr = '';
   thbodyList.forEach(function(item, index) {
@@ -808,7 +793,7 @@ $('.modal-save').click(function() {
     construction_group: userInfo.projectInfo.construction_group,
     entrust_group: userInfo.projectInfo.entrust_group,
     witness_group: userInfo.projectInfo.witness_group,
-    name: userInfo.projectInfo.name,
+    project_name: userInfo.projectInfo.name,
     test_group: JSON.stringify(thbodyList),
   }
   projectSaveFn(modalParams)
@@ -824,6 +809,25 @@ function projectSaveFn(params) {
     contentType: "application/json",
     data:JSON.stringify(params),
     success: function (res) {
+      localStorage.setItem(
+        "iqc_user_info",
+        JSON.stringify({
+          token: userInfo.token,
+          project_cid: userInfo.project_cid || "",
+          type: userInfo.type,
+          id: userInfo.id || "",
+          projectInfo: {
+            cid: userInfo.project_cid || "",
+            id: userInfo.id || "",
+            construction_group: params.construction_group || '',
+            entrust_group: params.entrust_group || '',
+            witness_group: params.witness_group || '',
+            name:params.project_name || '',
+            test_group: params.test_group || [],
+          },
+        })
+      );
+      // modalParams
       toastr && toastr.success("数据更新成功");
     },
     error: function (error) {},
