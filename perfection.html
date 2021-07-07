@@ -209,9 +209,8 @@
               formData[this.name] = this.value;
             }
           });
-          console.log('formData', formData)
+          console.log("formData", formData);
 
-         
           formData.group_cid = userInfo.project_cid || "";
           // 保存工程单位信息
           if (submitFlag) {
@@ -224,7 +223,7 @@
               data: JSON.stringify(formData),
               success: function (res) {
                 submitFlag = true;
-                console.log('userinfo', userInfo)
+                console.log("userinfo", userInfo);
 
                 iqc_user_info_obj = Object.assign(userInfo, {
                   projectInfo: {
@@ -234,14 +233,14 @@
                     name: formData.project_name,
                     witness_group: formData.witness_group,
                     test_group: formData.test_group,
-                  }
-                } )
+                  },
+                });
                 localStorage.setItem(
                   "iqc_user_info",
                   JSON.stringify(iqc_user_info_obj)
                 );
                 if (res.code == 200) {
-                  window.location.href = "./index-y.html";
+                  window.location.href = "./index.html";
                 }
               },
               error: function (error) {

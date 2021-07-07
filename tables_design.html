@@ -91,9 +91,9 @@
         <!-- 面包线 -->
         <div id="hbreadcrumb" class="m-b-n-i">
           <ol class="hbreadcrumb breadcrumb">
-            <li><a href="index-y.html">首页</a></li>
+            <li><a href="index.html">首页</a></li>
             <li>
-              <a href="create_form-z.html">新建表单</a>
+              <a href="create_form.html">新建表单</a>
             </li>
             <li class="active">
               <span>新建表单</span>
@@ -146,7 +146,10 @@
                     <div
                       style="overflow: hidden; width: 100%; text-align: justify"
                     >
-                      <div class="qr-code code-pos hidden" style="text-align: right">
+                      <div
+                        class="qr-code code-pos hidden"
+                        style="text-align: right"
+                      >
                         <img
                           src=""
                           alt=""
@@ -693,9 +696,8 @@
             id: queryObj.id,
             target_day: queryObj.target_day,
             qr_code_obj: {
-              contract:
-                "./qr-code-z.html?" + obj2query(queryObj) + "&witness=0",
-              witness: "./qr-code-z.html?" + obj2query(queryObj) + "&witness=1",
+              contract: "./qr-code.html?" + obj2query(queryObj) + "&witness=0",
+              witness: "./qr-code.html?" + obj2query(queryObj) + "&witness=1",
             },
           },
           success: function (res) {
@@ -728,21 +730,20 @@
                       false,
                       isWitness
                     );
-                    
                   }
                 });
               }
               // 二维码
-              if(data.qrCode) {
-                  if(data.qrCode.contract) {
-                    $(".contract-code").parent().removeClass('hidden');
-                    $(".contract-code").attr("src", data.qrCode.contract);
-                    $('#loginForm1 .print-code').removeClass('hidden');
-                  }
-                  if(data.qrCode.witness) {
-                    $(".witness-code").attr("src", data.qrCode.witness);
-                  }
+              if (data.qrCode) {
+                if (data.qrCode.contract) {
+                  $(".contract-code").parent().removeClass("hidden");
+                  $(".contract-code").attr("src", data.qrCode.contract);
+                  $("#loginForm1 .print-code").removeClass("hidden");
                 }
+                if (data.qrCode.witness) {
+                  $(".witness-code").attr("src", data.qrCode.witness);
+                }
+              }
               //最后的错误信息
               res.msg && res.msg != "ok" && toastr && toastr.warning(res.msg);
             }
@@ -959,16 +960,16 @@
                 }
               });
               // 二维码
-              if(data.qrCode) {
-                  if(data.qrCode.contract) {
-                    $(".contract-code").parent().removeClass('hidden');
-                    $(".contract-code").attr("src", data.qrCode.contract);
-                    $('#loginForm1 .print-code').removeClass('hidden');
-                  }
-                  if(data.qrCode.witness) {
-                    $(".witness-code").attr("src", data.qrCode.witness);
-                  }
+              if (data.qrCode) {
+                if (data.qrCode.contract) {
+                  $(".contract-code").parent().removeClass("hidden");
+                  $(".contract-code").attr("src", data.qrCode.contract);
+                  $("#loginForm1 .print-code").removeClass("hidden");
                 }
+                if (data.qrCode.witness) {
+                  $(".witness-code").attr("src", data.qrCode.witness);
+                }
+              }
             }
           },
           error: function (error) {},

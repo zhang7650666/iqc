@@ -123,7 +123,7 @@
       aria-hidden="true"
     >
       <div class="modal-dialog modal-lg">
-        <div class="modal-content" >
+        <div class="modal-content">
           <div class="color-line"></div>
           <div class="modal-header" style="padding: 15px">
             <h4 class="modal-title">我的工程信息</h4>
@@ -135,8 +135,7 @@
                   action="#"
                   id="p-e-form"
                   class="form-horizontal label-right"
-                >
-                </form>
+                ></form>
               </div>
             </div>
           </div>
@@ -154,14 +153,14 @@
       <div id="navigation">
         <ul class="nav" id="side-menu">
           <li class="active">
-            <a href="index-y.html" class="hight">
+            <a href="index.html" class="hight">
               <span class="nav-label">
                 <i class="pe-7s-home nav-icon"></i> 首页</span
               >
             </a>
           </li>
           <li>
-            <a href="create_form-z.html">
+            <a href="create_form.html">
               <span class="nav-label"
                 ><i class="pe-7s-news-paper nav-icon"></i> 新建表单</span
               >
@@ -378,7 +377,7 @@
       // var userInfo = getUserInfo();
       // 设置默认时间
       var sevenAgo = moment().format("YYYY-MM");
-      console.log(999999,sevenAgo)
+      console.log(999999, sevenAgo);
 
       //初始化日期
       $("#WHC_PayDate").datepicker({
@@ -393,7 +392,7 @@
       $("#WHC_PayDate").val(sevenAgo);
 
       $("#createContract").click(function () {
-        window.location.href = "./create_form-z.html";
+        window.location.href = "./create_form.html";
       });
       //生成分页元素
       function getPaginatLi(pagesCount) {
@@ -473,7 +472,7 @@
           var target_day = item.create_at.split(" ")[0];
           var isWitness = item.status == 1;
           var witnessDetail =
-            " <a style='color:#3498db' href='tables_design-z.html?id=" +
+            " <a style='color:#3498db' href='tables_design.html?id=" +
             item.id +
             "&target_day=" +
             target_day +
@@ -481,7 +480,7 @@
             "见证详情</a>";
 
           var edit =
-            " <a style='color:#3498db' href='tables_design-z.html?id=" +
+            " <a style='color:#3498db' href='tables_design.html?id=" +
             item.id +
             "&target_day=" +
             target_day +

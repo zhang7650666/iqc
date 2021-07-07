@@ -136,11 +136,7 @@
                 </div>
 
                 <div class="text-center">
-                  <a
-                    type="button"
-                    class="btn btn-default"
-                    href="./login-y.html"
-                  >
+                  <a type="button" class="btn btn-default" href="./login.html">
                     去登陆
                   </a>
                   <button class="btn btn-success">新建</button>
@@ -314,7 +310,7 @@
               success: function (res) {
                 submitFlag = true;
                 if (res.code == 200) {
-                  // window.location.href = "./login-y.html";
+                  // window.location.href = "./login.html";
                   //直接登陆
                   $.ajax({
                     url: "http://meterial.cxhy.cn/login/",
@@ -337,8 +333,8 @@
                         );
                         window.location.href =
                           res.data.project_checked == 1
-                            ? "./index-y.html"
-                            : "./perfection-y.html";
+                            ? "./index.html"
+                            : "./perfection.html";
                       }
                       // token;
                     },
