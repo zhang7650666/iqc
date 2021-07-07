@@ -95,7 +95,7 @@
         <!-- 面包线 -->
         <div id="hbreadcrumb">
           <ol class="hbreadcrumb breadcrumb">
-            <li><a href="index-y.html">首页</a></li>
+            <li><a href="index.html">首页</a></li>
             <li class="active">
               <span>新建表单</span>
             </li>
@@ -399,8 +399,7 @@
           queryObj.target_day = ymd();
           queryObj.type = "create";
 
-          window.location.href =
-            "./tables_design-z.html?" + obj2query(queryObj);
+          window.location.href = "./tables_design.html?" + obj2query(queryObj);
         },
         errorPlacement: function (error, element) {
           var name = $(element).attr("name");
@@ -415,7 +414,7 @@
       });
       // 返回首页
       $(".query-other-form").click(function () {
-        window.location.href = "./index-y.html";
+        window.location.href = "./index.html";
       });
 
       // $('.reset-form').click(function() {
