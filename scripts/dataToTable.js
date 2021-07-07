@@ -214,21 +214,21 @@ function dataToTable(tableData, parentId, map, sourceData, isProhibitEdit) {
           var required = map.rules["sid_" + item.submitId]
             ? 'required="true"'
             : "";
-            // value="' +
-            // (item.value ? ymd_format(item.value) : ymd_format(value)) +
-            // (item.value ? moment(item.value).format('YYYY年MM月DD日'):  moment(value).format('YYYY年MM月DD日')) +
-            var dateVal = '';
-            if(item.value.indexOf('年') > -1) {
-              dateVal = item.value;
-            } else if(item.value == 'Invalid date') {
-              dateVal =  moment(ymd()).format('YYYY年MM月DD日');
+          // value="' +
+          // (item.value ? ymd_format(item.value) : ymd_format(value)) +
+          // (item.value ? moment(item.value).format('YYYY年MM月DD日'):  moment(value).format('YYYY年MM月DD日')) +
+          var dateVal = "";
+          if (item.value.indexOf("年") > -1) {
+            dateVal = item.value;
+          } else if (item.value == "Invalid date") {
+            dateVal = moment(ymd()).format("YYYY年MM月DD日");
+          } else {
+            if (item.value && item.value.indexOf("-") > -1) {
+              dateVal = moment(item.value).format("YYYY年MM月DD日");
             } else {
-              if(item.value && (item.value.indexOf('-') > -1)) {
-                dateVal =  moment(item.value).format('YYYY年MM月DD日');
-              } else {
-                dateVal =  moment(ymd()).format('YYYY年MM月DD日');
-              }
+              dateVal = moment(ymd()).format("YYYY年MM月DD日");
             }
+          }
           tdHtml =
             '<input data-date-format="yyyy年mm月dd日" iptdate="ipt-date" type="text" ' +
             required +

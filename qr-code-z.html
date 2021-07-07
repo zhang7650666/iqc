@@ -44,7 +44,7 @@
     <link rel="stylesheet" href="styles/style.css" />
     <link rel="stylesheet" href="styles/flex.css" />
     <style>
-      .fixed-navbar #wrapper{
+      .fixed-navbar #wrapper {
         top: 0px;
       }
     </style>
@@ -59,7 +59,6 @@
       </p>
     <![endif]-->
 
-   
     <!-- Main Wrapper -->
     <div id="wrapper" class="m-n">
       <div class="content animate-panel content-width">
@@ -350,90 +349,99 @@
     <script>
       var userInfo = getUserInfo() || {};
       var queryObj = query2obj(window.location.href);
-     
+      var isView = queryObj.type === "view"; // 查看状态
+
       var contractTable = $("#contractTable");
       var witnessTable = $("#witnessTable");
-      $("#contractTable").hide()
+      $("#contractTable").hide();
       $("#witnessTable").hide();
-     
+
       var nullTable = JSON.stringify({
         tableHead: [],
         tableBody: [],
         desc: null,
       }); // 空表对比模板
-       //   生成表格校验信息
-       var loginForm1Map = {
+      //   生成表格校验信息
+      var loginForm1Map = {
         rules: {},
         messages: {},
       };
       var tableName = "";
       var tableNum = "";
-     
-      console.log(88888, queryObj.witness)
-        $.ajax({
-          url: "http://meterial.cxhy.cn/showFormRecord/",
-          type: "GET",
-          data: {
-            id: queryObj.id,
-            target_day: queryObj.target_day,
-            witness: queryObj.witness
-          },
-          success: function (res) {
-            if (res.code == 200) {
-              var data = res.data;
-              // 工程编号
-              tableNum = data.numbers;
-              tableName = data.title;
-              document.title = tableName;
-              $("#hbreadcrumb .active span").html(tableName);
-              // $("#loginForm1 .table-donwload-section .table-order").html(
-              //   data.numbers
-              // );
-              // title 信息
-              $("#loginForm1 .table-donwload-section .table-title").html(
-                data.title
-              );
 
-              // 表头信息
-              if (queryObj.witness == '0' && data.tableData) {
-                $("#contractTable").show()
-                data.tableData.forEach(function (item) {
-                  // 如果是空表不在渲染
-                  if (nullTable != JSON.stringify(item)) {
-                    dataToTable(
-                      item,
-                      "#loginForm1",
-                      loginForm1Map,
-                      data,
-                      false,
-                      true
-                    );
-                  }
-                });
-                // saveFn(true);
-              }
-              if (queryObj.witness == '1' && data.tableData) {
-                $("#witnessTable").show();
-                data.tableData.forEach(function (item) {
-                  if (nullTable != JSON.stringify(item)) {
-                    dataToTable(
-                      item,
-                      "#loginForm2",
-                      loginForm1Map,
-                      data,
-                      false,
-                      true
-                    );
-                  }
-                  // saveFn();
-                });
-              }
+      console.log(88888, queryObj.witness);
+      $.ajax({
+        url: "http://meterial.cxhy.cn/showFormRecord/",
+        type: "GET",
+        data: {
+          id: queryObj.id,
+          target_day: queryObj.target_day,
+          witness: queryObj.witness,
+        },
+        success: function (res) {
+          if (res.code == 200) {
+            var data = res.data;
+            // 工程编号
+            tableNum = data.numbers;
+            tableName = data.title;
+            document.title = tableName;
+            $("#hbreadcrumb .active span").html(tableName);
+            $("#loginForm1 .table-donwload-section .table-order").html(
+              data.numbers
+            );
+            // title 信息
+            $("#loginForm1 .table-donwload-section .table-title").html(
+              data.title
+            );
 
-              //最后的错误信息
-              res.msg && res.msg != "ok" && toastr && toastr.warning(res.msg);
+            // 表头信息
+            if (queryObj.witness == "0" && data.tableData) {
+              $("#contractTable").show();
+              data.tableData.forEach(function (item) {
+                // 如果是空表不在渲染
+                if (nullTable != JSON.stringify(item)) {
+                  dataToTable(
+                    item,
+                    "#loginForm1",
+                    loginForm1Map,
+                    data,
+                    false,
+                    true
+                  );
+                  // 二维码
+                  data.qrCode &&
+                    data.qrCode.contract &&
+                    $(".contract-code").attr("src", data.qrCode.contract);
+                }
+              });
+              // saveFn(true);
             }
-          },
-        });
+            if (queryObj.witness == "1" && data.tableData) {
+              $("#witnessTable").show();
+              data.tableData.forEach(function (item) {
+                if (nullTable != JSON.stringify(item)) {
+                  dataToTable(
+                    item,
+                    "#loginForm2",
+                    loginForm1Map,
+                    data,
+                    false,
+                    true
+                  );
+                  // 二维码
+                  data.qrCode &&
+                    data.qrCode.witness &&
+                    $(".witness-code").attr("src", data.qrCode.witness);
+                }
+                // saveFn();
+              });
+            }
+
+            //最后的错误信息
+            res.msg && res.msg != "ok" && toastr && toastr.warning(res.msg);
+          }
+        },
+      });
     </script>
   </body>
 </html>
