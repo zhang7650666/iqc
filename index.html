@@ -101,7 +101,7 @@
         <!-- 常屏 顶部导航 -->
         <div class="navbar-right">
           <ul class="nav navbar-nav no-borders">
-            <li class="word-no-wp" data-toggle="modal" data-target="#myModal7">
+            <li class="word-no-wp modal-wp" data-toggle="modal" data-target="#myModal7">
               <span>工程编号：</span>
               <span class="word-no"></span>
             </li>
@@ -122,31 +122,6 @@
       role="dialog"
       aria-hidden="true"
     >
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="color-line"></div>
-          <div class="modal-header" style="padding: 15px">
-            <h4 class="modal-title">我的工程信息</h4>
-          </div>
-          <div class="modal-body">
-            <div class="hpanel">
-              <div class="panel-body">
-                <form
-                  action="#"
-                  id="p-e-form"
-                  class="form-horizontal label-right"
-                ></form>
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">
-              关闭
-            </button>
-            <button type="button" class="btn btn-primary">保存</button>
-          </div>
-        </div>
-      </div>
     </div>
     <!-- Navigation -->
     <aside id="menu" class="home-menu">
@@ -429,28 +404,31 @@
         $("#paginationBox .page").click(function () {
           $(this).siblings().removeClass("active");
           $(this).addClass("active");
-          var pageIndex = parseInt($("#paginationBox .page.active a").html());
+
+          pageIndex = parseInt($("#paginationBox .page.active a").html());
+          console.log(66661, pageIndex)
           getList();
         });
         // 下一页
         $(".page-next").click(function () {
-          var pageIndex = parseInt($("#paginationBox .page.active a").html());
+         
           if (pagesCount >= pageIndex + 1) {
             $("#paginationBox .page.active").next().addClass("active");
             $("#paginationBox .page")
               .eq(pageIndex - 1)
               .removeClass("active");
+              pageIndex = parseInt($("#paginationBox .page.active a").html());
             getList();
           }
         });
         // 上一页
         $(".page-pre").click(function () {
-          var pageIndex = parseInt($("#paginationBox .page.active a").html());
           if (pageIndex - 1 > 0) {
             $("#paginationBox .page.active").prev().addClass("active");
             $("#paginationBox .page")
               .eq(pageIndex - 1)
               .removeClass("active");
+            pageIndex = parseInt($("#paginationBox .page.active a").html());
             getList();
           }
         });
@@ -521,8 +499,8 @@
             page: pageIndex,
           },
           function (res) {
-            var data = res.data;
-            var total = data.length || 0;
+            var data = res.data.list;
+            var total = res.data.total || 0;
             $(".total span").html(total);
             var pagesCount = parseInt(total) / 20;
 

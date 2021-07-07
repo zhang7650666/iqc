@@ -319,7 +319,7 @@ $.ajaxSetup({
     var jsonData = JSON.parse(res);
     // logout/
     if (jsonData.code == 0) {
-      // window.location.href = "./login-y.html";
+      window.location.href = "./login.html";
     }
     if (errorCodeMap[jsonData.code]) {
       toastr && toastr.warning(errorCodeMap[jsonData.code]);
@@ -406,7 +406,7 @@ $(".logoutBtn").on("click", function (e) {
                 toastr && toastr.success("已退出登陆！");
                 localStorage.setItem("iqc_user_info", "");
                 setTimeout(function () {
-                  window.location.href = "./login-y.html";
+                  window.location.href = "./login.html";
                 }, 1000);
               }
             },
@@ -640,45 +640,66 @@ function addZero(val) {
   }
   return parseInt(val) > 9 ? val : "0" + val;
 }
-
 // 点击导航修改工程编号摸态框信息
-var editWrokInfo = [
-  {
-    label: "工程编号:",
-    for: "project_cid",
-    value: userInfo.project_cid || "",
-  },
-  {
-    label: "施工单位:",
-    for: "construction_group",
-    value: userInfo.projectInfo.construction_group || "",
-  },
-  {
-    label: "委托单位:",
-    for: "entrust_group",
-    value: userInfo.projectInfo.entrust_group || "",
-  },
-  {
-    label: "见证单位:",
-    for: "witness_group",
-    value: userInfo.projectInfo.witness_group || "",
-  },
-  {
-    label: "工程名称:",
-    for: "project_name",
-    value: userInfo.projectInfo.name || "",
-  },
-  {
-    label: "检测单位:",
-    for: "test_group",
-    value:
-      (userInfo.projectInfo.test_group &&
-        JSON.parse(userInfo.projectInfo.test_group)[0].name) ||
-      "",
-  },
-];
+var thbodyList = [];
+var defaultVal = '';
+var editWrokInfo = [];
+var prejectEditForm = '';
+var checkedIdx = 0;
+$('.modal-wp').click(function() {
+  $("#myModal7").html('');
+  initModalRender()
+})
 
-var prejectEditForm =
+
+function initModalRender() {
+  if(userInfo.projectInfo.test_group && typeof(userInfo.projectInfo.test_group) == 'string') {
+    thbodyList = JSON.parse(userInfo.projectInfo.test_group) || [];
+  } else {
+    thbodyList = userInfo.projectInfo.test_group || [];
+  }
+  
+  thbodyList.forEach(function(item, index) {
+    if(item.checked) {
+      defaultVal = item.name;
+      checkedIdx = index;
+    }
+  });
+
+  editWrokInfo = [
+    {
+      label: "工程编号:",
+      for: "project_cid",
+      value: userInfo.project_cid || "",
+    },
+    {
+      label: "施工单位:",
+      for: "construction_group",
+      value: userInfo.projectInfo.construction_group || "",
+    },
+    {
+      label: "委托单位:",
+      for: "entrust_group",
+      value: userInfo.projectInfo.entrust_group || "",
+    },
+    {
+      label: "见证单位:",
+      for: "witness_group",
+      value: userInfo.projectInfo.witness_group || "",
+    },
+    {
+      label: "工程名称:",
+      for: "project_name",
+      value: userInfo.projectInfo.name || "",
+    },
+    {
+      label: "检测单位:",
+      for: "test_group",
+      value: defaultVal || "",
+    },
+  ];
+
+  var prejectEditForm =
   '<div class="modal-dialog">\
     <div class="modal-content">\
       <div class="color-line"></div>\
@@ -717,29 +738,32 @@ var prejectEditForm =
       </div>\
       <div class="modal-footer">\
         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>\
-        <button type="button" class="btn btn-primary modal-save">设置为默认</button>\
+        <button type="button" class="btn btn-primary modal-save">保存</button>\
       </div>\
     </div>\
   </div>';
 
-$("#myModal7").html(prejectEditForm);
-var projectEditItemStr = "";
-editWrokInfo.forEach(function (item) {
-  projectEditItemStr +=
-    '<div class="form-group cancel-mb">\
-  <label class="col-xs-3 control-label" for="' +
-    item.for +
-    '">' +
-    item.label +
-    '</label>\
-  <div class="col-xs-8 form-control-static p-e-main">' +
-    item.value +
-    "</div>\
-</div>";
-});
-$(".p-e-r-item").html(projectEditItemStr);
+  $("#myModal7").html(prejectEditForm);
 
-var thbodyList = JSON.parse(userInfo.projectInfo.test_group) || [];
+  var projectEditItemStr = "";
+  editWrokInfo.forEach(function (item) {
+    projectEditItemStr +=
+      '<div class="form-group cancel-mb">\
+    <label class="col-xs-3 control-label" for="' +
+      item.for +
+      '">' +
+      item.label +
+      '</label>\
+    <div class="col-xs-8 form-control-static p-e-main '+(item.for == 'test_group' ? 'test-group': '')+'">' +
+      item.value +
+      "</div>\
+  </div>";
+  });
+  $(".p-e-r-item").html(projectEditItemStr);
+
+  renderTbodyFn();
+}
+
 function renderTbodyFn() {
   var tbodyStr = "";
   thbodyList.forEach(function (item, index) {
@@ -776,22 +800,24 @@ function renderTbodyFn() {
   //     </td>\
 
   $(".tbody-modal").html(tbodyStr);
+  $('#myModal7 input[type="radio"]').eq(checkedIdx).attr('checked', true)
 }
-renderTbodyFn();
+
 
 // 新增检测单位
-$("#p-e-form .add-item").click(function () {
+$("#myModal7").on('click',  '.add-item', function () {
   if (thbodyList.length < 5) {
     thbodyList.unshift({
       name: "",
       phone: "",
       address: "",
+      checked: false
     });
     renderTbodyFn();
   }
 });
 // 删除
-$("#p-e-form").on("click", ".modal-del", function () {
+$("#myModal7").on("click", ".modal-del", function () {
   if (thbodyList.length == 1) {
     renderTbodyFn();
   } else {
@@ -801,18 +827,21 @@ $("#p-e-form").on("click", ".modal-del", function () {
   }
 });
 
+
 // 点击保存
-$(".modal-save").click(function () {
+$("#myModal7").on('click',  ".modal-save", function () {
+  thbodyList.forEach(function(item) {
+    item.checked = false;
+  })
   var radioChecked = $("input[name='testGroup']:checked").val();
-  console.log("radioChecked", radioChecked);
+  thbodyList[radioChecked].checked = true
   var modalParams = {
     project_cid: userInfo.project_cid,
     construction_group: userInfo.projectInfo.construction_group,
     entrust_group: userInfo.projectInfo.entrust_group,
     witness_group: userInfo.projectInfo.witness_group,
     project_name: userInfo.projectInfo.name,
-    test_group: JSON.stringify(thbodyList),
-    checked: radioChecked,
+    test_group: thbodyList,
   };
   projectSaveFn(modalParams);
   $("#myModal7").modal("hide");

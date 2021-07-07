@@ -232,7 +232,7 @@
                     entrust_group: formData.entrust_group,
                     name: formData.project_name,
                     witness_group: formData.witness_group,
-                    test_group: formData.test_group,
+                    test_group:[{"name":formData.test_group,"phone":"","address":"","checked":true}] ,
                   },
                 });
                 localStorage.setItem(
