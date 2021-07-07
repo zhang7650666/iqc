@@ -613,8 +613,6 @@ function getUnitDetail() {
   }
 }
 
-
-
 function ymd_format(dataStr) {
   var args = dataStr ? dataStr : ymd();
   var tempList = args.split("-");
@@ -643,45 +641,45 @@ function addZero(val) {
   return parseInt(val) > 9 ? val : "0" + val;
 }
 
-
-
-
-
 // 点击导航修改工程编号摸态框信息
 var editWrokInfo = [
   {
-    label: '工程编号:',
-    for: 'project_cid',
-    value: userInfo.project_cid || '',
+    label: "工程编号:",
+    for: "project_cid",
+    value: userInfo.project_cid || "",
   },
   {
-    label: '施工单位:',
-    for: 'construction_group',
-    value: userInfo.projectInfo.construction_group || '',
+    label: "施工单位:",
+    for: "construction_group",
+    value: userInfo.projectInfo.construction_group || "",
   },
   {
-    label: '委托单位:',
-    for: 'entrust_group',
-    value: userInfo.projectInfo.entrust_group || '',
+    label: "委托单位:",
+    for: "entrust_group",
+    value: userInfo.projectInfo.entrust_group || "",
   },
   {
-    label: '见证单位:',
-    for: 'witness_group',
-    value: userInfo.projectInfo.witness_group || '',
+    label: "见证单位:",
+    for: "witness_group",
+    value: userInfo.projectInfo.witness_group || "",
   },
   {
-    label: '工程名称:',
-    for: 'project_name',
-    value: userInfo.projectInfo.name || '',
+    label: "工程名称:",
+    for: "project_name",
+    value: userInfo.projectInfo.name || "",
   },
   {
-    label: '检测单位:',
-    for: 'test_group',
-    value: userInfo.projectInfo.test_group && JSON.parse(userInfo.projectInfo.test_group)[0].name || '',
+    label: "检测单位:",
+    for: "test_group",
+    value:
+      (userInfo.projectInfo.test_group &&
+        JSON.parse(userInfo.projectInfo.test_group)[0].name) ||
+      "",
   },
-]
+];
 
-var prejectEditForm ='<div class="modal-dialog">\
+var prejectEditForm =
+  '<div class="modal-dialog">\
     <div class="modal-content">\
       <div class="color-line"></div>\
       <div class="modal-header" style="padding: 15px">\
@@ -719,79 +717,94 @@ var prejectEditForm ='<div class="modal-dialog">\
       </div>\
       <div class="modal-footer">\
         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>\
-        <button type="button" class="btn btn-primary modal-save">保存</button>\
+        <button type="button" class="btn btn-primary modal-save">设置为默认</button>\
       </div>\
     </div>\
-  </div>'
+  </div>';
 
-$('#myModal7').html(prejectEditForm);
-var projectEditItemStr = '';
-editWrokInfo.forEach(function(item) {
-  projectEditItemStr += '<div class="form-group cancel-mb">\
-  <label class="col-xs-3 control-label" for="'+item.for+'">'+item.label+'</label>\
-  <div class="col-xs-8 form-control-static p-e-main">'+item.value+'</div>\
-</div>'
+$("#myModal7").html(prejectEditForm);
+var projectEditItemStr = "";
+editWrokInfo.forEach(function (item) {
+  projectEditItemStr +=
+    '<div class="form-group cancel-mb">\
+  <label class="col-xs-3 control-label" for="' +
+    item.for +
+    '">' +
+    item.label +
+    '</label>\
+  <div class="col-xs-8 form-control-static p-e-main">' +
+    item.value +
+    "</div>\
+</div>";
 });
-$('.p-e-r-item').html(projectEditItemStr);
+$(".p-e-r-item").html(projectEditItemStr);
 
-
-var thbodyList = JSON.parse(userInfo.projectInfo.test_group)
+var thbodyList = JSON.parse(userInfo.projectInfo.test_group) || [];
 function renderTbodyFn() {
-  var tbodyStr = '';
-  thbodyList.forEach(function(item, index) {
-    tbodyStr += '<tr>\
+  var tbodyStr = "";
+  thbodyList.forEach(function (item, index) {
+    tbodyStr +=
+      '<tr>\
       <td>\
-        <input type="radio" name="testGroup" value="'+index+'" style="margin-left: 10px;margin-top: 11px;"/>\
+        <input type="radio" name="testGroup" value="' +
+      index +
+      '" style="margin-left: 10px;margin-top: 11px;"/>\
       </td>\
       <td>\
-        <input type="text" value="'+item.name+'" class="form-control"/>\
+        <input type="text" value="' +
+      item.name +
+      '" class="form-control"/>\
         <div class="error-block-test_group text-danger"></div>\
       </td>\
       <td>\
-        <input type="text" value="'+item.phone+'" class="form-control"/>\
+        <input type="text" value="' +
+      item.phone +
+      '" class="form-control"/>\
         <div class="error-block-test_group text-danger"></div>\
       </td>\
       <td>\
-        <input type="text" value="'+item.address+'" class="form-control"/>\
+        <input type="text" value="' +
+      item.address +
+      '" class="form-control"/>\
         <div class="error-block-test_group text-danger"></div>\
       </td>\
-    </tr>'
-  })
- 
+    </tr>';
+  });
+
   // <td style="text-align:center">\
   //     <button class="btn btn-danger modal-del" type="button" data-idx="'+index+'"><i class="fa fa-trash-o"></i> <span class="bold"></span></button>\
   //     </td>\
 
-  $('.tbody-modal').html(tbodyStr)
+  $(".tbody-modal").html(tbodyStr);
 }
-renderTbodyFn()
+renderTbodyFn();
 
 // 新增检测单位
-$('#p-e-form .add-item').click(function() {
-  if(thbodyList.length < 5) {
+$("#p-e-form .add-item").click(function () {
+  if (thbodyList.length < 5) {
     thbodyList.unshift({
-      name: '',
-      phone: '',
-      address: ''
-    })
-    renderTbodyFn()
+      name: "",
+      phone: "",
+      address: "",
+    });
+    renderTbodyFn();
   }
-})
+});
 // 删除
-$('#p-e-form').on('click', '.modal-del', function() {
-  if(thbodyList.length == 1) {
-    renderTbodyFn()
+$("#p-e-form").on("click", ".modal-del", function () {
+  if (thbodyList.length == 1) {
+    renderTbodyFn();
   } else {
-    var idx = $(this).attr('data-idx');
+    var idx = $(this).attr("data-idx");
     thbodyList.splice(parseInt(idx), 1);
-    renderTbodyFn()
+    renderTbodyFn();
   }
 });
 
 // 点击保存
-$('.modal-save').click(function() {
+$(".modal-save").click(function () {
   var radioChecked = $("input[name='testGroup']:checked").val();
-  console.log('radioChecked', radioChecked)
+  console.log("radioChecked", radioChecked);
   var modalParams = {
     project_cid: userInfo.project_cid,
     construction_group: userInfo.projectInfo.construction_group,
@@ -799,10 +812,11 @@ $('.modal-save').click(function() {
     witness_group: userInfo.projectInfo.witness_group,
     project_name: userInfo.projectInfo.name,
     test_group: JSON.stringify(thbodyList),
-  }
-  projectSaveFn(modalParams)
-  $('#myModal7').modal('hide')
-})
+    checked: radioChecked,
+  };
+  projectSaveFn(modalParams);
+  $("#myModal7").modal("hide");
+});
 
 // 点击保存编辑工程编号信息
 function projectSaveFn(params) {
@@ -811,7 +825,7 @@ function projectSaveFn(params) {
     type: "POST",
     dataType: "json",
     contentType: "application/json",
-    data:JSON.stringify(params),
+    data: JSON.stringify(params),
     success: function (res) {
       localStorage.setItem(
         "iqc_user_info",
@@ -823,10 +837,10 @@ function projectSaveFn(params) {
           projectInfo: {
             cid: userInfo.project_cid || "",
             id: userInfo.id || "",
-            construction_group: params.construction_group || '',
-            entrust_group: params.entrust_group || '',
-            witness_group: params.witness_group || '',
-            name:params.project_name || '',
+            construction_group: params.construction_group || "",
+            entrust_group: params.entrust_group || "",
+            witness_group: params.witness_group || "",
+            name: params.project_name || "",
             test_group: params.test_group || [],
           },
         })
