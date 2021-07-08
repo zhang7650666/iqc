@@ -323,12 +323,12 @@
                   border-right: 1px solid #000;
                   border-bottom: 1px solid #000;
                   font-size: 13.2px;
-                  height:42px;
+                  height:28px;
                   font-family:NSimSun,SimSun;
                   min-width: 70px;
               }
               .table-body tr{
-                height: 42px;
+                height: 28px;
               }
 
               .table-header {
@@ -982,9 +982,17 @@
         var htmlStr = $("#" + fromId)
           .find(".table-donwload-section")
           .clone(true);
-        $("#" + fromId)
+        if(fromId == 'loginForm1') {
+          $("#" + fromId)
+          .find("tr, th")
+          .attr("style", "height:28px");
+        } else {
+          $("#" + fromId)
           .find("tr, th")
           .attr("style", "height:45px");
+        }
+        
+        
         replaceEl(fromId, "print");
         $("#" + fromId)
           .find(".table-donwload-section")
