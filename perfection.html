@@ -209,7 +209,7 @@
               formData[this.name] = this.value;
             }
           });
-          console.log("formData", formData);
+          formData.test_group = [{"name":formData.test_group,"phone":"","address":"","checked":true}] 
 
           formData.group_cid = userInfo.project_cid || "";
           // 保存工程单位信息

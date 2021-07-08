@@ -653,6 +653,7 @@ $('.modal-wp').click(function() {
 
 
 function initModalRender() {
+  userInfo = getUserInfo()
   if(userInfo.projectInfo.test_group && typeof(userInfo.projectInfo.test_group) == 'string') {
     thbodyList = JSON.parse(userInfo.projectInfo.test_group) || [];
   } else {
@@ -777,19 +778,19 @@ function renderTbodyFn() {
       <td>\
         <input type="text" value="' +
       item.name +
-      '" class="form-control"/>\
+      '" class="form-control ipt-name"/>\
         <div class="error-block-test_group text-danger"></div>\
       </td>\
       <td>\
         <input type="text" value="' +
       item.phone +
-      '" class="form-control"/>\
+      '" class="form-control ipt-phone"/>\
         <div class="error-block-test_group text-danger"></div>\
       </td>\
       <td>\
         <input type="text" value="' +
       item.address +
-      '" class="form-control"/>\
+      '" class="form-control ipt-address"/>\
         <div class="error-block-test_group text-danger"></div>\
       </td>\
     </tr>';
@@ -830,18 +831,23 @@ $("#myModal7").on("click", ".modal-del", function () {
 
 // 点击保存
 $("#myModal7").on('click',  ".modal-save", function () {
-  thbodyList.forEach(function(item) {
+  var testGroupList = [];
+  thbodyList.forEach(function(item, index) {
+    item.name = $('.tbody-modal tr').eq(index).find('.ipt-name').val();
+    item.phone = $('.tbody-modal tr').eq(index).find('.ipt-phone').val();
+    item.address = $('.tbody-modal tr').eq(index).find('.ipt-address').val();
     item.checked = false;
+    testGroupList.push(item)
   })
   var radioChecked = $("input[name='testGroup']:checked").val();
-  thbodyList[radioChecked].checked = true
+  testGroupList[radioChecked].checked = true
   var modalParams = {
     project_cid: userInfo.project_cid,
     construction_group: userInfo.projectInfo.construction_group,
     entrust_group: userInfo.projectInfo.entrust_group,
     witness_group: userInfo.projectInfo.witness_group,
     project_name: userInfo.projectInfo.name,
-    test_group: thbodyList,
+    test_group: testGroupList,
   };
   projectSaveFn(modalParams);
   $("#myModal7").modal("hide");
