@@ -223,8 +223,6 @@
               data: JSON.stringify(formData),
               success: function (res) {
                 submitFlag = true;
-                console.log("userinfo", userInfo);
-
                 iqc_user_info_obj = Object.assign(userInfo, {
                   projectInfo: {
                     cid: formData.group_cid,
@@ -232,7 +230,7 @@
                     entrust_group: formData.entrust_group,
                     name: formData.project_name,
                     witness_group: formData.witness_group,
-                    test_group:[{"name":formData.test_group,"phone":"","address":"","checked":true}] ,
+                    test_group:formData.test_group,
                   },
                 });
                 localStorage.setItem(

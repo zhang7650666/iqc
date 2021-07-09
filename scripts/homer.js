@@ -230,9 +230,7 @@ if ($.validator) {
     "isCid",
     function (value, element) {
       var length = value.length;
-      console.log("value", value);
       var mobile = /^W((19\d{2})|(2\d{3}))\d{4}$/;
-      console.log(888, mobile.test(value));
       return this.optional(element) || (length == 9 && mobile.test(value));
     },
     "工程编号必须以大写W开头 W+年份+4位数字,年份必须在(1999-2999)之间 如W20001234"
@@ -282,6 +280,12 @@ function getUserInfo() {
 }
 
 var userInfo = getUserInfo();
+var tempHref = window.location.href;
+  if((tempHref.indexOf('/login.html') == -1 && tempHref.indexOf('/register.html') == -1) && (!userInfo || !userInfo.token)) {
+    window.location.href="./login.html"
+  }
+
+
 
 // 设置导航上的工程编号
 userInfo && userInfo.project_cid ? $(".word-no-wp .word-no").html(userInfo.project_cid) : '';
@@ -524,7 +528,6 @@ function createList(cb) {
       $("#formData")[0].reset();
       //导航点击处理
       // $(".create-form-title").html($(this).html());
-      console.log(666);
       var id = $(this).attr("data-id");
       var form_id = $(this).attr("data-form_id");
       var that = this;
