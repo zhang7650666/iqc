@@ -460,7 +460,7 @@
               var len = 0;
               data.tableData.forEach(function (item) {
                 // 如果是空表不在渲染
-                if (nullTable != JSON.stringify(item)) {
+                if (Array.isArray(item.tableBody) && item.tableBody.length) {
                   dataToTable(
                     item,
                     "#loginForm1",
