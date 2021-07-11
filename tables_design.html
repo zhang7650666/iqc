@@ -175,8 +175,16 @@
                     </button>
                     <a
                       tabindex="0"
-                      class="btn w-xs btn-info m-l-lg m-b print"
+                      class="btn w-xs btn-info m-l-lg hidden m-b print-h5"
                       data-id="loginForm1"
+                      role="button"
+                      >打印</a
+                    >
+                    <a
+                      tabindex="0"
+                      class="btn w-xs btn-info m-l-lg hidden m-b print-pc"
+                      data-id="loginForm1"
+                      data-type="0"
                       role="button"
                       >打印</a
                     >
@@ -249,7 +257,15 @@
                     <button
                       type="button"
                       data-id="loginForm2"
-                      class="btn w-xs btn-info print"
+                      class="btn w-xs hidden btn-info print-h5"
+                    >
+                      打印
+                    </button>
+                    <button
+                      type="button"
+                      data-id="loginForm2"
+                      data-type="1"
+                      class="btn w-xs hidden btn-info print-pc"
                     >
                       打印
                     </button>
@@ -532,7 +548,7 @@
           <div>2、打印一页：【缩放】=>【自定义】调整打印区域</div>\
           </div>";
 
-      $(".print").popover({
+      $(".print-h5").popover({
         // selector: ".print",
         trigger: "hover",
         content: popoverTemplate,
@@ -573,10 +589,17 @@
         desc: null,
       }); // 空表对比模板
 
+      // 切换打印按钮
+      if (queryObj.pc) {
+        $(".print-pc").removeClass("hidden");
+      } else {
+        $(".print-h5").removeClass("hidden");
+      }
+
       // 按钮更新
       isView &&
         (contractSave.addClass("hidden"), contractEdit.removeClass("hidden"));
-      isCreate && $(".print").addClass("hidden");
+      isCreate && $(".print-h5").addClass("hidden");
 
       isId && $(".record").removeClass("hidden");
       // 委托合同编辑
@@ -977,22 +1000,21 @@
       });
 
       // 点击打印
-      $(".print").click(function () {
+      $(".print-h5").click(function () {
         var fromId = $(this).attr("data-id");
         var htmlStr = $("#" + fromId)
           .find(".table-donwload-section")
           .clone(true);
-        if(fromId == 'loginForm1') {
+        if (fromId == "loginForm1") {
           $("#" + fromId)
-          .find("tr, th")
-          .attr("style", "height:28px");
+            .find("tr, th")
+            .attr("style", "height:28px");
         } else {
           $("#" + fromId)
-          .find("tr, th")
-          .attr("style", "height:45px");
+            .find("tr, th")
+            .attr("style", "height:45px");
         }
-        
-        
+
         replaceEl(fromId, "print");
         $("#" + fromId)
           .find(".table-donwload-section")
@@ -1162,6 +1184,23 @@
             "style",
             "width:150px;height:150px;background-size:150px 150px;"
           );
+      });
+
+      // 打开新页面并注入数据
+      function openNewPage() {
+        newwindow.document.write("打开的新页面");
+      }
+      $(".print-pc").click(function () {
+        var type = $(this).attr("data-type");
+        window.open(
+          "./print-page.html?id=" +
+            queryObj.id +
+            "&target_day=" +
+            queryObj.target_day +
+            "&pritype=" +
+            type,
+          "_blank"
+        );
       });
     </script>
   </body>

@@ -281,14 +281,18 @@ function getUserInfo() {
 
 var userInfo = getUserInfo();
 var tempHref = window.location.href;
-  if((tempHref.indexOf('/login.html') == -1 && tempHref.indexOf('/register.html') == -1) && (!userInfo || !userInfo.token)) {
-    window.location.href="./login.html"
-  }
-
-
+if (
+  tempHref.indexOf("/login.html") == -1 &&
+  tempHref.indexOf("/register.html") == -1 &&
+  (!userInfo || !userInfo.token)
+) {
+  window.location.href = "./login.html";
+}
 
 // 设置导航上的工程编号
-userInfo && userInfo.project_cid ? $(".word-no-wp .word-no").html(userInfo.project_cid) : '';
+userInfo && userInfo.project_cid
+  ? $(".word-no-wp .word-no").html(userInfo.project_cid)
+  : "";
 
 var whiteList = ["login/", "register/", "logout/"];
 var baseUrl = "http://meterial.cxhy.cn/";
@@ -645,26 +649,28 @@ function addZero(val) {
 }
 // 点击导航修改工程编号摸态框信息
 var thbodyList = [];
-var defaultVal = '';
+var defaultVal = "";
 var editWrokInfo = [];
-var prejectEditForm = '';
+var prejectEditForm = "";
 var checkedIdx = 0;
-$('.modal-wp').click(function() {
-  $("#myModal7").html('');
-  initModalRender()
-})
-
+$(".modal-wp").click(function () {
+  $("#myModal7").html("");
+  initModalRender();
+});
 
 function initModalRender() {
-  userInfo = getUserInfo()
-  if(userInfo.projectInfo.test_group && typeof(userInfo.projectInfo.test_group) == 'string') {
+  userInfo = getUserInfo();
+  if (
+    userInfo.projectInfo.test_group &&
+    typeof userInfo.projectInfo.test_group == "string"
+  ) {
     thbodyList = JSON.parse(userInfo.projectInfo.test_group) || [];
   } else {
     thbodyList = userInfo.projectInfo.test_group || [];
   }
-  
-  thbodyList.forEach(function(item, index) {
-    if(item.checked) {
+
+  thbodyList.forEach(function (item, index) {
+    if (item.checked) {
       defaultVal = item.name;
       checkedIdx = index;
     }
@@ -704,7 +710,7 @@ function initModalRender() {
   ];
 
   var prejectEditForm =
-  '<div class="modal-dialog">\
+    '<div class="modal-dialog">\
     <div class="modal-content">\
       <div class="color-line"></div>\
       <div class="modal-header" style="padding: 15px">\
@@ -758,7 +764,9 @@ function initModalRender() {
       '">' +
       item.label +
       '</label>\
-    <div class="col-xs-8 form-control-static p-e-main '+(item.for == 'test_group' ? 'test-group': '')+'">' +
+    <div class="col-xs-8 form-control-static p-e-main ' +
+      (item.for == "test_group" ? "test-group" : "") +
+      '">' +
       item.value +
       "</div>\
   </div>";
@@ -804,18 +812,17 @@ function renderTbodyFn() {
   //     </td>\
 
   $(".tbody-modal").html(tbodyStr);
-  $('#myModal7 input[type="radio"]').eq(checkedIdx).attr('checked', true)
+  $('#myModal7 input[type="radio"]').eq(checkedIdx).attr("checked", true);
 }
 
-
 // 新增检测单位
-$("#myModal7").on('click',  '.add-item', function () {
+$("#myModal7").on("click", ".add-item", function () {
   if (thbodyList.length < 5) {
     thbodyList.unshift({
       name: "",
       phone: "",
       address: "",
-      checked: false
+      checked: false,
     });
     renderTbodyFn();
   }
@@ -831,19 +838,18 @@ $("#myModal7").on("click", ".modal-del", function () {
   }
 });
 
-
 // 点击保存
-$("#myModal7").on('click',  ".modal-save", function () {
+$("#myModal7").on("click", ".modal-save", function () {
   var testGroupList = [];
-  thbodyList.forEach(function(item, index) {
-    item.name = $('.tbody-modal tr').eq(index).find('.ipt-name').val();
-    item.phone = $('.tbody-modal tr').eq(index).find('.ipt-phone').val();
-    item.address = $('.tbody-modal tr').eq(index).find('.ipt-address').val();
+  thbodyList.forEach(function (item, index) {
+    item.name = $(".tbody-modal tr").eq(index).find(".ipt-name").val();
+    item.phone = $(".tbody-modal tr").eq(index).find(".ipt-phone").val();
+    item.address = $(".tbody-modal tr").eq(index).find(".ipt-address").val();
     item.checked = false;
-    testGroupList.push(item)
-  })
+    testGroupList.push(item);
+  });
   var radioChecked = $("input[name='testGroup']:checked").val();
-  testGroupList[radioChecked].checked = true
+  testGroupList[radioChecked].checked = true;
   var modalParams = {
     project_cid: userInfo.project_cid,
     construction_group: userInfo.projectInfo.construction_group,
