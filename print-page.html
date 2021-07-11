@@ -90,14 +90,18 @@
                           "
                         ></h3>
                       </div>
-                      <!-- <div flex-box="0">
+                      <div
+                        class="qr-code code-pos hidden"
+                        style="text-align: right"
+                      >
                         <img
-                          src="http://meterial.cxhy.cn/static/images/a4.jpg"
-                          width="100"
-                          height="100"
-                          style="display: inline-block"
+                          src=""
+                          alt=""
+                          class="contract-code"
+                          width="80px"
+                          height="80px"
                         />
-                      </div> -->
+                      </div>
                     </div>
                   </div>
                 </form>
@@ -472,10 +476,6 @@
                     false,
                     true
                   );
-                  // 二维码
-                  data.qrCode &&
-                    data.qrCode.contract &&
-                    $(".contract-code").attr("src", data.qrCode.contract);
                 }
               });
             }
@@ -491,15 +491,21 @@
                     false,
                     true
                   );
-                  // 二维码
-                  data.qrCode &&
-                    data.qrCode.witness &&
-                    $(".witness-code").attr("src", data.qrCode.witness);
                 }
                 // saveFn();
               });
             }
-
+             // 二维码
+             if (data.qrCode) {
+                if (data.qrCode.contract) {
+                  $(".contract-code").parent().removeClass("hidden");
+                  $(".contract-code").attr("src", data.qrCode.contract);
+                  $("#loginForm1 .print-code").removeClass("hidden");
+                }
+                if (data.qrCode.witness) {
+                  $(".witness-code").attr("src", data.qrCode.witness);
+                }
+              }
             $(".print").click();
             //最后的错误信息
             res.msg && res.msg != "ok" && toastr && toastr.warning(res.msg);
