@@ -59,9 +59,7 @@
     <div id="wrapper" class="m-n">
       <div class="content animate-panel content-width">
         <div class="hpanel">
-          <!-- class="row"flex="" -->
           <div id="mainWrapper" class="ovh">
-            <!-- class="col-xs-12 col-md-12 col-lg-12" -->
             <div id="contractTable">
               <div class="panel-body" style="padding: 0">
                 <form
@@ -161,12 +159,19 @@
                   /* width: 16%; */
                   border-right: 1px solid #000;
                   border-bottom: 1px solid #000;
-                  font-size: 13.2px;
-                  height:28px;
+                  font-size: 10px;
+                  height:15px;
                   font-family: NSimSun,SimSun;
               }
               .table-body tr{
-                height: 28px;
+                height: 15px;
+              }
+
+              #witnessTable .table-body tr td,
+              #witnessTable .table-body tr th,
+              #witnessTable  .table-body tr {
+                height: 44px;
+                font-size: 13.2px;
               }
 
               .table-header {
@@ -292,17 +297,21 @@
                 width: 21cm;
                 min-height: 29.7cm;
                 background: white;
-                margin: auto;
+                margin: 0 auto;
               }
               #contractTable {
                 padding: 0.6cm;
               }
               #witnessTable  {
-                padding: 2cm 2cm 2cm 2.5cm;
+                min-height: 26.7cm;
+                padding: 2cm 2cm 0cm 2.5cm;
               }
 
               #contractTable  .table-donwload-section {
-              height: 237mm;
+              height: 267mm;
+              }
+              ##witnessTable  .table-donwload-section {
+              height: 267mm;
               }
 
               @page {
@@ -311,6 +320,7 @@
               }
 
               @media print {
+                #witnessTable,
                 #contractTable {
                   margin: 0;
                   border: initial;
@@ -465,9 +475,8 @@
               // 计算下有多少列，重置下行高
               var len = 0;
               data.tableData.forEach(function (item) {
-                len = len + item.tableBody.length;
                 // 如果是空表不在渲染
-                if (nullTable != JSON.stringify(item)) {
+                if (Array.isArray(item.tableBody) && item.tableBody.length) {
                   dataToTable(
                     item,
                     "#loginForm1",
@@ -482,7 +491,7 @@
             if (queryObj.pritype == "1" && data.witnessData) {
               $("#witnessTable").show();
               data.witnessData.tableData.forEach(function (item) {
-                if (nullTable != JSON.stringify(item)) {
+                if (Array.isArray(item.tableBody) && item.tableBody.length) {
                   dataToTable(
                     item,
                     "#loginForm2",
@@ -492,7 +501,6 @@
                     true
                   );
                 }
-                // saveFn();
               });
             }
              // 二维码
