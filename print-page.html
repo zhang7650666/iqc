@@ -159,12 +159,12 @@
                   /* width: 16%; */
                   border-right: 1px solid #000;
                   border-bottom: 1px solid #000;
-                  font-size: 10px;
-                  height:15px;
+                  font-size: 13.2px;
+                  height:26px;
                   font-family: NSimSun,SimSun;
               }
               .table-body tr{
-                height: 15px;
+                height: 26px;
               }
 
               #witnessTable .table-body tr td,
@@ -431,9 +431,9 @@
       var tableNum = "";
 
       $(".print").click(function () {
-        $("#mainWrapper")
-            .find("tr, th")
-            .attr("style", "height:45px");
+        // $("#mainWrapper")
+        //     .find("tr, th")
+        //     .attr("style", "height:45px");
         $("#mainWrapper").jqprint({
           debug: false, //如果是true则可以显示iframe查看效果，默认是false
           importCSS: true, //true表示引进原来的页面的css，默认是true。
