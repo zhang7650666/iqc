@@ -429,7 +429,7 @@ $(".logoutBtn").on("click", function (e) {
 function getMemu(data, num, isFirst) {
   var homeMenu = !isFirst
     ? '<li>\
-      <a href="index-y.html" class="hight">\
+      <a href="index.html" class="hight">\
         <span class="nav-label">\
           <i class="pe-7s-home nav-icon"></i> 首页\
           </span>\
@@ -739,7 +739,7 @@ function initModalRender() {
                       <thead>\
                         <tr>\
                             <th >默认</th>\
-                            <th style="width: 38%">委托检测单位</th>\
+                            <th style="width: 38%">检测单位</th>\
                             <th style="width: 18%">联系电话</th>\
                             <th style="width: 26%">地址邮箱</th>\
                         </tr>\
@@ -853,13 +853,13 @@ $("#myModal7").on("click", ".modal-save", function () {
     item.name = $(".tbody-modal tr").eq(index).find(".ipt-name").val();
     item.phone = $(".tbody-modal tr").eq(index).find(".ipt-phone").val();
     item.address = $(".tbody-modal tr").eq(index).find(".ipt-address").val();
-    item.checked = false;
-    if (!(!item.name && !tem.phone && !item.address)) {
+    item.checked = "false";
+    if (!(!item.name && !item.phone && !item.address)) {
       testGroupList.push(item);
     }
   });
   var radioChecked = $("input[name='testGroup']:checked").val();
-  testGroupList[radioChecked].checked = true;
+  testGroupList[radioChecked] && (testGroupList[radioChecked].checked = "true");
   var modalParams = {
     project_cid: userInfo.project_cid,
     construction_group: userInfo.projectInfo.construction_group,

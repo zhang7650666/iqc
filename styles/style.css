@@ -2556,6 +2556,7 @@ body.fullscreen-panel-mode {
   background-color: #34495e;
   padding: 1px;
   height: 56px;
+  line-height: 56px;
   text-align: center;
 }
 #logo span {
@@ -4236,9 +4237,9 @@ td {
   z-index: 1;
 }
 
-.cancel-mb{
+.cancel-mb {
   margin-bottom: 0px;
 }
-#myModal7 .modal-dialog{
+#myModal7 .modal-dialog {
   width: 800px !important;
 }

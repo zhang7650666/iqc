@@ -634,10 +634,12 @@
       }); // 空表对比模板
 
       // 切换打印按钮
-      if (!queryObj.pc) {
-        $(".print-pc").removeClass("hidden");
-      } else {
-        $(".print-h5").removeClass("hidden");
+      if (isId) {
+        if (!queryObj.pc) {
+          $(".print-pc").removeClass("hidden");
+        } else {
+          $(".print-h5").removeClass("hidden");
+        }
       }
 
       // 按钮更新

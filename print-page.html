@@ -159,7 +159,7 @@
                   /* width: 16%; */
                   border-right: 1px solid #000;
                   border-bottom: 1px solid #000;
-                  font-size: 13.2px;
+                  font-size: 12px;
                   height:26px;
                   font-family: NSimSun,SimSun;
               }
@@ -300,7 +300,7 @@
                 margin: 0 auto;
               }
               #contractTable {
-                padding: 0.6cm;
+                padding: 0.6cm 0.6cm 0 0.6cm;
               }
               #witnessTable  {
                 min-height: 26.7cm;
@@ -412,16 +412,9 @@
 
       var contractTable = $("#contractTable");
       var witnessTable = $("#witnessTable");
-      $("#contractTable").hide();
-      $("#witnessTable").hide();
+      contractTable.hide();
+      witnessTable.hide();
 
-      var isFast = true;
-
-      var nullTable = JSON.stringify({
-        tableHead: [],
-        tableBody: [],
-        desc: null,
-      }); // 空表对比模板
       //   生成表格校验信息
       var loginForm1Map = {
         rules: {},
@@ -431,9 +424,6 @@
       var tableNum = "";
 
       $(".print").click(function () {
-        // $("#mainWrapper")
-        //     .find("tr, th")
-        //     .attr("style", "height:45px");
         $("#mainWrapper").jqprint({
           debug: false, //如果是true则可以显示iframe查看效果，默认是false
           importCSS: true, //true表示引进原来的页面的css，默认是true。
@@ -477,14 +467,7 @@
               data.tableData.forEach(function (item) {
                 // 如果是空表不在渲染
                 if (Array.isArray(item.tableBody) && item.tableBody.length) {
-                  dataToTable(
-                    item,
-                    "#loginForm1",
-                    loginForm1Map,
-                    data,
-                    false,
-                    true
-                  );
+                  dataToTable(item, "#loginForm1", loginForm1Map, data, true);
                 }
               });
             }
@@ -492,28 +475,21 @@
               $("#witnessTable").show();
               data.witnessData.tableData.forEach(function (item) {
                 if (Array.isArray(item.tableBody) && item.tableBody.length) {
-                  dataToTable(
-                    item,
-                    "#loginForm2",
-                    loginForm1Map,
-                    data,
-                    false,
-                    true
-                  );
+                  dataToTable(item, "#loginForm2", loginForm1Map, data, true);
                 }
               });
             }
-             // 二维码
-             if (data.qrCode) {
-                if (data.qrCode.contract) {
-                  $(".contract-code").parent().removeClass("hidden");
-                  $(".contract-code").attr("src", data.qrCode.contract);
-                  $("#loginForm1 .print-code").removeClass("hidden");
-                }
-                if (data.qrCode.witness) {
-                  $(".witness-code").attr("src", data.qrCode.witness);
-                }
+            // 二维码
+            if (data.qrCode) {
+              if (data.qrCode.contract) {
+                $(".contract-code").parent().removeClass("hidden");
+                $(".contract-code").attr("src", data.qrCode.contract);
+                $("#loginForm1 .print-code").removeClass("hidden");
               }
+              if (data.qrCode.witness) {
+                $(".witness-code").attr("src", data.qrCode.witness);
+              }
+            }
             $(".print").click();
             //最后的错误信息
             res.msg && res.msg != "ok" && toastr && toastr.warning(res.msg);
