@@ -180,7 +180,7 @@ function dataToTable(tableData, parentId, map, sourceData, isProhibitEdit) {
             //   ? '<span class="text-gary">' + item.valueExt + "</span>"
             //   : "");
           } else {
-            tdHtml = "<div class='txt-left'>" + item.value + "</div> ";
+            tdHtml = "<div class='txt-left'>" + item.value || "" + "</div> ";
           }
           break;
         case "textarea":
@@ -218,8 +218,8 @@ function dataToTable(tableData, parentId, map, sourceData, isProhibitEdit) {
           // (item.value ? ymd_format(item.value) : ymd_format(value)) +
           // (item.value ? moment(item.value).format('YYYY年MM月DD日'):  moment(value).format('YYYY年MM月DD日')) +
           var dateVal = "";
-          if (item.value.indexOf("年") > -1) {
-            dateVal = item.value;
+          if ((item.value || "").indexOf("年") > -1) {
+            dateVal = item.value || "";
           } else if (item.value == "Invalid date") {
             dateVal = moment(ymd()).format("YYYY年MM月DD日");
           } else {

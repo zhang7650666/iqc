@@ -336,7 +336,7 @@
                   /* width: 16%; */
                   border-right: 1px solid #000;
                   border-bottom: 1px solid #000;
-                  font-size: 13.2px;
+                  font-size: 12px;
                   height:26px;
                   font-family: NSimSun,SimSun;
               }
@@ -674,9 +674,15 @@
       };
       var tableName = "";
       var tableNum = "";
-      var form_style_query = JSON.parse(
-        localStorage.getItem("form_style_query")
-      );
+      var formContent = localStorage.getItem("form_style_query");
+      if (!isId && (form_style_query == "{}" || form_style_query == "")) {
+        toastr && toastr.warning("请先创建单位信息");
+        setTimeout(function () {
+          window.location.href = "./create_form.html";
+        }, 1500);
+      }
+      var form_style_query = JSON.parse(formContent);
+
       var formStyle = {
         token: userInfo.token, //	Y	用户临时标识
         form_id: queryObj.form_id || 8, // 	Y	表格样式id
@@ -736,7 +742,6 @@
           });
         }
       }
-
       var formData = Object.assign(formStyle, form_style_query);
       if (!isId) {
         $.ajax({
@@ -901,6 +906,7 @@
                     form_id: "",
                     type: "view",
                   };
+                  localStorage.setItem("form_style_query", "{}");
                   updateUrlParams(params);
                 }
                 isSubmit = false;
