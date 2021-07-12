@@ -678,7 +678,7 @@ function initModalRender() {
   }
 
   thbodyList.forEach(function (item, index) {
-    if (item.checked) {
+    if (item.checked == "true") {
       defaultVal = item.name;
       checkedIdx = index;
     }
@@ -787,12 +787,15 @@ function initModalRender() {
 function renderTbodyFn() {
   var tbodyStr = "";
   thbodyList.forEach(function (item, index) {
+    var checked = checkedIdx == index ? "checked=true " : "";
     tbodyStr +=
       '<tr>\
       <td>\
         <input type="radio" name="testGroup" value="' +
       index +
-      '" style="margin-left: 10px;margin-top: 11px;"/>\
+      '" ' +
+      checked +
+      ' style="margin-left: 10px;margin-top: 11px;"/>\
       </td>\
       <td>\
         <input type="text" value="' +
@@ -815,25 +818,32 @@ function renderTbodyFn() {
     </tr>';
   });
 
-  // <td style="text-align:center">\
-  //     <button class="btn btn-danger modal-del" type="button" data-idx="'+index+'"><i class="fa fa-trash-o"></i> <span class="bold"></span></button>\
-  //     </td>\
-
   $(".tbody-modal").html(tbodyStr);
-  $('#myModal7 input[type="radio"]').eq(checkedIdx).attr("checked", true);
 }
 
 // 新增检测单位
 $("#myModal7").on("click", ".add-item", function () {
-  // if (thbodyList.length < 5) {
-  thbodyList.unshift({
-    name: "",
-    phone: "",
-    address: "",
-    checked: false,
+  var isAppend = false;
+  thbodyList.forEach(function (item, index) {
+    item.name = $(".tbody-modal tr").eq(index).find(".ipt-name").val();
+    item.phone = $(".tbody-modal tr").eq(index).find(".ipt-phone").val();
+    item.address = $(".tbody-modal tr").eq(index).find(".ipt-address").val();
+    if (!item.name && !item.phone && !item.address) {
+      isAppend = true;
+    }
   });
-  renderTbodyFn();
-  // }
+  if (isAppend) {
+    toastr && toastr.warning("请先填写内容后再新增");
+  } else {
+    thbodyList.push({
+      name: "",
+      phone: "",
+      address: "",
+      checked: "false",
+    });
+    isAppend = false;
+    renderTbodyFn();
+  }
 });
 // 删除
 $("#myModal7").on("click", ".modal-del", function () {
@@ -849,17 +859,18 @@ $("#myModal7").on("click", ".modal-del", function () {
 // 点击保存
 $("#myModal7").on("click", ".modal-save", function () {
   var testGroupList = [];
+  var checkIdx = $("input[name='testGroup']:checked").val();
+  checkedIdx = checkIdx;
   thbodyList.forEach(function (item, index) {
     item.name = $(".tbody-modal tr").eq(index).find(".ipt-name").val();
     item.phone = $(".tbody-modal tr").eq(index).find(".ipt-phone").val();
     item.address = $(".tbody-modal tr").eq(index).find(".ipt-address").val();
-    item.checked = "false";
+    item.checked = index == checkIdx ? "true" : "false";
     if (!(!item.name && !item.phone && !item.address)) {
       testGroupList.push(item);
     }
   });
-  var radioChecked = $("input[name='testGroup']:checked").val();
-  testGroupList[radioChecked] && (testGroupList[radioChecked].checked = "true");
+
   var modalParams = {
     project_cid: userInfo.project_cid,
     construction_group: userInfo.projectInfo.construction_group,

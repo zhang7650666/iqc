@@ -2564,6 +2564,9 @@ body.fullscreen-panel-mode {
   color: #fff;
   font-size: 14px;
 }
+#logo > img {
+  display: block;
+}
 #logo.light-version {
   background-color: #f7f9fa;
   border-bottom: 1px solid #e4e5e7;
