@@ -590,7 +590,7 @@
       }); // 空表对比模板
 
       // 切换打印按钮
-      if (queryObj.pc) {
+      if (!queryObj.pc) {
         $(".print-pc").removeClass("hidden");
       } else {
         $(".print-h5").removeClass("hidden");
@@ -1198,8 +1198,7 @@
             "&target_day=" +
             queryObj.target_day +
             "&pritype=" +
-            type,
-          "_blank"
+            type
         );
       });
     </script>

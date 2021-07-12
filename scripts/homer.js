@@ -664,7 +664,15 @@ function initModalRender() {
     userInfo.projectInfo.test_group &&
     typeof userInfo.projectInfo.test_group == "string"
   ) {
-    thbodyList = JSON.parse(userInfo.projectInfo.test_group) || [];
+    try {
+      thbodyList = userInfo.projectInfo.test_group.replace(/\'/g, '"');
+      thbodyList = thbodyList.replace(/(True|true|False|false)/g, function (m) {
+        return '"' + m + '"';
+      });
+      thbodyList = JSON.parse(userInfo.projectInfo.test_group);
+    } catch (e) {
+      thbodyList = [];
+    }
   } else {
     thbodyList = userInfo.projectInfo.test_group || [];
   }
@@ -817,15 +825,15 @@ function renderTbodyFn() {
 
 // 新增检测单位
 $("#myModal7").on("click", ".add-item", function () {
-  if (thbodyList.length < 5) {
-    thbodyList.unshift({
-      name: "",
-      phone: "",
-      address: "",
-      checked: false,
-    });
-    renderTbodyFn();
-  }
+  // if (thbodyList.length < 5) {
+  thbodyList.unshift({
+    name: "",
+    phone: "",
+    address: "",
+    checked: false,
+  });
+  renderTbodyFn();
+  // }
 });
 // 删除
 $("#myModal7").on("click", ".modal-del", function () {
@@ -846,7 +854,9 @@ $("#myModal7").on("click", ".modal-save", function () {
     item.phone = $(".tbody-modal tr").eq(index).find(".ipt-phone").val();
     item.address = $(".tbody-modal tr").eq(index).find(".ipt-address").val();
     item.checked = false;
-    testGroupList.push(item);
+    if (!(!item.name && !tem.phone && !item.address)) {
+      testGroupList.push(item);
+    }
   });
   var radioChecked = $("input[name='testGroup']:checked").val();
   testGroupList[radioChecked].checked = true;
