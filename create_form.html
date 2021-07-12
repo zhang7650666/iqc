@@ -104,7 +104,11 @@
         <!-- 常屏 顶部导航 -->
         <div class="navbar-right">
           <ul class="nav navbar-nav no-borders">
-            <li class="word-no-wp">
+            <li
+              class="word-no-wp modal-wp"
+              data-toggle="modal"
+              data-target="#myModal7"
+            >
               <span>工程编号：</span>
               <span class="word-no"></span>
             </li>
@@ -124,6 +128,15 @@
         <ul class="nav" id="side-menu"></ul>
       </div>
     </aside>
+
+    <!-- 工程信息摸态框 -->
+    <div
+      class="modal fade hmodal-success"
+      id="myModal7"
+      tabindex="-1"
+      role="dialog"
+      aria-hidden="true"
+    ></div>
 
     <!-- Main Wrapper -->
     <div id="wrapper">
