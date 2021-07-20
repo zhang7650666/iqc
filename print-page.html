@@ -131,12 +131,12 @@
         <script type="text/template" id="tableTemp">
           <div class="no-border" style="text-align: center">
             <style type="text/css">
+            .table-header {width: 100%}
               .table-header tr th {
                 border: 1px solid #fff;
                 text-align: left;
                 /* width: 12.5%; */
                 font-size: 13.2px;
-                /* padding: 0px; */
               }
               .font-weight {
                   /* font-weight: 600; */
@@ -160,17 +160,27 @@
                   border-right: 1px solid #000;
                   border-bottom: 1px solid #000;
                   font-size: 12px;
-                  height:26px;
+                  height:25px;
                   font-family: NSimSun,SimSun;
+                  box-sizing: border-box;
+                  word-break:break-all;
+                  word-wrap:break-word;
+                  border-collapse:collapse;
               }
               .table-body tr{
-                height: 26px;
+                height: 25px;
+              }
+              .td-label {
+                min-width: 40px;
+              }
+              label {
+                margin-bottom: 0 !important;
               }
 
               #witnessTable .table-body tr td,
               #witnessTable .table-body tr th,
               #witnessTable  .table-body tr {
-                height: 44px;
+                height: 42px;
                 font-size: 13.2px;
               }
 
@@ -295,27 +305,21 @@
               #contractTable,
               #witnessTable {
                 width: 21cm;
-                min-height: 29.7cm;
+                /* min-height: 29.7cm; */
                 background: white;
                 margin: 0 auto;
+                box-sizing: border-box;
               }
               #contractTable {
                 padding: 0.6cm 0.6cm 0 0.6cm;
               }
               #witnessTable  {
-                min-height: 26.7cm;
+                /* min-height: 26.7cm; */
                 padding: 2cm 2cm 0cm 2.5cm;
               }
 
-              #contractTable  .table-donwload-section {
-              height: 267mm;
-              }
-              ##witnessTable  .table-donwload-section {
-              height: 267mm;
-              }
-
               @page {
-              size: A4;
+              size: A4 portrait;
               margin: 0;
               }
 
@@ -330,6 +334,22 @@
                   box-shadow: initial;
                   background: initial;
                   page-break-after: always;
+                  overflow: hidden;
+                }
+
+                #contractTable .table-body {
+                  font-size: 9px !important;
+                  width: 100%;
+                  table-layout: fixed;
+                  word-break: break-all;
+                  height: 736px;
+                }
+                #contractTable .td-label {
+                width: 70px !important;
+              }
+                #witnessTable input,
+                #contractTable input {
+                 border:0 none black;
                 }
               }
 
@@ -344,14 +364,11 @@
             </table>
             <!-- 表体 -->
             <table class="table-body" align="center">
-              <tbody>
                 __TABLE_BODY
-              </tbody>
             </table>
             <!-- 备注 -->
-            <div class="row">
               <div
-                class="col-lg-12 table-desc"
+                class="table-desc"
                 style="
                   font-size: 12px;
                   word-wrap: break-word;
@@ -361,14 +378,13 @@
               >
                 __TABLE_DESC
               </div>
-            </div>
           </div>
         </script>
       </div>
     </div>
-
     <div style="visibility: hidden">
       <button type="button" class="print">打印</button>
+      <button type="button" class="print1">打印1</button>
     </div>
     <!-- Vendor scripts -->
     <script src="vendor/jquery/dist/jquery.min.js"></script>
@@ -430,6 +446,9 @@
           printContainer: true, //表示如果原来选择的对象必须被纳入打印，默认是true。
           operaSupport: true, ///表示如果插件也必须支持歌opera浏览器，默认是true。
         });
+      });
+      $(".print1").click(function () {
+        window.print();
       });
 
       $.ajax({

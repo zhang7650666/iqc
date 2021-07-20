@@ -352,9 +352,14 @@
                   font-size: 12px;
                   height:26px;
                   font-family: NSimSun,SimSun;
+                  min-width: 60px;
               }
               .table-body tr{
                 height: 26px;
+              }
+
+              .td-label {
+                min-width: 60px;
               }
 
               #witnessTable .table-body tr td,
@@ -482,54 +487,6 @@
                 border-bottom:1px solid #000;
               }
 
-              /* #contractTable,
-              #witnessTable {
-                width: 21cm;
-                min-height: 29.7cm;
-                background: white;
-                margin: 0 auto;
-              }
-              #contractTable {
-                padding: 0.6cm;
-              }
-              #witnessTable  {
-                min-height: 26.7cm;
-                padding: 2cm 2cm 0cm 2.5cm;
-              }
-
-              #contractTable  .table-donwload-section {
-              height: 267mm;
-              }
-              ##witnessTable  .table-donwload-section {
-              height: 267mm;
-              } */
-
-              /* @page {
-              size: A4;
-              margin: 0;
-              } */
-
-              /* @media print {
-                #witnessTable,
-                #contractTable {
-                  border: initial;
-                  border-radius: initial;
-                  width: initial;
-                  min-height: initial;
-                  box-shadow: initial;
-                  background: initial;
-                  page-break-after: always;
-                }
-                #contractTable {
-                  margin: 1cm;
-                  padding: 1cm;
-                }
-                #witnessTable {
-                  margin: 0;
-                  padding: 2cm 2cm 0cm 2.5cm;
-                }
-              } */
-
             </style>
             <!-- 测试图片 -->
             <!-- <img src="./images/a1.jpg" alt="" srcset="" crossorigin="anonymous"> -->
@@ -546,9 +503,8 @@
               </tbody>
             </table>
             <!-- 备注 -->
-            <div class="row">
               <div
-                class="col-lg-12 table-desc"
+                class="table-desc"
                 style="
                   font-size: 12px;
                   word-wrap: break-word;
@@ -558,7 +514,6 @@
               >
                 __TABLE_DESC
               </div>
-            </div>
           </div>
         </script>
       </div>
