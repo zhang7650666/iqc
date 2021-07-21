@@ -665,10 +665,10 @@ function initModalRender() {
     typeof userInfo.projectInfo.test_group == "string"
   ) {
     try {
-      thbodyList = userInfo.projectInfo.test_group.replace(/\'/g, '"');
-      thbodyList = thbodyList.replace(/(True|true|False|false)/g, function (m) {
-        return '"' + m + '"';
-      });
+      // thbodyList = userInfo.projectInfo.test_group.replace(/\'/g, '"');
+      // thbodyList = thbodyList.replace(/(True|true|False|false)/g, function (m) {
+      //   return '"' + m + '"';
+      // });
       thbodyList = JSON.parse(userInfo.projectInfo.test_group);
     } catch (e) {
       thbodyList = [];
@@ -738,10 +738,11 @@ function initModalRender() {
                     <table cellpadding="1" cellspacing="1" class="table table-condensed table-striped table-modal">\
                       <thead>\
                         <tr>\
-                            <th >默认</th>\
-                            <th style="width: 38%">检测单位</th>\
-                            <th style="width: 18%">联系电话</th>\
-                            <th style="width: 26%">地址邮箱</th>\
+                            <th width="80px">默认</th>\
+                            <th width= "38%">检测单位</th>\
+                            <th width= "18%">联系电话</th>\
+                            <th >检测地址</th>\
+                            <th >传值</th>\
                         </tr>\
                       </thead>\
                       <tbody class="tbody-modal">\
@@ -815,6 +816,12 @@ function renderTbodyFn() {
       '" class="form-control ipt-address"/>\
         <div class="error-block-test_group text-danger"></div>\
       </td>\
+      <td>\
+      <input type="text" value="' +
+      item.faxNumber +
+      '" class="form-control ipt-faxNumber"/>\
+        <div class="error-block-test_group text-danger"></div>\
+      </td>\
     </tr>';
   });
 
@@ -828,7 +835,11 @@ $("#myModal7").on("click", ".add-item", function () {
     item.name = $(".tbody-modal tr").eq(index).find(".ipt-name").val();
     item.phone = $(".tbody-modal tr").eq(index).find(".ipt-phone").val();
     item.address = $(".tbody-modal tr").eq(index).find(".ipt-address").val();
-    if (!item.name && !item.phone && !item.address) {
+    item.faxNumber = $(".tbody-modal tr")
+      .eq(index)
+      .find(".ipt-faxNumber")
+      .val();
+    if (!item.name && !item.phone && !item.address && !item.faxNumber) {
       isAppend = true;
     }
   });
@@ -839,6 +850,7 @@ $("#myModal7").on("click", ".add-item", function () {
       name: "",
       phone: "",
       address: "",
+      faxNumber: "",
       checked: "false",
     });
     isAppend = false;
@@ -865,8 +877,12 @@ $("#myModal7").on("click", ".modal-save", function () {
     item.name = $(".tbody-modal tr").eq(index).find(".ipt-name").val();
     item.phone = $(".tbody-modal tr").eq(index).find(".ipt-phone").val();
     item.address = $(".tbody-modal tr").eq(index).find(".ipt-address").val();
+    item.faxNumber = $(".tbody-modal tr")
+      .eq(index)
+      .find(".ipt-faxNumber")
+      .val();
     item.checked = index == checkIdx ? "true" : "false";
-    if (!(!item.name && !item.phone && !item.address)) {
+    if (!(!item.name && !item.phone && !item.address && !item.faxNumber)) {
       testGroupList.push(item);
     }
   });
@@ -916,3 +932,22 @@ function projectSaveFn(params) {
     error: function (error) {},
   });
 }
+
+//获取工程信息
+function getProjectDetailFn() {
+  $.ajax({
+    url: "http://meterial.cxhy.cn/getProjectInfo/",
+    type: "GET",
+    dataType: "json",
+    contentType: "application/json",
+    data: { project_cid: userInfo.project_cid || "" },
+    success: function (res) {
+      // 由于后改，尽量少的改动，页面初始，读取下工程信息
+      userInfo = getUserInfo();
+      userInfo.projectInfo = res.data;
+      localStorage.setItem("iqc_user_info", JSON.stringify(userInfo));
+    },
+    error: function (error) {},
+  });
+}
+getProjectDetailFn();
