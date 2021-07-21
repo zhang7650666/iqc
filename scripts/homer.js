@@ -655,28 +655,29 @@ var prejectEditForm = "";
 var checkedIdx = 0;
 $(".modal-wp").click(function () {
   $("#myModal7").html("");
-  initModalRender();
+  getProjectDetailFn(function () {
+    initModalRender();
+  });
 });
 
 function initModalRender() {
-  userInfo = getUserInfo();
-  if (
-    userInfo.projectInfo.test_group &&
-    typeof userInfo.projectInfo.test_group == "string"
-  ) {
-    try {
-      // thbodyList = userInfo.projectInfo.test_group.replace(/\'/g, '"');
-      // thbodyList = thbodyList.replace(/(True|true|False|false)/g, function (m) {
-      //   return '"' + m + '"';
-      // });
-      thbodyList = JSON.parse(userInfo.projectInfo.test_group);
-    } catch (e) {
-      thbodyList = [];
-    }
-  } else {
-    thbodyList = userInfo.projectInfo.test_group || [];
-  }
-
+  // userInfo = getUserInfo();
+  // if (
+  //   userInfo.projectInfo.test_group &&
+  //   typeof userInfo.projectInfo.test_group == "string"
+  // ) {
+  //   try {
+  //     // thbodyList = userInfo.projectInfo.test_group.replace(/\'/g, '"');
+  //     // thbodyList = thbodyList.replace(/(True|true|False|false)/g, function (m) {
+  //     //   return '"' + m + '"';
+  //     // });
+  //     thbodyList = JSON.parse(userInfo.projectInfo.test_group);
+  //   } catch (e) {
+  //     thbodyList = [];
+  //   }
+  // } else {
+  //   thbodyList = userInfo.projectInfo.test_group || [];
+  // }
   thbodyList.forEach(function (item, index) {
     if (item.checked == "true") {
       defaultVal = item.name;
@@ -934,7 +935,7 @@ function projectSaveFn(params) {
 }
 
 //获取工程信息
-function getProjectDetailFn() {
+function getProjectDetailFn(cb) {
   $.ajax({
     url: "http://meterial.cxhy.cn/getProjectInfo/",
     type: "GET",
@@ -945,9 +946,10 @@ function getProjectDetailFn() {
       // 由于后改，尽量少的改动，页面初始，读取下工程信息
       userInfo = getUserInfo();
       userInfo.projectInfo = res.data;
+      thbodyList = res.data.test_group || [];
       localStorage.setItem("iqc_user_info", JSON.stringify(userInfo));
+      cb && cb();
     },
     error: function (error) {},
   });
 }
-getProjectDetailFn();

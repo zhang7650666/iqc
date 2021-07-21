@@ -83,6 +83,16 @@
           </button>
           <div class="collapse mobile-navbar" id="mobile-collapse">
             <ul class="nav navbar-nav">
+              <li
+                class="word-no-wp modal-wp txt-center"
+                data-toggle="modal"
+                data-target="#myModal7"
+              >
+                <a type="button" class="btn btn-text">
+                  <span>工程编号：</span>
+                  <span class="word-no"></span>
+                </a>
+              </li>
               <li>
                 <a type="button" class="btn btn-text logoutBtn">Logout</a>
               </li>
@@ -101,7 +111,11 @@
         <!-- 常屏 顶部导航 -->
         <div class="navbar-right">
           <ul class="nav navbar-nav no-borders">
-            <li class="word-no-wp modal-wp" data-toggle="modal" data-target="#myModal7">
+            <li
+              class="word-no-wp modal-wp"
+              data-toggle="modal"
+              data-target="#myModal7"
+            >
               <span>工程编号：</span>
               <span class="word-no"></span>
             </li>
@@ -121,8 +135,7 @@
       tabindex="-1"
       role="dialog"
       aria-hidden="true"
-    >
-    </div>
+    ></div>
     <!-- Navigation -->
     <aside id="menu" class="home-menu">
       <div id="navigation">
@@ -406,18 +419,17 @@
           $(this).addClass("active");
 
           pageIndex = parseInt($("#paginationBox .page.active a").html());
-          console.log(66661, pageIndex)
+          console.log(66661, pageIndex);
           getList();
         });
         // 下一页
         $(".page-next").click(function () {
-         
           if (pagesCount >= pageIndex + 1) {
             $("#paginationBox .page.active").next().addClass("active");
             $("#paginationBox .page")
               .eq(pageIndex - 1)
               .removeClass("active");
-              pageIndex = parseInt($("#paginationBox .page.active a").html());
+            pageIndex = parseInt($("#paginationBox .page.active a").html());
             getList();
           }
         });

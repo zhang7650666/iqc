@@ -1067,8 +1067,20 @@ body.blank {
 .navbar-nav .open > a,
 .navbar-nav .open > a:hover,
 .navbar-nav .open > a:focus {
-  color: inherit;
-  background: #f7f8fa;
+  color: #409eff;
+  background: #1f2d3d;
+  border-bottom: 1px solid #e4e5e7;
+}
+.navbar-right .navbar-nav > li {
+  padding-right: 10px;
+}
+.navbar-right .navbar-nav > li > a:hover,
+.navbar-right .navbar-nav > li > a:focus,
+.navbar-right .navbar-nav .open > a,
+.navbar-right .navbar-nav .open > a:hover,
+.navbar-right .navbar-nav .open > a:focus {
+  color: #222;
+  background: #e6e6e6;
   border-bottom: 1px solid #e4e5e7;
 }
 .chat-avatar {
@@ -3426,7 +3438,7 @@ label.error:before {
 .mobile-navbar .navbar-nav > li > a {
   padding: 15px 15px;
   font-size: 14px;
-  color: #6a6c6f;
+  color: #fff;
 }
 .mobile-navbar .navbar-nav > li > a:hover,
 .mobile-navbar .navbar-nav > li > a:focus,
@@ -4194,10 +4206,15 @@ td {
 
 /* 工程编号样式表 */
 .word-no-wp span {
-  line-height: 53px;
-  color: #34495e;
+  /* line-height: 53px; */
+  color: #fff;
   font-size: 12px;
   cursor: pointer;
+}
+
+.navbar-right .word-no-wp span {
+  line-height: 53px;
+  color: #404040;
 }
 
 /* 必填项型号 */
@@ -4226,7 +4243,7 @@ td {
   padding-right: 100px;
   background: url(../images/p2.jpg) no-repeat top center;
   background-size: cover;
-  padding-top: 7%;
+  padding-top: 100px;
   position: relative;
 }
 .login-wrapper::after {
@@ -4244,5 +4261,7 @@ td {
   margin-bottom: 0px;
 }
 #myModal7 .modal-dialog {
-  width: 800px !important;
+  /* width: 800px !important; */
+  width: 80% !important;
+  max-width: 800px;
 }
