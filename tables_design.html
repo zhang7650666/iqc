@@ -821,7 +821,7 @@
       });
       // 点击保存
       $(".save").click(function () {
-        $("#loginForm1 .no-border:eq(1)").append(
+        $("#loginForm1 .no-border:eq(1)").html(
           '<p style="text-align:right">生效时间：' + ymd() + "</p>"
         );
         saveFn();
@@ -834,6 +834,7 @@
           rule: loginForm1Map.rule,
           messages: loginForm1Map.messages,
           submitHandler: function () {
+            
             isSubmit = true;
             var datas = $("#loginForm1").serializeArray();
 
@@ -851,9 +852,14 @@
               submitData[item.name] =
                 (already ? already + "," : "") + $.trim(item.value) || "";
             });
-            datas[$("#loginForm1 .step-wp").attr("data-sid")] = $(
-              "#loginForm1 .step-wp"
-            ).html(); // 替换第几部的值
+            // datas[$("#loginForm1 .step-wp").attr("data-sid")] = $(
+            //   "#loginForm1 .step-wp"
+            // ).html(); // 替换第几部的值
+            datas.push({
+              name: $("#loginForm1 .step-wp").attr("data-sid"),
+              value: $("#loginForm1 .step-wp").html()
+            })
+            // console.log('请求参数', datas)
             // debugger;
             var params = {
               classifyId: queryObj.classifyId || 1,
@@ -862,7 +868,9 @@
               form_data: $.base64.encode(JSON.stringify(submitData), "UTF-8"), // checkbox 只有选中的才会提交
               target_day: queryObj.target_day, // 获取当前年月日
             };
+            
             isId && (params.record_id = queryObj.id);
+            
             $.ajax({
               url: "http://meterial.cxhy.cn/saveFormRecord/",
               type: "POST",
