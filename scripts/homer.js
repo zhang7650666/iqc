@@ -739,11 +739,11 @@ function initModalRender() {
                     <table cellpadding="1" cellspacing="1" class="table table-condensed table-striped table-modal">\
                       <thead>\
                         <tr>\
-                            <th width="80px">默认</th>\
-                            <th width= "38%">检测单位</th>\
-                            <th width= "18%">联系电话</th>\
-                            <th >检测地址</th>\
-                            <th >传值</th>\
+                            <th width="10%">默认</th>\
+                            <th width="25%">检测单位</th>\
+                            <th width="20%">联系电话</th>\
+                            <th width="25%">检测地址</th>\
+                            <th width="20%">传值</th>\
                         </tr>\
                       </thead>\
                       <tbody class="tbody-modal">\
@@ -800,25 +800,25 @@ function renderTbodyFn() {
       ' style="margin-left: 10px;margin-top: 11px;"/>\
       </td>\
       <td>\
-        <input type="text" value="' +
+        <input type="text" maxlength="30" value="' +
       item.name +
       '" class="form-control ipt-name"/>\
         <div class="error-block-test_group text-danger"></div>\
       </td>\
       <td>\
-        <input type="text" value="' +
+        <input type="text" maxlength="11" value="' +
       item.phone +
       '" class="form-control ipt-phone"/>\
         <div class="error-block-test_group text-danger"></div>\
       </td>\
       <td>\
-        <input type="text" value="' +
+        <input type="text" maxlength="50" value="' +
       item.address +
       '" class="form-control ipt-address"/>\
         <div class="error-block-test_group text-danger"></div>\
       </td>\
       <td>\
-      <input type="text" value="' +
+      <input type="text" maxlength="12" value="' +
       item.faxNumber +
       '" class="form-control ipt-faxNumber"/>\
         <div class="error-block-test_group text-danger"></div>\
