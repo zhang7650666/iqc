@@ -96,7 +96,7 @@
                     <div class="error-block-password2 text-danger"></div>
                   </div>
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <label class="col-xs-3 control-label" for="phone_num"
                     >绑定手机号码</label
                   >
@@ -109,8 +109,8 @@
                     />
                     <div class="error-block-phone_num text-danger"></div>
                   </div>
-                </div>
-                <div class="form-group">
+                </div> -->
+                <!-- <div class="form-group">
                   <label class="col-xs-3 control-label" for="verify_code"
                     >手机验证码</label
                   >
@@ -133,7 +133,7 @@
                     </button>
                     <div class="countdown hidden line34">59</div>
                   </div>
-                </div>
+                </div> -->
 
                 <div class="text-center">
                   <a type="button" class="btn btn-default" href="./login.html">
@@ -295,7 +295,7 @@
           });
 
           formData.password = hex_md5(formData.password);
-          formData.verify_code = "112233";
+          // formData.verify_code = "112233";
           delete formData.password2;
           if (submitFlag) {
             submitFlag = false;
