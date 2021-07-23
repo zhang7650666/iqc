@@ -674,7 +674,7 @@ body.blank {
   z-index: 5;
 }
 .login-title {
-  color: #fff;
+  /* color: #fff; */
 }
 .register-container {
   max-width: 540px;
@@ -4240,13 +4240,13 @@ td {
 
 .login-wrapper {
   height: 100%;
-  background: url(../images/p2.jpg) no-repeat top center;
-  background-size: cover;
-  padding-top: 100px;
+  /* background: url(../images/p2.jpg) no-repeat top center;
+  background-size: cover; */
+  /* padding-top: 100px; */
   position: relative;
   overflow: hidden;
 }
-.login-wrapper::after {
+/* .login-wrapper::after {
   content: "";
   position: absolute;
   top: 0;
@@ -4255,7 +4255,7 @@ td {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.3);
   z-index: 1;
-}
+} */
 
 .cancel-mb {
   margin-bottom: 0px;
