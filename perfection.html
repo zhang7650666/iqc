@@ -40,7 +40,7 @@
         <div class="col-md-12">
           <div class="text-center m-b-md">
             <h3>工程信息详情</h3>
-            <small>完善工程信息，不可修改 </small>
+            <small>完善工程信息</small>
           </div>
           <div class="hpanel">
             <div class="panel-body">
@@ -209,7 +209,14 @@
               formData[this.name] = this.value;
             }
           });
-          formData.test_group = [{"name":formData.test_group,"phone":"","address":"","checked":true}] 
+          formData.test_group = [
+            {
+              name: formData.test_group,
+              phone: "",
+              address: "",
+              checked: true,
+            },
+          ];
 
           formData.group_cid = userInfo.project_cid || "";
           // 保存工程单位信息
@@ -230,7 +237,7 @@
                     entrust_group: formData.entrust_group,
                     name: formData.project_name,
                     witness_group: formData.witness_group,
-                    test_group:formData.test_group,
+                    test_group: formData.test_group,
                   },
                 });
                 localStorage.setItem(
