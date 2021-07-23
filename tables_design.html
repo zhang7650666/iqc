@@ -837,7 +837,7 @@
             
             isSubmit = true;
             var datas = $("#loginForm1").serializeArray();
-
+            console.log(99999, datas)
             var radios = $("#loginForm1").find('input[type="radio"]');
             radios.each(function (idx, inputEle) {
               var checked = inputEle.checked;
@@ -846,6 +846,10 @@
               datas.push({ name: sid, value: val });
             });
             var submitData = {};
+            datas.push({
+              name: $("#loginForm1 .step-wp").attr("data-sid"),
+              value: $("#loginForm1 .step-wp").html()
+            })
             $(datas).each(function (idx, item) {
               //   debugger;
               var already = submitData[item.name] || "";
@@ -855,12 +859,11 @@
             // datas[$("#loginForm1 .step-wp").attr("data-sid")] = $(
             //   "#loginForm1 .step-wp"
             // ).html(); // 替换第几部的值
-            datas.push({
-              name: $("#loginForm1 .step-wp").attr("data-sid"),
-              value: $("#loginForm1 .step-wp").html()
-            })
+           
             // console.log('请求参数', datas)
+            console.log('submitData', submitData)
             // debugger;
+            
             var params = {
               classifyId: queryObj.classifyId || 1,
               form_id: queryObj.form_id || 1,
