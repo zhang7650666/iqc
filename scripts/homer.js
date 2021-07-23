@@ -736,14 +736,14 @@ function initModalRender() {
                 </div>\
                 <div class="panel-body">\
                   <div class="table-responsive">\
-                    <table cellpadding="1" cellspacing="1" class="table table-condensed table-striped table-modal">\
+                    <table cellpadding="1" cellspacing="1" class="table table-condensed table-striped table-modal ">\
                       <thead>\
                         <tr>\
-                            <th width="10%">默认</th>\
-                            <th width="25%">检测单位</th>\
-                            <th width="20%">联系电话</th>\
-                            <th width="25%">检测地址</th>\
-                            <th width="20%">传值</th>\
+                            <th width="10%" class="txt-center">默认</th>\
+                            <th width="25%" class="txt-center">检测单位</th>\
+                            <th width="20%" class="txt-center">联系电话</th>\
+                            <th width="25%" class="txt-center">检测地址</th>\
+                            <th width="20%" class="txt-center">传真</th>\
                         </tr>\
                       </thead>\
                       <tbody class="tbody-modal">\

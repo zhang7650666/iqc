@@ -4240,11 +4240,11 @@ td {
 
 .login-wrapper {
   height: 100%;
-  padding-right: 100px;
   background: url(../images/p2.jpg) no-repeat top center;
   background-size: cover;
   padding-top: 100px;
   position: relative;
+  overflow: hidden;
 }
 .login-wrapper::after {
   content: "";
