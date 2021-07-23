@@ -201,7 +201,7 @@ function dataToTable(tableData, parentId, map, sourceData, isProhibitEdit) {
             (item.value || "") +
             '" ' +
             disab +
-            "></textarea>";
+            ">"+item.value+"</textarea>";
 
           break;
         case "date":
