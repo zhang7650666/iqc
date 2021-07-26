@@ -322,177 +322,181 @@
             </div>
           </div>
         </div>
+        <!-- style模版 -->
+        <script type="text/template" id="styleTemp">
+          <style type="text/css">
+            .table-header tr th {
+              border: 1px solid #fff;
+              text-align: left;
+              /* width: 12.5%; */
+              font-size: 13.2px;
+              /* padding: 0px; */
+            }
+            .font-weight {
+                /* font-weight: 600; */
+            }
+            .label-text {
+              font-family:'Microsoft Yahei', SimHei;
+            }
+            .no-border {
+                border: 0;
+            }
+            .table-body {
+              width: 100%;
+              border: 1px solid #000;
+              border-bottom: 0;
+              border-collapse: collapse;
+            }
+
+            .table-body tr td,
+            .table-body tr th {
+                /* width: 16%; */
+                border-right: 1px solid #000;
+                border-bottom: 1px solid #000;
+                font-size: 12px;
+                height:26px;
+                font-family: NSimSun,SimSun;
+                min-width: 60px;
+            }
+            .table-body tr{
+              height: 26px;
+            }
+
+            .td-label {
+              min-width: 60px;
+            }
+
+            #witnessTable .table-body tr td,
+            #witnessTable .table-body tr th,
+            #witnessTable  .table-body tr {
+              height: 44px;
+              font-size: 13.2px;
+            }
+
+            .table-header {
+              border: 1px solid #fff;
+              width: 100%;;
+            }
+
+            .p-xs {
+              padding: 0 5px
+            }
+            .table-desc {
+              font-size: 12px;
+              word-wrap: break-word;
+              margin-top: 10px;
+              text-align: left;
+            }
+
+            .checkbox-wp {
+              text-align: left;
+              margin-left: 10px;
+            }
+
+            .txt-center {
+                text-align: center;
+            }
+            .txt-left {
+                text-align: left;
+            }
+            .txt-right {
+                text-align: right;
+            }
+            textarea {
+              width:100%;
+              border: 0px;
+              outline: none;
+              margin: 0px;
+            }
+
+            [flex] {
+              display: -webkit-box;
+              display: -webkit-flex;
+              display: -ms-flexbox;
+              display: flex;
+            }
+
+            [flex-box="0"] {
+              -webkit-box-flex: 0;
+              -webkit-flex-grow: 0;
+              -ms-flex-positive: 0;
+              flex-grow: 0;
+              -webkit-flex-shrink: 0;
+              -ms-flex-negative: 0;
+              flex-shrink: 0;
+            }
+
+            [flex-box="1"] {
+              -webkit-box-flex: 1;
+              -webkit-flex-grow: 1;
+              -ms-flex-positive: 1;
+              flex-grow: 1;
+              -webkit-flex-shrink: 1;
+              -ms-flex-negative: 1;
+              flex-shrink: 1;
+            }
+            .table-win tr:first-child {
+              height: 80px !important;
+            }
+            .table-win tr th,
+            .table-win tr td {
+                /* height: 23px;
+                line-height:23px; */
+                font-size: 14px;
+                /* font-family:"SimHei"; */
+                text-align:center;
+            }
+            .table-win tr td .jz-str1{
+                /* border-bottom:1px solid #000; */
+                font-size: 22.5px;
+                font-family:"SimHei";
+                /* font-weight: 500; */
+            }
+            .table-win tr td .jz-str2{
+                font-size: 16px;
+                font-family:"SimHei";
+                /* font-weight: 500; */
+            }
+            .table-win tr td .b-border{
+                display:inline-block;
+                width: 30px;
+                border-bottom:1px solid #000;
+            }
+            .table-donwload-section label {
+                /* font-weight: 500; */
+            }
+            .table-win{
+              /* border: 2px solid #000; */
+            }
+
+           .table-win tr td,
+            .table-win tr th{
+              font-size: 13.2px !important;
+              height: 25px;
+              width: 200px;
+            }
+            .table-win td div{
+              text-align:center !important;
+            }
+            .tr-line1{
+              height: 25px;
+            }
+            .tr-line4{
+              height: 100px;
+            }
+            .table-body tr td .class-step{
+              outline: none;
+              border: none;
+              display: inline-block;
+              width: 20px;
+              border-bottom:1px solid #000;
+            }
+
+          </style>
+        </script>
         <!-- 模版 -->
         <script type="text/template" id="tableTemp">
           <div class="no-border" style="text-align: center">
-            <style type="text/css">
-              .table-header tr th {
-                border: 1px solid #fff;
-                text-align: left;
-                /* width: 12.5%; */
-                font-size: 13.2px;
-                /* padding: 0px; */
-              }
-              .font-weight {
-                  /* font-weight: 600; */
-              }
-              .label-text {
-                font-family:'Microsoft Yahei', SimHei;
-              }
-              .no-border {
-                  border: 0;
-              }
-              .table-body {
-                width: 100%;
-                border: 1px solid #000;
-                border-bottom: 0;
-                border-collapse: collapse;
-              }
-
-              .table-body tr td,
-              .table-body tr th {
-                  /* width: 16%; */
-                  border-right: 1px solid #000;
-                  border-bottom: 1px solid #000;
-                  font-size: 12px;
-                  height:26px;
-                  font-family: NSimSun,SimSun;
-                  min-width: 60px;
-              }
-              .table-body tr{
-                height: 26px;
-              }
-
-              .td-label {
-                min-width: 60px;
-              }
-
-              #witnessTable .table-body tr td,
-              #witnessTable .table-body tr th,
-              #witnessTable  .table-body tr {
-                height: 44px;
-                font-size: 13.2px;
-              }
-
-              .table-header {
-                border: 1px solid #fff;
-              }
-
-              .p-xs {
-                padding: 0 5px
-              }
-              .table-desc {
-                font-size: 12px;
-                word-wrap: break-word;
-                margin-top: 10px;
-                text-align: left;
-              }
-
-              .checkbox-wp {
-                text-align: left;
-                margin-left: 10px;
-              }
-
-              .txt-center {
-                  text-align: center;
-              }
-              .txt-left {
-                  text-align: left;
-              }
-              .txt-right {
-                  text-align: right;
-              }
-              textarea {
-                width:100%;
-                border: 0px;
-                outline: none;
-                margin: 0px;
-              }
-
-              [flex] {
-                display: -webkit-box;
-                display: -webkit-flex;
-                display: -ms-flexbox;
-                display: flex;
-              }
-
-              [flex-box="0"] {
-                -webkit-box-flex: 0;
-                -webkit-flex-grow: 0;
-                -ms-flex-positive: 0;
-                flex-grow: 0;
-                -webkit-flex-shrink: 0;
-                -ms-flex-negative: 0;
-                flex-shrink: 0;
-              }
-
-              [flex-box="1"] {
-                -webkit-box-flex: 1;
-                -webkit-flex-grow: 1;
-                -ms-flex-positive: 1;
-                flex-grow: 1;
-                -webkit-flex-shrink: 1;
-                -ms-flex-negative: 1;
-                flex-shrink: 1;
-              }
-              .table-win tr:first-child {
-                height: 80px !important;
-              }
-              .table-win tr th,
-              .table-win tr td {
-                  /* height: 23px;
-                  line-height:23px; */
-                  font-size: 14px;
-                  /* font-family:"SimHei"; */
-                  text-align:center;
-              }
-              .table-win tr td .jz-str1{
-                  /* border-bottom:1px solid #000; */
-                  font-size: 22.5px;
-                  font-family:"SimHei";
-                  /* font-weight: 500; */
-              }
-              .table-win tr td .jz-str2{
-                  font-size: 16px;
-                  font-family:"SimHei";
-                  /* font-weight: 500; */
-              }
-              .table-win tr td .b-border{
-                  display:inline-block;
-                  width: 30px;
-                  border-bottom:1px solid #000;
-              }
-              .table-donwload-section label {
-                  /* font-weight: 500; */
-              }
-              .table-win{
-                /* border: 2px solid #000; */
-              }
-
-             .table-win tr td,
-              .table-win tr th{
-                font-size: 13.2px !important;
-                height: 25px;
-                width: 200px;
-              }
-              .table-win td div{
-                text-align:center !important;
-              }
-              .tr-line1{
-                height: 25px;
-              }
-              .tr-line4{
-                height: 100px;
-              }
-              .table-body tr td .class-step{
-                outline: none;
-                border: none;
-                display: inline-block;
-                width: 20px;
-                border-bottom:1px solid #000;
-              }
-
-            </style>
             <!-- 测试图片 -->
             <!-- <img src="./images/a1.jpg" alt="" srcset="" crossorigin="anonymous"> -->
             <!-- <img src="./images/a1.jpg" alt="" srcset=""> -->
@@ -695,8 +699,11 @@
         $("#loginForm1 .table-donwload-section .table-desc-info").html(
           tableName
         );
+
         // 表头信息
         if (data.tableData) {
+          var styles = $("#styleTemp").html();
+          $("#loginForm1 .table-donwload-section").append(styles);
           data.tableData.forEach(function (item) {
             if (nullTable != JSON.stringify(item)) {
               if (!isEdit) {
@@ -835,6 +842,7 @@
           messages: loginForm1Map.messages,
           submitHandler: function () {
             isSubmit = true;
+
             var datas = $("#loginForm1").serializeArray();
             console.log(99999, datas);
             var radios = $("#loginForm1").find('input[type="radio"]');

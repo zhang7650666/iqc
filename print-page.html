@@ -160,7 +160,7 @@
                   border-right: 1px solid #000;
                   border-bottom: 1px solid #000;
                   font-size: 12px;
-                  height:25px;
+                  height:24px;
                   font-family: NSimSun,SimSun;
                   box-sizing: border-box;
                   word-break:break-all;
@@ -168,7 +168,7 @@
                   border-collapse:collapse;
               }
               .table-body tr{
-                height: 25px;
+                height: 24px;
               }
               .td-label {
                 min-width: 40px;
@@ -272,6 +272,10 @@
                   width: 30px;
                   border-bottom:1px solid #000;
               }
+              .table-donwload-section {
+                  height: 970px;
+                  overflow: hidden;
+              }
               .table-donwload-section label {
                   /* font-weight: 500; */
               }
@@ -304,14 +308,14 @@
 
               #contractTable,
               #witnessTable {
-                width: 21cm;
-                height: 29.7cm;
+                width: 20cm;
+                /* height: 29.7cm; */
                 background: white;
                 margin: 0 auto;
                 box-sizing: border-box;
               }
               #contractTable {
-                padding: 0.6cm 0.6cm 0 0.6cm;
+                padding: 0.5cm 0.5cm 0 0.5cm;
               }
               #witnessTable  {
                 /* min-height: 26.7cm; */
@@ -342,7 +346,7 @@
                   width: 100%;
                   table-layout: fixed;
                   word-break: break-all;
-                  height: 736px;
+                  /* height: 600px; */
                 }
                 #contractTable .td-label {
                 width: 70px !important;
@@ -440,6 +444,10 @@
       var tableNum = "";
 
       $(".print").click(function () {
+        // var timeEle = $(
+        //   '<p style="text-align:right">生效时间：' + ymd() + "</p>"
+        // );
+        // $("#loginForm1 .table-donwload-section").append(timeEle);
         $("#mainWrapper").jqprint({
           debug: false, //如果是true则可以显示iframe查看效果，默认是false
           importCSS: true, //true表示引进原来的页面的css，默认是true。

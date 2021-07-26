@@ -29,7 +29,7 @@ function crateThead(item, rules, messages) {
         required +
         " name=sid_" +
         item.submitId +
-        ' vaule="" flex-box="1"/></label></th>';
+        ' value="" flex-box="1"/></label></th>';
       break;
   }
   return thHtml;
@@ -201,7 +201,9 @@ function dataToTable(tableData, parentId, map, sourceData, isProhibitEdit) {
             (item.value || "") +
             '" ' +
             disab +
-            ">"+item.value+"</textarea>";
+            ">" +
+            item.value +
+            "</textarea>";
 
           break;
         case "date":
