@@ -369,7 +369,7 @@
             #witnessTable .table-body tr td,
             #witnessTable .table-body tr th,
             #witnessTable  .table-body tr {
-              height: 44px;
+              height: 42px;
               font-size: 13.2px;
             }
 
@@ -828,9 +828,9 @@
       });
       // 点击保存
       $(".save").click(function () {
-        $("#loginForm1 .no-border:eq(1)").html(
-          '<p style="text-align:right">生效时间：' + ymd() + "</p>"
-        );
+        // $("#loginForm1 .no-border:eq(1)").html(
+        //   '<p style="text-align:right">生效时间：' + ymd() + "</p>"
+        // );
         saveFn();
       });
 
