@@ -245,7 +245,7 @@
                 padding: 2cm 2cm 0cm 2.5cm;
               }
               .table-donwload-section {
-                height: 950px;
+                /* height: 970px; */
               }
 
               .table-donwload-section > img {
@@ -460,7 +460,7 @@
         domtoimage
           .toBlob(tableContent, {
             width: queryObj.pritype == 1 ? 623 : 753, // 高度宽度自行设定
-            height: queryObj.pritype == 1 ? 915 : 950,
+            height: queryObj.pritype == 1 ? 1000 : 1050,
             scale: 8, // 后面的字表示需要把一个像素转为几个像素
             bgcolor: "#fff",
             quality: 100,
@@ -485,7 +485,7 @@
         // domtoimage
         //   .toBlob(tableContent, {
         //     width: queryObj.pritype == 1 ? 623 : 753, // 高度宽度自行设定
-        //     height: queryObj.pritype == 1 ? 915 : 950,
+        //     height: queryObj.pritype == 1 ? 1000 : 1050,
         //     scale: 8, // 后面的字表示需要把一个像素转为几个像素
         //     bgcolor: "#fff",
         //     quality: 100,
@@ -550,6 +550,7 @@
                   dataToTable(item, "#loginForm1", loginForm1Map, data, true);
                 }
               });
+              $("#contractTable .table-body").eq(0).css("height", "800px");
             }
             if (queryObj.pritype == "1" && data.witnessData) {
               $("#witnessTable").show();
@@ -558,6 +559,7 @@
                   dataToTable(item, "#loginForm2", loginForm1Map, data, true);
                 }
               });
+              $("#witnessTable .table-body").eq(0).css("height", "940px");
             }
             // 二维码
             if (data.qrCode) {
