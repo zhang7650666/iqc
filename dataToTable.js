@@ -79,8 +79,6 @@ function formatTableHeadItem(datas, rules, messages) {
  * @param {*} isProhibitEdit 是否禁止编辑 to:用于见证记录内容不可编辑
  */
 function dataToTable(tableData, parentId, map, sourceData, isProhibitEdit) {
-  var queryObj = query2obj(window.location.href);
-  var isView = queryObj.type === "view"; // 查看状态
   var theadHtml = "";
   var dateInits = [];
   var headData = $.extend([], tableData.tableHead);
@@ -180,7 +178,7 @@ function dataToTable(tableData, parentId, map, sourceData, isProhibitEdit) {
             //   ? '<span class="text-gary">' + item.valueExt + "</span>"
             //   : "");
           } else {
-            tdHtml = "<div class='txt-left'>" + item.value || "" + "</div> ";
+            tdHtml = "<div class='txt-left'>" + item.value + "</div> ";
           }
           break;
         case "textarea":
@@ -201,7 +199,7 @@ function dataToTable(tableData, parentId, map, sourceData, isProhibitEdit) {
             (item.value || "") +
             '" ' +
             disab +
-            ">"+item.value+"</textarea>";
+            "></textarea>";
 
           break;
         case "date":
@@ -218,8 +216,8 @@ function dataToTable(tableData, parentId, map, sourceData, isProhibitEdit) {
           // (item.value ? ymd_format(item.value) : ymd_format(value)) +
           // (item.value ? moment(item.value).format('YYYY年MM月DD日'):  moment(value).format('YYYY年MM月DD日')) +
           var dateVal = "";
-          if ((item.value || "").indexOf("年") > -1) {
-            dateVal = item.value || "";
+          if (item.value.indexOf("年") > -1) {
+            dateVal = item.value;
           } else if (item.value == "Invalid date") {
             dateVal = moment(ymd()).format("YYYY年MM月DD日");
           } else {
@@ -322,30 +320,27 @@ function dataToTable(tableData, parentId, map, sourceData, isProhibitEdit) {
             "</label>";
           break;
         case "qrcode":
-          // var required = map.rules["sid_" + item.submitId]
-          //   ? 'required="true"'
-          //   : "";
-          // // var testStr = "<div class='main'>第<span style='text-decoration:underline'>&nbsp;&nbsp;</span>步～<span style='text-decoration:underline'>&nbsp;&nbsp;</span>步<br/>第<span style='text-decoration:underline'>&nbsp;&nbsp;</span>点~<span style='text-decoration:underline'>&nbsp;&nbsp;</span>点<br/>共<span style='text-decoration:underline'>&nbsp;&nbsp;</span>步，<span style='text-decoration:underline'>&nbsp;&nbsp;</span>点</div>"
-          // var tempHtmls = item.value ? item.value : item.valueExt;
-          // tdHtml +=
-          //   '<div class="qr-code code-pos" style="width: 85px;height: 85px; overflow:hidden;text-align: right">\
-          //   <img src="" alt="" class="witness-code"  width="80px" height="80px"/>\
-          // </div>';
+          var required = map.rules["sid_" + item.submitId]
+            ? 'required="true"'
+            : "";
+          // var testStr = "<div class='main'>第<span style='text-decoration:underline'>&nbsp;&nbsp;</span>步～<span style='text-decoration:underline'>&nbsp;&nbsp;</span>步<br/>第<span style='text-decoration:underline'>&nbsp;&nbsp;</span>点~<span style='text-decoration:underline'>&nbsp;&nbsp;</span>点<br/>共<span style='text-decoration:underline'>&nbsp;&nbsp;</span>步，<span style='text-decoration:underline'>&nbsp;&nbsp;</span>点</div>"
+          var tempHtmls = item.value ? item.value : item.valueExt;
+          tdHtml +=
+            '<div class="qr-code code-pos" style="width: 80px;height: 80px; overflow:hidden;text-align: right">\
+            <img src="" alt="" class="witness-code"  width="80px" height="80px"/>\
+          </div>';
           break;
       }
       var columnCount = item.tagColumCount || item.columnCount || 1;
       var classNams = item.direction == 1 ? "txt-left" : ""; //table-center
-      classNams =
-        item.columnType == "label" ? classNams + " td-label" : classNams;
       if (item.name && item.name.indexOf("见证记录<br/>表") != -1) {
         var jzStr1 = item.name.split("<br/>")[0];
         var jzStr2 = item.name.split("<br/>")[1];
         var testHtml = "";
-        columnCount = columnCount - 1 || 1;
         testHtml += '<div class="jz-str1">' + jzStr1 + "</div>";
         testHtml += '<div class="jz-str2"><br/>' + jzStr2 + "<br/></div>";
         tdStr +=
-          "<td style='border-right: 0' \
+          "<td \
           colspan='" +
           columnCount +
           "'\
@@ -364,17 +359,11 @@ function dataToTable(tableData, parentId, map, sourceData, isProhibitEdit) {
           >" +
           testHtml +
           "</td>";
-
-        tdStr +=
-          '<td><div class="qr-code code-pos" style="width: 85px;height: 85px; overflow:hidden;text-align: right">\
-          <img src="" alt="" class="witness-code"  width="80px" height="80px"/>\
-        </div></td>';
       } else {
         // parentAttr +=
         //   item.columnType == "label" ? " width:" + tdW.toFixed(2) + "%" : "";
-        // width:parseInt(tdW) + "%;"
         parentAttr +=
-          "width: " + parseInt(tdW) + "%; padding: 0 5px;text-align:center;";
+          "width:" + parseInt(tdW) + "%;" + "padding: 0 5px;text-align:center;";
         tdStr +=
           "<td \
           colspan='" +
@@ -423,7 +412,6 @@ function dataToTable(tableData, parentId, map, sourceData, isProhibitEdit) {
   temp = temp.replace("__TABLE_HEADER__", theadHtml);
   temp = temp.replace("__TABLE_BODY", trHtml);
   temp = temp.replace("__TABLE_DESC", tableData.desc || "");
-  temp = temp.replace("__TABLE_DESC", "");
   $(parentId).find(".table-donwload-section").append(temp);
   if (headData.length == 0) {
     $(parentId).find(".table-header").remove();

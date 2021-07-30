@@ -92,7 +92,7 @@
                 border-right: 1px solid #000;
                 border-bottom: 1px solid #000;
                 font-size: 12px;
-                height: 24px;
+                height: 25px;
                 font-family: NSimSun, SimSun;
                 box-sizing: border-box;
                 word-break: break-all;
@@ -100,10 +100,10 @@
                 border-collapse: collapse;
               }
               .table-body tr {
-                height: 24px;
+                height: 25px;
               }
               .td-label {
-                min-width: 40px;
+                min-width: 36px;
               }
               label {
                 margin-bottom: 0 !important;
@@ -112,7 +112,7 @@
               #witnessTable .table-body tr td,
               #witnessTable .table-body tr th,
               #witnessTable .table-body tr {
-                height: 42px;
+                height: 37px;
                 font-size: 13.2px;
               }
 
@@ -231,7 +231,7 @@
               #contractTable,
               #witnessTable {
                 width: 19cm;
-                height: 28.7cm;
+                /* height: 28.7cm; */
                 background: white;
                 margin: 0 auto;
                 box-sizing: border-box;
@@ -382,10 +382,6 @@
         </script>
       </div>
     </div>
-    <div style="visibility: hidden">
-      <button type="button" class="print">打印</button>
-      <button type="button" class="print1">打印1</button>
-    </div>
     <!-- Vendor scripts -->
     <script src="vendor/jquery/dist/jquery.min.js"></script>
     <script src="vendor/jquery-ui/jquery-ui.min.js"></script>
@@ -459,8 +455,8 @@
 
         domtoimage
           .toPng(tableContent, {
-            width: 678, // 高度宽度自行设定
-            height: 970,
+            width: queryObj.pritype == 1 ? 547 : 678, // 高度宽度自行设定
+            height: queryObj.pritype == 1 ? 915 : 940,
             scale: 3, // 后面的字表示需要把一个像素转为几个像素
             bgcolor: "#fff",
             quality: 3,
@@ -481,22 +477,6 @@
       };
       var tableName = "";
       var tableNum = "";
-
-      $(".print").click(function () {
-        // var timeEle = $(
-        //   '<p style="text-align:right">生效时间：' + ymd() + "</p>"
-        // );
-        // $("#loginForm1 .table-donwload-section").append(timeEle);
-        $("#mainWrapper").jqprint({
-          debug: false, //如果是true则可以显示iframe查看效果，默认是false
-          importCSS: true, //true表示引进原来的页面的css，默认是true。
-          printContainer: true, //表示如果原来选择的对象必须被纳入打印，默认是true。
-          operaSupport: true, ///表示如果插件也必须支持歌opera浏览器，默认是true。
-        });
-      });
-      $(".print1").click(function () {
-        window.print();
-      });
 
       $.ajax({
         url: "http://meterial.cxhy.cn/getRecordDetail/",
