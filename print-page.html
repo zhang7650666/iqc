@@ -107,6 +107,7 @@
               }
               label {
                 margin-bottom: 0 !important;
+                font-weight: 400;
               }
 
               #witnessTable .table-body tr td,
@@ -407,7 +408,7 @@
     <script src="scripts/dataToTable.js"></script>
     <script src="qwebchannel.js" type="text/javascript"></script>
     <!-- <script src="dom-to-image.js" type="text/javascript"></script> -->
-    <script src="domtoimage.js" type="text/javascript"></script>
+    <script src="scripts/domtoimage.js" type="text/javascript"></script>
     <!-- <script src="html2canvas.js" type="text/javascript"></script> -->
 
     <script>
@@ -454,19 +455,24 @@
         )[0];
 
         domtoimage
-          .toPng(tableContent, {
+          .toBlob(tableContent, {
             width: queryObj.pritype == 1 ? 547 : 678, // 高度宽度自行设定
             height: queryObj.pritype == 1 ? 915 : 940,
-            scale: 3, // 后面的字表示需要把一个像素转为几个像素
+            scale: 4, // 后面的字表示需要把一个像素转为几个像素
             bgcolor: "#fff",
-            quality: 3,
+            quality: 100,
           })
-          .then(function (dataUrl) {
-            var newImg = document.createElement("img");
-            newImg.src = dataUrl;
-            tableContent.innerHTML = "";
-            tableContent.appendChild(newImg);
-            cb && cb();
+          .then(function (blob) {
+            var reader = new FileReader();
+            reader.readAsDataURL(blob);
+            reader.onloadend = function () {
+              var base64data = reader.result;
+              var newImg = document.createElement("img");
+              newImg.src = base64data;
+              tableContent.innerHTML = "";
+              tableContent.appendChild(newImg);
+              cb && cb();
+            };
           });
       }
 
@@ -536,14 +542,6 @@
                 $(".witness-code").attr("src", data.qrCode.witness);
               }
             }
-            //$(".print").click();
-
-            var printEleParent = document.getElementById(
-              queryObj.pritype == 1 ? "witnessTable" : "contractTable"
-            );
-            var tableContent = printEleParent.getElementsByClassName(
-              "table-donwload-section"
-            )[0];
 
             saveImage(function () {
               $("#mainWrapper").jqprint({
@@ -553,25 +551,6 @@
                 operaSupport: true, ///表示如果插件也必须支持歌opera浏览器，默认是true。
               });
             });
-
-            // domtoimage
-            //   .toBlob(document.getElementById("mainWrapper"))
-            //   .then(function (blob) {
-            //     // window.saveAs(blob, 'my-node.png');
-            //     var reader = new FileReader();
-            //     reader.readAsDataURL(blob);
-            //     reader.onloadend = function () {
-            //       var base64data = reader.result;
-            //       //console.log(base64data);
-            //       printer.print(
-            //         JSON.stringify({
-            //           x: -370,
-            //           y: 0,
-            //           imageData: base64data,
-            //         })
-            //       );
-            //     };
-            //   });
 
             //最后的错误信息
             res.msg && res.msg != "ok" && toastr && toastr.warning(res.msg);
