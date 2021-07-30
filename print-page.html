@@ -92,7 +92,7 @@
                 border-right: 1px solid #000;
                 border-bottom: 1px solid #000;
                 font-size: 12px;
-                height: 25px;
+                height: 30px;
                 font-family: NSimSun, SimSun;
                 box-sizing: border-box;
                 word-break: break-all;
@@ -100,7 +100,7 @@
                 border-collapse: collapse;
               }
               .table-body tr {
-                height: 25px;
+                height: 30px;
               }
               .td-label {
                 min-width: 36px;
@@ -113,7 +113,7 @@
               #witnessTable .table-body tr td,
               #witnessTable .table-body tr th,
               #witnessTable .table-body tr {
-                height: 37px;
+                height: 42px;
                 font-size: 13.2px;
               }
 
@@ -231,7 +231,7 @@
 
               #contractTable,
               #witnessTable {
-                width: 19cm;
+                width: 21cm;
                 /* height: 28.7cm; */
                 background: white;
                 margin: 0 auto;
@@ -243,6 +243,9 @@
               #witnessTable {
                 /* min-height: 26.7cm; */
                 padding: 2cm 2cm 0cm 2.5cm;
+              }
+              .table-donwload-section {
+                height: 950px;
               }
 
               .table-donwload-section > img {
@@ -450,30 +453,55 @@
         var printEleParent = document.getElementById(
           queryObj.pritype == 1 ? "witnessTable" : "contractTable"
         );
-        var tableContent = printEleParent.getElementsByClassName(
-          "table-donwload-section"
-        )[0];
+        var tableContent = printEleParent.querySelector(
+          ".table-donwload-section"
+        );
 
         domtoimage
           .toBlob(tableContent, {
-            width: queryObj.pritype == 1 ? 547 : 678, // 高度宽度自行设定
-            height: queryObj.pritype == 1 ? 915 : 940,
-            scale: 4, // 后面的字表示需要把一个像素转为几个像素
+            width: queryObj.pritype == 1 ? 623 : 753, // 高度宽度自行设定
+            height: queryObj.pritype == 1 ? 915 : 950,
+            scale: 8, // 后面的字表示需要把一个像素转为几个像素
             bgcolor: "#fff",
             quality: 100,
           })
           .then(function (blob) {
+            // window.saveAs(blob, 'my-node.png');
             var reader = new FileReader();
             reader.readAsDataURL(blob);
             reader.onloadend = function () {
               var base64data = reader.result;
-              var newImg = document.createElement("img");
-              newImg.src = base64data;
-              tableContent.innerHTML = "";
-              tableContent.appendChild(newImg);
-              cb && cb();
+              //console.log(base64data);
+              printer.print(
+                JSON.stringify({
+                  x: -370,
+                  y: 0,
+                  imageData: base64data,
+                })
+              );
             };
           });
+
+        // domtoimage
+        //   .toBlob(tableContent, {
+        //     width: queryObj.pritype == 1 ? 623 : 753, // 高度宽度自行设定
+        //     height: queryObj.pritype == 1 ? 915 : 950,
+        //     scale: 8, // 后面的字表示需要把一个像素转为几个像素
+        //     bgcolor: "#fff",
+        //     quality: 100,
+        //   })
+        //   .then(function (blob) {
+        //     var reader = new FileReader();
+        //     reader.readAsDataURL(blob);
+        //     reader.onloadend = function () {
+        //       var base64data = reader.result;
+        //       var newImg = document.createElement("img");
+        //       newImg.src = base64data;
+        //       tableContent.innerHTML = "";
+        //       tableContent.appendChild(newImg);
+        //       cb && cb();
+        //     };
+        //   });
       }
 
       //   生成表格校验信息
