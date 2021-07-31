@@ -1181,6 +1181,7 @@
                     sid +
                     '" class="ipt-self"/>'
                 );
+                $(inputEle).parent().find('.ipt-self').attr('disabled', isView)
             }
           $(inputEle).change(function () {
             var checked = $(inputEle).is(":checked");
@@ -1197,8 +1198,11 @@
                     val +
                     '"  name="' +
                     sid +
-                    '" class="ipt-self"/>'
+                    '"  disabled=' +
+                    isView +
+                    ' class="ipt-self"/>'
                 );
+                $(inputEle).parent().find('.ipt-self').attr('disabled', isView)
               // $(inputEle).parent()
             } else {
               if ($(inputEle).parent().find(".ipt-self")) {
