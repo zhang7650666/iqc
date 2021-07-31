@@ -1165,6 +1165,23 @@
         // 处理勾选其他的样式
         var selects = $("#loginForm1").find(".class-other");
         selects.each(function (idx, inputEle) {
+          var checked = $(inputEle).is(":checked");
+            var val =
+              $(inputEle).attr("subVal") == "null"
+                ? ""
+                : $(inputEle).attr("subVal");
+            var sid = $(inputEle).attr("subSid");
+            if (checked) {
+              $(inputEle)
+                .parent()
+                .append(
+                  '<input type="text" value="' +
+                    val +
+                    '"  name="' +
+                    sid +
+                    '" class="ipt-self"/>'
+                );
+            }
           $(inputEle).change(function () {
             var checked = $(inputEle).is(":checked");
             var val =
